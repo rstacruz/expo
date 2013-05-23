@@ -97,6 +97,23 @@ var AppExt = module.exports = function(app) {
     return this;
   };
 
+  // Config
+  // ------
+
+  // Loads a file.
+  
+  app._configData = {};
+
+  app.configFile = function(file) {
+    if (!app._configData[file])  {
+      var fname = app.path('config', file+'.json');
+      var data = require(fname);
+      app._configData[file] = data[app.get('env')];
+    }
+
+    return app._configData[file];
+  };
+
   // Private helpers
   // ---------------
 

@@ -6,27 +6,23 @@
 var Runner = module.exports = function(app, port, flags) {
   port = port || 4567;
 
-  app.load(function(app) {
-    if (flags === 'Q') {
-      app.log('runner', 'Application loaded at ' + timestamp());
-      start();
-      return;
-    }
-
+  if ((app.get('env') === 'development') && (flags !== 'Q')) {
+    app.log('runner', 'Auto-restarting on changes');
     printHeader();
+    runSupervisor();
+    return;
+  }
 
-    if (app.get('env') === 'development') {
-      app.log('runner', 'Auto-restarting on changes');
-      runSupervisor();
-      return;
-    }
+  app.load(function(app) {
+    if (flags !== 'Q') printHeader();
 
+    app.log('runner', 'Ready (' + timestamp() + ')');
     start();
   });
 
   function printHeader() {
-    app.log('runner', "Environment: " + app.get('env'));
-    app.log('runner', "Listening at http://0.0.0.0:"+port);
+    app.log('runner', "env: " + app.get('env'));
+    app.log('runner', "url: http://0.0.0.0:"+port);
   }
 
   // Invokes supervisor to load the runner bin of the application.
@@ -38,6 +34,7 @@ var Runner = module.exports = function(app, port, flags) {
   function start() {
     app.listen(port);
   }
+
   function timestamp() {
     return (new Date()).toString().split(' ')[4];
   }

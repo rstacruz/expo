@@ -8,10 +8,12 @@ var ExpoSequelize = module.exports = function(app) {
   });
 
   app.on('models:before', function(app, cli) {
+    app.log('db', 'Setting sequel');
+    app.sequelize = getSequelizeFromURL('postgres://rsc:@localhost:5432/db');
   });
 };
 
-function getSequelize(url) {
+function getSequelizeFromURL(url) {
   match = url.match(/([^:]+):\/\/([^:]*):([^@]*)@([^:]+):(\d+)\/(.+)/);
 
   if (!match) throw "Wrong DATABASE_URL format";
