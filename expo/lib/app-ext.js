@@ -2,6 +2,9 @@ var path = require('path');
 var loadMixins = require('./path_helpers').loadMixins;
 var EventEmitter = require('events').EventEmitter;
 
+// Application extensions mixin.
+// Extends an Express app with more functions.
+//
 var AppExt = module.exports = function(app) {
   // The root path. To be overriden later.
   app.root = '';
@@ -67,6 +70,14 @@ var AppExt = module.exports = function(app) {
     }
 
     return this._cli;
+  };
+
+  // Logger
+  // ------
+
+  // Simple logging facility.
+  app.log = function(type, msg) {
+    console.log('=>', '['+type+']', msg);
   };
 
   // Events
