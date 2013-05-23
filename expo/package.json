@@ -10,6 +10,7 @@
     "coffee-script": "1.6.x",
     "express": "3.2.x",
     "commander": "1.1.x",
-    "libyaml": "0.2.x"
+    "libyaml": "0.2.x",
+    "supervisor": "0.5.x"
   }
 }

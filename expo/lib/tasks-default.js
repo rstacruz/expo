@@ -1,17 +1,20 @@
 var TasksDefault = module.exports = function(app, cli) {
+  cli.go = function(argv) {
+    if (argv.length === 2) {
+      this.parse([argv[0], argv[1], '--help']);
+    } else {
+      this.parse(argv);
+    }
+  };
+
   cli
     .version(app.getPackageInfo().version);
 
   cli
-    .command('server')
+    .command('server [port] [..]')
     .description('Starts the server')
-    .action(function() {
-      app.load(function(app) {
-        var port = 4567;
-        console.log("=> Environment:", app.get('env'));
-        console.log("=> Listening at http://0.0.0.0:"+port);
-        app.listen(port);
-      });
+    .action(function(port, flags) {
+      require('../lib/runner')(app, port, flags);
     });
 
   cli

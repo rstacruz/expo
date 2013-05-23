@@ -1,5 +1,6 @@
-module.exports = {
-  loadMixins: loadMixins
+var PathHelpers = module.exports = {
+  loadMixins: loadMixins,
+  isDirSync: isDirSync
 };
 
 // Loads mixin modules in a path.
@@ -13,6 +14,8 @@ function loadMixins(filepath, args) {
   var path = require('path');
 
   var self = this;
+
+  if (!isDirSync(filepath)) return;
 
   var files = fs.readdirSync(filepath);
   files = files.sort();
@@ -30,7 +33,12 @@ function loadMixins(filepath, args) {
   });
 }
 
+// Checks if a given path is a directory.
 function isDirSync(fn) {
-  var stat = require('fs').statSync(fn);
+  var fs = require('fs');
+
+  if (!fs.existsSync(fn)) return false;
+
+  var stat = fs.statSync(fn);
   return stat.isDirectory();
 }

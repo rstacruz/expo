@@ -3,12 +3,13 @@ Features
 
 Core:
 
-- Initializers
+- Initializers (done)
 - Tasks (done)
+- Supervisor
 - Helpers
 - Models
 - Model linking
-- Settings yml
+- Settings.yml
 - Environment
 - Public
 

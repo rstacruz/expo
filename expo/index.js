@@ -1,13 +1,28 @@
 var path = require('path');
 var app = require('express')();
 var extend = require('util')._extend;
+var loadMixins = require('./lib/path_helpers').loadMixins;
 
 extend(app, {
   // The root path.
   root: '',
 
-  // Command line parser.
-  cli: null,
+  // Returns the commander command line parser.
+  //
+  //     app.cli()
+  //     app.cli().parse(...)
+  //
+  cli: function() {
+    if (!this._cli) {
+      var cli = this._cli = require('commander');
+
+      // Import default and custom tasks.
+      require('./lib/tasks-default')(this, cli);
+      loadMixins(this.path('tasks'), [this, cli]);
+    }
+
+    return this._cli;
+  },
 
   // Gets a path relative to the root.
   //
@@ -23,38 +38,27 @@ extend(app, {
     return require(path.resolve(this.root, 'package.json'));
   },
 
-  // Runs the command line interface.
-  go: function(argv) {
-    if (argv.length === 2) {
-      this.cli.parse([argv[0], argv[1], '--help']);
-    } else {
-      this.cli.parse(argv);
-    }
-  },
-
-  // Loads all files needed.
+  // Loads all files needed to run an Express server.
+  //
+  //     app.load(function(app) {
+  //       app.listen(3000);
+  //     });
+  //
   load: function(callback) {
-    var loadMixins = require('./lib/path_helpers').loadMixins;
-    loadMixins(this.path('initializers'), [this, this.cli]);
+    this._loadPath('initializers');
+    this._loadPath('models');
+    this._loadPath('helpers');
+    this._loadPath('routes');
     callback(this);
   },
 
-  // Build the `this.cli` model.
-  _initializeCli: function(dir) {
-    this.cli = require('commander');
-    require('./lib/tasks-default')(this, this.cli);
-  },
-
-  _initializeTasks: function() {
-    var filepath = this.path('tasks');
-    var loadMixins = require('./lib/path_helpers').loadMixins;
-    loadMixins(this.path('tasks'), [this, this.cli]);
+  // Loads mixins in a given path.
+  _loadPath: function(path) {
+    loadMixins(this.path(path), [this]);
   }
 });
 
 module.exports = function(dir, callback) {
   app.root = dir;
-  app._initializeCli();
-  app._initializeTasks();
   return app;
 };
