@@ -42,23 +42,26 @@ var AppExt = module.exports = function(app) {
     if (!loaded) {
       process.chdir(app.root);
 
-      // Set environment if asked.
+      // Set environment if asked (usually test).
       if (env) app.set('env', env);
 
+      // Hooks: do pre-load hooks that extensions may listen for.
       this.events.emit('load:before', app);
       if (env === 'test') this.events.emit('load:test:before', app);
 
+      // Load initializers of the application.
       loadPath('initializers', function(mixin) { mixin(app); });
 
-      // Make sure this is the last middleware in the stack.
+      // Ensure this is the last middleware in the stack.
       app.use(app.router);
 
       // Apply the helpers using `.local()` to make them available to all views.
       loadPath('helpers', function(helpers) { app.locals(helpers); });
 
-      // Load routes.
+      // Load routes of the application.
       loadPath('routes', function(mixin) { mixin(app); });
 
+      // After hooks
       if (env === 'test') this.events.emit('load:test:after', app);
       this.events.emit('load:after', app);
 
@@ -119,6 +122,8 @@ var AppExt = module.exports = function(app) {
   app.conf = function(file) {
     if (!app._configData[file])  {
       var fname = app.path('config', file+'.js');
+      if (!fs.existsSync(fname)) fname = app.path('config', file+'.coffee');
+
       var data = require(fname);
       app._configData[file] = data[app.get('env')];
     }

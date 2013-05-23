@@ -15,14 +15,14 @@ Core:
 - Logging (done?)
 - Sessions (done)
 - Secret tokens (done)
+- Tests (done)
+- Helpers (done)
 - Generator bin
-- Helpers
 - Error
 
 Sequelize:
 
-- Db Migration
-- Tests
+- Db Migration (done)
 
 Connect:
 - Asset pre-compilation (?)
