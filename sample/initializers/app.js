@@ -9,11 +9,6 @@ module.exports = function(app) {
   app.use(express.methodOverride());
   app.use(express.bodyParser());
 
-  app.use(express.cookieParser('secret-here'));
-  app.use(express.cookieSession({
-    key: 'connect_session'
-  }));
-
   app.configure('development', function() {
     app.use(express.logger('dev'));
     app.use(express.errorHandler());
