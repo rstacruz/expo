@@ -13,6 +13,8 @@
     "expo": "*",
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
-    "jade": "*"
+    "jade": "*",
+    "stylus": "*",
+    "nib": "*"
   }
 }

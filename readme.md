@@ -9,11 +9,12 @@ Core:
 - Helpers
 - Models
 - Model linking
-- Settings.yml
+- Settings.yml (done)
 - Environment (done)
 - Public (done)
 - Generator bin
-- Extensions support
+- Extensions support (done)
+- Logging
 
 Sequelize:
 
@@ -21,8 +22,8 @@ Sequelize:
 - Tests
 
 Connect:
-- Asset pre-compilation
-- Asset serving
+- Asset pre-compilation (?)
+- Asset serving (done)
 
 Files
 -----
