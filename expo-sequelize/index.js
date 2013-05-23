@@ -7,10 +7,14 @@ var ExpoSequelize = module.exports = function(app) {
       });
   });
 
-  app.on('models:before', function(app, cli) {
-    app.log('db', 'Setting sequel');
-    app.sequelize = getSequelizeFromURL('postgres://rsc:@localhost:5432/db');
-  });
+  app.sequelize = function() {
+    if (!app._sequelize) {
+      app.log('db', 'Setting sequel');
+      app._sequelize = getSequelizeFromURL('postgres://rsc:@localhost:5432/db');
+    }
+
+    return app._sequelize;
+  };
 };
 
 function getSequelizeFromURL(url) {

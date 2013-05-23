@@ -33,7 +33,6 @@ var AppExt = module.exports = function(app) {
   //
   //  * load:before
   //  * initializers:before, initializers:after
-  //  * models:before, models:after
   //  * helpers:before, helpers:after
   //  * routes:before, routes:after
   //  * load:after
@@ -44,7 +43,6 @@ var AppExt = module.exports = function(app) {
     this.emit('load:before');
 
     loadPath('initializers');
-    loadPath('models');
     loadPath('helpers');
     loadPath('routes');
 
@@ -99,9 +97,16 @@ var AppExt = module.exports = function(app) {
     return this;
   };
 
-  // Config
+  // Models
   // ------
 
+  // Returns a model.
+  app.model = function(name) {
+    return require(app.path('models', name))(app);
+  };
+
+  // Config
+  // ------
   
   app._configData = {};
 
