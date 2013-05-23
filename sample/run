@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+var app = module.exports = require('expo')(__dirname);
+
+if (__filename === process.argv[1]) app.go(process.argv);
+

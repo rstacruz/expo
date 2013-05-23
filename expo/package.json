@@ -1,0 +1,17 @@
+{
+  "name": "expo",
+  "description": "",
+  "keywords": [""],
+  "author": "Rico Sta. Cruz",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "main": "index",
+  "dependencies": {
+    "coffee-script": "~1.6.2",
+    "express": "~3.2.0",
+    "commander": "~1.1.0",
+    "libyaml": "~0.2.2"
+  }
+}
