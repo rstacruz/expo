@@ -1,1 +1,2 @@
-alert 2
+#= require a
+#= require b
