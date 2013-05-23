@@ -38,11 +38,15 @@ var AppExt = module.exports = function(app) {
   //  * routes:before, routes:after
   //  * load:after
   //
-  app.load = function() {
+  app.load = function(env) {
     if (!loaded) {
       process.chdir(app.root);
 
+      // Set environment if asked.
+      if (env) app.set('env', env);
+
       this.events.emit('load:before', app);
+      if (env === 'test') this.events.emit('load:test:before', app);
 
       loadPath('initializers', function(mixin) { mixin(app); });
 
@@ -55,7 +59,10 @@ var AppExt = module.exports = function(app) {
       // Load routes.
       loadPath('routes', function(mixin) { mixin(app); });
 
+      if (env === 'test') this.events.emit('load:test:after', app);
       this.events.emit('load:after', app);
+
+      if (env === 'test') app.log.debug('App loaded for test environment');
 
       loaded = true;
     }

@@ -13,8 +13,13 @@
     "expo": "*",
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
+
     "jade": "*",
     "stylus": "*",
-    "nib": "*"
+    "nib": "*",
+
+    "mocha": "*",
+    "chai": "*",
+    "supertest": "*"
   }
 }

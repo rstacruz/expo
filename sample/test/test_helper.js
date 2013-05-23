@@ -1,9 +1,12 @@
-// var chai = require('chai');
-// chai.should();
+// Chai.js (http://chaijs.com/)
+var chai = require('chai');
+global.assert = chai.assert;
+global.expect = chai.expect;
+chai.should();
 
-// var supertestChai = require('supertest-chai');
-// chai.use(supertestChai.httpAsserts);
+// Supertest (https://github.com/visionmedia/supertest)
+global.request = require('supertest');
 
-var app = require('../app');
-app.load();
-
+// Load the app
+global.app = require('../app');
+app.load('test');
