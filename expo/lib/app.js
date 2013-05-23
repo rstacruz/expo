@@ -121,8 +121,9 @@ var AppExt = module.exports = function(app) {
   // Loads configuration from a file.
   app.conf = function(file) {
     if (!app._configData[file])  {
-      var fname = app.path('config', file+'.js');
-      if (!fs.existsSync(fname)) fname = app.path('config', file+'.coffee');
+      var fname =
+        getFile(app.path('config', file+'.js')) ||
+        getFile(app.path('config', file+'.coffee'));
 
       var data = require(fname);
       app._configData[file] = data[app.get('env')];
@@ -133,6 +134,11 @@ var AppExt = module.exports = function(app) {
 
   // Private helpers
   // ---------------
+
+  function getFile(fname) {
+    var fs = require('fs');
+    if (fs.existsSync(fname)) return fname;
+  }
 
   // Loads mixins in a given path.
   function loadPath(path, callback) {
