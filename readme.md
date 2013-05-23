@@ -7,7 +7,7 @@ Core:
 - Tasks (done)
 - Supervisor (done)
 - Helpers
-- Models
+- Models (done)
 - Model linking
 - Settings.yml (done)
 - Environment (done)
@@ -15,6 +15,7 @@ Core:
 - Generator bin
 - Extensions support (done)
 - Logging
+- Error
 
 Sequelize:
 

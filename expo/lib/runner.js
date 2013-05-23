@@ -7,7 +7,7 @@ var Runner = module.exports = function(app, port, flags) {
   port = port || 4567;
 
   if ((app.get('env') === 'development') && (flags !== 'Q')) {
-    app.log('runner', 'Auto-restarting on changes');
+    app.log.info('Auto-restarting on changes');
     printHeader();
     runSupervisor();
     return;
@@ -16,13 +16,13 @@ var Runner = module.exports = function(app, port, flags) {
   app.load(function(app) {
     if (flags !== 'Q') printHeader();
 
-    app.log('runner', 'Ready (' + timestamp() + ')');
+    app.log.info('Ready (' + timestamp() + ')');
     start();
   });
 
   function printHeader() {
-    app.log('runner', "env: " + app.get('env'));
-    app.log('runner', "url: http://0.0.0.0:"+port);
+    app.log.debug("env: " + app.get('env'));
+    app.log.debug("url: http://0.0.0.0:"+port);
   }
 
   // Invokes supervisor to load the runner bin of the application.

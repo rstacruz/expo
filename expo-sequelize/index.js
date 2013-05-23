@@ -37,10 +37,10 @@ var ExpoSequelize = module.exports = function(app) {
       var url = process.env.DATABASE_URL;
 
       if (url) {
-        app.log('db', 'Loading sequelize via DATABASE_URL');
+        app.log.debug('[db] Loading sequelize via DATABASE_URL');
         app._sequelize = getSequelizeFromURL(url);
       } else {
-        app.log('db', 'Loading sequelize');
+        app.log.debug('[db] Loading sequelize');
         app._sequelize = getSequelizeFromConfig(app.conf('database'));
       }
     }

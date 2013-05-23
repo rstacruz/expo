@@ -40,13 +40,13 @@ var AppExt = module.exports = function(app) {
   app.load = function(callback) {
     process.chdir(app.root);
 
-    this.events.emit('load:before');
+    this.events.emit('load:before', app);
 
     loadPath('initializers');
     loadPath('helpers');
     loadPath('routes');
 
-    this.events.emit('load:after');
+    this.events.emit('load:after', app);
     callback(this);
   };
 
@@ -76,9 +76,7 @@ var AppExt = module.exports = function(app) {
   // ------
 
   // Simple logging facility.
-  app.log = function(type, msg) {
-    console.log('=>', '['+type+']', msg);
-  };
+  app.log = require('clog');
 
   // Events
   // ------
@@ -98,7 +96,7 @@ var AppExt = module.exports = function(app) {
   app._configData = {};
 
   // Loads configuration from a file.
-  app.configFile = function(file) {
+  app.conf = function(file) {
     if (!app._configData[file])  {
       var fname = app.path('config', file+'.js');
       var data = require(fname);
@@ -113,9 +111,9 @@ var AppExt = module.exports = function(app) {
 
   // Loads mixins in a given path.
   function loadPath(path) {
-    app.events.emit(path+':before');
+    app.events.emit(path+':before', app);
     loadMixins(app.path(path), [app]);
-    app.events.emit(path+':after');
+    app.events.emit(path+':after', app);
   }
 };
 
