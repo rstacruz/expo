@@ -100,10 +100,10 @@ var AppExt = module.exports = function(app) {
   // Config
   // ------
 
-  // Loads a file.
   
   app._configData = {};
 
+  // Loads configuration from a file.
   app.configFile = function(file) {
     if (!app._configData[file])  {
       var fname = app.path('config', file+'.json');

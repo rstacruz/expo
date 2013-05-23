@@ -1,0 +1,12 @@
+{
+  "name": "expo-connect_assets",
+  "description": "",
+  "keywords": [""],
+  "author": "Rico Sta. Cruz",
+  "version": "0.1.0",
+  "engines": { "node": ">=0.8.0" },
+  "main": "index",
+  "dependencies": {
+    "connect-assets": "latest"
+  }
+}

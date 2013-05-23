@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-var app = module.exports = require('expo')(__dirname);
-require('expo-sequelize')(app);
+var app = require('./app');
 
 if (__filename === process.argv[1]) app.cli().go(process.argv);
 
