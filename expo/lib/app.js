@@ -40,13 +40,13 @@ var AppExt = module.exports = function(app) {
   app.load = function(callback) {
     process.chdir(app.root);
 
-    this.emit('load:before');
+    this.events.emit('load:before');
 
     loadPath('initializers');
     loadPath('helpers');
     loadPath('routes');
 
-    this.emit('load:after');
+    this.events.emit('load:after');
     callback(this);
   };
 
@@ -86,11 +86,6 @@ var AppExt = module.exports = function(app) {
   // Event emitter.
   app.events = new EventEmitter();
 
-  // Emits an event.
-  app.emit = function(eventName) {
-    return this.events.emit(eventName, this);
-  };
-
   // Listens to a given event.
   app.on = function(eventName, listener) {
     this.events.on(eventName, listener);
@@ -118,9 +113,9 @@ var AppExt = module.exports = function(app) {
 
   // Loads mixins in a given path.
   function loadPath(path) {
-    app.emit(path+':before');
+    app.events.emit(path+':before');
     loadMixins(app.path(path), [app]);
-    app.emit(path+':after');
+    app.events.emit(path+':after');
   }
 };
 
