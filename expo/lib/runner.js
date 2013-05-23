@@ -13,12 +13,10 @@ var Runner = module.exports = function(app, port, flags) {
     return;
   }
 
-  app.load(function(app) {
-    if (flags !== 'Q') printHeader();
-
-    app.log.info('Ready (' + timestamp() + ')');
-    start();
-  });
+  app.load();
+  if (flags !== 'Q') printHeader();
+  app.log.info('Ready (' + timestamp() + ')');
+  start();
 
   function printHeader() {
     app.log.debug("env: " + app.get('env'));

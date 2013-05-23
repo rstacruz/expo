@@ -1,5 +1,5 @@
 var path = require('path');
-var loadMixins = require('./path_helpers').loadMixins;
+var loadModules = require('./path_helpers').loadModules;
 var EventEmitter = require('events').EventEmitter;
 
 // Application extensions mixin.
@@ -23,11 +23,12 @@ var AppExt = module.exports = function(app) {
     return require(path.resolve(this.root, 'package.json'));
   };
 
+  var loaded = false;
+
   // Loads all files needed to run an Express server.
   //
-  //     app.load(function(app) {
-  //       app.listen(3000);
-  //     });
+  //     app.load();
+  //     app.listen(3000);
   //
   // Also emits the following events in this sequence:
   //
@@ -37,21 +38,29 @@ var AppExt = module.exports = function(app) {
   //  * routes:before, routes:after
   //  * load:after
   //
-  app.load = function(callback) {
-    process.chdir(app.root);
+  app.load = function() {
+    if (!loaded) {
+      process.chdir(app.root);
 
-    this.events.emit('load:before', app);
+      this.events.emit('load:before', app);
 
-    loadPath('initializers');
+      loadPath('initializers', function(mixin) { mixin(app); });
 
-    // Make sure this is the last middleware in the stack.
-    app.use(app.router);
+      // Make sure this is the last middleware in the stack.
+      app.use(app.router);
 
-    loadPath('helpers');
-    loadPath('routes');
+      // Apply the helpers using `.local()` to make them available to all views.
+      loadPath('helpers', function(helpers) { app.locals(helpers); });
 
-    this.events.emit('load:after', app);
-    callback(this);
+      // Load routes.
+      loadPath('routes', function(mixin) { mixin(app); });
+
+      this.events.emit('load:after', app);
+
+      loaded = true;
+    }
+
+    return this;
   };
 
   // Returns the commander command line parser.
@@ -64,13 +73,13 @@ var AppExt = module.exports = function(app) {
       var cli = this._cli = require('commander');
 
       // Import default tasks;
-      require('./cli')(this, cli);
+      require('./cli')(app, cli);
 
       // Extension tasks;
-      this.events.emit('cli', this, cli);
+      app.events.emit('cli', app, cli);
 
       // Application tasks.
-      loadMixins(this.path('tasks'), [this, cli]);
+      loadModules(app.path('tasks'), function(mixin) { mixin(app, cli); });
     }
 
     return this._cli;
@@ -114,9 +123,9 @@ var AppExt = module.exports = function(app) {
   // ---------------
 
   // Loads mixins in a given path.
-  function loadPath(path) {
+  function loadPath(path, callback) {
     app.events.emit(path+':before', app);
-    loadMixins(app.path(path), [app]);
+    loadModules(app.path(path), callback);
     app.events.emit(path+':after', app);
   }
 };

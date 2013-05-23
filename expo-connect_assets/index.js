@@ -21,29 +21,30 @@ module.exports = function(app) {
       .description('Precompiles asset files')
       .action(function() {
         
+        process.chdir(app.root);
         app.set('env', 'production'); // Not working
 
-        app.load(function(app) {
-          var packages = app.get('assets precompiled');
-          if (typeof packages !== 'object') {
-            console.info("Warning: 'assets precompiled' setting found, no assets to be compiled.");
-            process.exit(0);
-          }
+        app.load();
 
-          if (packages.js) {
-            packages.js.forEach(function(pkg) {
-              console.log('  (js) '+pkg);
-              js(pkg);
-            });
-          }
+        var packages = app.get('assets precompiled');
+        if (typeof packages !== 'object') {
+          console.info("Warning: 'assets precompiled' setting found, no assets to be compiled.");
+          process.exit(0);
+        }
 
-          if (packages.css) {
-            packages.css.forEach(function(pkg) {
-              console.log('  (css) '+pkg);
-              css(pkg);
-            });
-          }
-        });
+        if (packages.js) {
+          packages.js.forEach(function(pkg) {
+            console.log('  (js) '+pkg);
+            js(pkg);
+          });
+        }
+
+        if (packages.css) {
+          packages.css.forEach(function(pkg) {
+            console.log('  (css) '+pkg);
+            css(pkg);
+          });
+        }
       });
   });
 };

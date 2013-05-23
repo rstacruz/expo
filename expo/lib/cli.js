@@ -27,8 +27,7 @@ var TasksDefault = module.exports = function(app, cli) {
     .description('Opens a console')
     .action(function() {
       global.app = app;
-      app.load(function() {
-        require('repl').start({});
-      });
+      app.load();
+      require('repl').start({});
     });
 };

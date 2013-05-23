@@ -1,15 +1,15 @@
 var PathHelpers = module.exports = {
-  loadMixins: loadMixins,
+  loadModules: loadModules,
   isDirSync: isDirSync
 };
 
 // Loads mixin modules in a path.
-// Finds all module files in `filepath` and applies the arguments in `args`
+// Finds all module files in `filepath` and gives them to `callback`.
 // to each of those functions.
 //
-//     loadMixins('./models/', [app]);
+//     loadModules('./models/', function(m) { ... });
 //
-function loadMixins(filepath, args) {
+function loadModules(filepath, callback) {
   var fs   = require('fs');
   var path = require('path');
 
@@ -29,7 +29,7 @@ function loadMixins(filepath, args) {
     // Ignore directories.
     if (isDirSync(fn)) return;
 
-    require(fn).apply(self, args);
+    callback(require(fn));
   });
 }
 
