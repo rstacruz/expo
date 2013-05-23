@@ -1,4 +1,4 @@
-#!/usr/bin/env NODE_PATH="./node_modules:..:." node
+#!/usr/bin/env node
 var app = require('./app');
 
 if (__filename === process.argv[1]) app.cli().go(process.argv);
