@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.on('load:after', function(app) {
     var options = {
       src: app.path('assets'),
-      buildDir: app.path('public')
+      buildDir: 'public'
     };
 
     // Get config from app.get.
@@ -20,7 +20,30 @@ module.exports = function(app) {
       .command('assets:precompile')
       .description('Precompiles asset files')
       .action(function() {
-        console.log('..');
+        
+        app.set('env', 'production'); // Not working
+
+        app.load(function(app) {
+          var packages = app.get('assets precompiled');
+          if (typeof packages !== 'object') {
+            console.info("Warning: 'assets precompiled' setting found, no assets to be compiled.");
+            process.exit(0);
+          }
+
+          if (packages.js) {
+            packages.js.forEach(function(pkg) {
+              console.log('  (js) '+pkg);
+              js(pkg);
+            });
+          }
+
+          if (packages.css) {
+            packages.css.forEach(function(pkg) {
+              console.log('  (css) '+pkg);
+              css(pkg);
+            });
+          }
+        });
       });
   });
 };

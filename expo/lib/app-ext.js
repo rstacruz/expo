@@ -39,6 +39,8 @@ var AppExt = module.exports = function(app) {
   //  * load:after
   //
   app.load = function(callback) {
+    process.chdir(app.root);
+
     this.emit('load:before');
 
     loadPath('initializers');
