@@ -1,6 +1,6 @@
 // Initialize app.
 var app = require('express')();
-require('./lib/app-ext')(app);
+require('./lib/app')(app);
 
 module.exports = function(dir, callback) {
   // process.chdir(dir);

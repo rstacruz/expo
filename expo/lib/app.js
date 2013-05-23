@@ -97,14 +97,6 @@ var AppExt = module.exports = function(app) {
     return this;
   };
 
-  // Models
-  // ------
-
-  // Returns a model.
-  app.model = function(name) {
-    return require(app.path('models', name))(app);
-  };
-
   // Config
   // ------
   

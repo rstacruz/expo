@@ -1,7 +1,5 @@
-function Note() {
-}
+var app = require('../app');
+app.sequelize();
 
-module.exports = function(app) {
-  app.sequelize();
-  return Note;
+var Note = module.exports = function() {
 };
