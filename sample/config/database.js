@@ -1,5 +1,8 @@
 module.exports = {
-  "development": {
-    "hello": "world"
+  development: {
+    database: 'db',
+    username: 'rsc',
+    password: '',
+    dialect: 'postgres'
   }
 };

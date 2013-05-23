@@ -6,15 +6,17 @@ Core:
 - Initializers (done)
 - Tasks (done)
 - Supervisor (done)
-- Helpers
 - Models (done)
-- Model linking
+- Model linking (done)
 - Settings.yml (done)
 - Environment (done)
 - Public (done)
-- Generator bin
 - Extensions support (done)
-- Logging
+- Logging (done?)
+- Sessions (done)
+- Secret tokens (done)
+- Generator bin
+- Helpers
 - Error
 
 Sequelize:

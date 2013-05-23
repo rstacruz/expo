@@ -43,6 +43,10 @@ var AppExt = module.exports = function(app) {
     this.events.emit('load:before', app);
 
     loadPath('initializers');
+
+    // Make sure this is the last middleware in the stack.
+    app.use(app.router);
+
     loadPath('helpers');
     loadPath('routes');
 
