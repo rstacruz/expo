@@ -2,10 +2,20 @@ var extend = require('util')._extend;
 
 module.exports = function(app) {
   app.on('load:after', function(app) {
+    var env = app.get('env');
+
     var options = {
       src: app.path('assets'),
       buildDir: 'public'
     };
+
+    // Connect-assets only does this for 'production'; so make 'test' act like production as well.
+    if (env === 'test') {
+      extend(options, {
+        build: true,
+        detectChanges: false
+      });
+    }
 
     // Get config from app.get.
     if (typeof app.get('assets') === 'object') {
