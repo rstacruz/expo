@@ -1,9 +1,13 @@
+// Runner
+//
+// Runs the app. Wraps it in supervisor if need be.
+//
 var Runner = module.exports = function(app, port, flags) {
   port = port || 4567;
 
   app.load(function(app) {
     if (flags === 'Q') {
-      console.log('=> Reloaded');
+      console.log('=> Application loaded at', timestamp());
       start();
       return;
     }
@@ -26,10 +30,13 @@ var Runner = module.exports = function(app, port, flags) {
 
   function runSupervisor() {
     var supervisor = require('supervisor');
-    supervisor.run(['-n', 'exit', '-q', '--', process.argv[1], 'server', port, 'Q']);
+    supervisor.run(['-n', 'exit', '-q', '-e', 'node|js|coffee', '--', process.argv[1], 'server', port, 'Q']);
   }
 
   function start() {
     app.listen(port);
+  }
+  function timestamp() {
+    return (new Date()).toString().split(' ')[4];
   }
 };

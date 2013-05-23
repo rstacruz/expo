@@ -6,6 +6,7 @@
   "version": "0.1.0",
   "engines": { "node": ">=0.8.0" },
   "main": "index",
+  "bin": { "expo": "./bin/expo" },
   "dependencies": {
     "coffee-script": "1.6.x",
     "express": "3.2.x",

@@ -5,13 +5,15 @@ Core:
 
 - Initializers (done)
 - Tasks (done)
-- Supervisor
+- Supervisor (done)
 - Helpers
 - Models
 - Model linking
 - Settings.yml
-- Environment
-- Public
+- Environment (done)
+- Public (done)
+- Generator bin
+- Extensions support
 
 Sequelize:
 
