@@ -8,5 +8,11 @@
   "main": "./app",
   "bin": {
     "app": "./app"
+  },
+  "dependencies": {
+    "expo": "*",
+    "expo-connect_assets": "*",
+    "expo-sequelize": "*",
+    "jade": "*"
   }
 }
