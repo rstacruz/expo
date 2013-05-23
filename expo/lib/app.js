@@ -60,7 +60,7 @@ var AppExt = module.exports = function(app) {
       var cli = this._cli = require('commander');
 
       // Import default tasks;
-      require('./tasks-default')(this, cli);
+      require('./cli')(this, cli);
 
       // Extension tasks;
       this.events.emit('cli', this, cli);
@@ -105,7 +105,7 @@ var AppExt = module.exports = function(app) {
   // Loads configuration from a file.
   app.configFile = function(file) {
     if (!app._configData[file])  {
-      var fname = app.path('config', file+'.json');
+      var fname = app.path('config', file+'.js');
       var data = require(fname);
       app._configData[file] = data[app.get('env')];
     }
