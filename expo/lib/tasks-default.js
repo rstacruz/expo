@@ -6,9 +6,12 @@ var TasksDefault = module.exports = function(app, cli) {
     .command('server')
     .description('Starts the server')
     .action(function() {
-      var port = 4567;
-      console.log("=> Listening at", port);
-      app.listen(port);
+      app.load(function(app) {
+        var port = 4567;
+        console.log("=> Environment:", app.get('env'));
+        console.log("=> Listening at http://0.0.0.0:"+port);
+        app.listen(port);
+      });
     });
 
   cli

@@ -1,3 +1,29 @@
+Features
+--------
+
+Core:
+
+- Initializers
+- Tasks (done)
+- Helpers
+- Models
+- Model linking
+- Settings yml
+- Environment
+- Public
+
+Sequelize:
+
+- Db Migration
+- Tests
+
+Connect:
+- Asset pre-compilation
+- Asset serving
+
+Files
+-----
+
 package.json
 app
 config/app.coffee

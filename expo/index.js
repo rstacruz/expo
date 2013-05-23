@@ -32,8 +32,15 @@ extend(app, {
     }
   },
 
+  // Loads all files needed.
+  load: function(callback) {
+    var loadMixins = require('./lib/path_helpers').loadMixins;
+    loadMixins(this.path('initializers'), [this, this.cli]);
+    callback(this);
+  },
+
+  // Build the `this.cli` model.
   _initializeCli: function(dir) {
-    // Build the cli.
     this.cli = require('commander');
     require('./lib/tasks-default')(this, this.cli);
   },
@@ -41,7 +48,7 @@ extend(app, {
   _initializeTasks: function() {
     var filepath = this.path('tasks');
     var loadMixins = require('./lib/path_helpers').loadMixins;
-    loadMixins(filepath, [this, this.cli]);
+    loadMixins(this.path('tasks'), [this, this.cli]);
   }
 });
 
