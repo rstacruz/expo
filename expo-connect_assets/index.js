@@ -12,7 +12,6 @@ module.exports = function(app) {
     // Connect-assets only does this for 'production'; so make 'test' act like production as well.
     if (env === 'test') {
       extend(options, {
-        build: true,
         detectChanges: false
       });
     }
