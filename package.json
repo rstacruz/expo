@@ -1,0 +1,12 @@
+{
+  "name": "expo-full",
+  "description": "",
+  "keywords": [""],
+  "author": "Rico Sta. Cruz",
+  "version": "0.1.0",
+  "devDependencies": {
+    "expo": "*",
+    "expo-connect_assets": "*",
+    "expo-sequelize": "*"
+  }
+}

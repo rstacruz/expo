@@ -1,16 +1,17 @@
 {
   "name": "myapp",
-  "private": true,
-  "description": "",
+  "description": "Your Expo application",
   "author": "You <me@here.com>",
   "version": "0.1.0",
+  "private": true,
   "engines": {"node": ">=0.8.0"},
   "main": "./app",
-  "bin": {
-    "app": "./app"
+  "bin": { "run": "./run" },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec"
   },
   "dependencies": {
-    "expo-core": "*",
+    "expo": "*",
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
 

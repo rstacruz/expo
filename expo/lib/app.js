@@ -40,7 +40,6 @@ var AppExt = module.exports = function(app) {
   //
   app.load = function(env) {
     if (!loaded) {
-      console.time('x');
       process.chdir(app.root);
 
       // Set environment if asked (usually test).
@@ -67,7 +66,6 @@ var AppExt = module.exports = function(app) {
       this.events.emit('load:after', app);
 
       if (env === 'test') app.log.debug('App loaded for test environment');
-      console.timeEnd('x');
 
       loaded = true;
     }

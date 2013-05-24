@@ -1,5 +1,5 @@
 {
-  "name": "expo-core",
+  "name": "expo",
   "description": "",
   "keywords": [""],
   "author": "Rico Sta. Cruz",
@@ -7,11 +7,17 @@
   "engines": { "node": ">=0.8.0" },
   "main": "index",
   "bin": { "expo": "./bin/expo" },
+  "scripts": { "test": "./node_modules/.bin/mocha -R spec" },
   "dependencies": {
     "coffee-script": "1.6.x",
     "express": "3.2.x",
     "commander": "1.1.x",
     "supervisor": "0.5.x",
     "clog": "*"
+  },
+  "devDependencies": {
+    "mocha": "1.10.x",
+    "chai": "1.6.x",
+    "supertest": "0.6.x"
   }
 }

@@ -4,19 +4,31 @@
 // Runs the Express app. Wraps it in supervisor if need be.
 //
 var Runner = module.exports = function(app, port, flags) {
+  var time = { start: +new Date() };
+
   port = port || 4567;
 
-  if ((app.get('env') === 'development') && (flags !== 'Q')) {
+  // Quick start mode
+  if (flags === 'Q') {
+    app.load();
+    start();
+  }
+
+  // Supervisor mode
+  else if (app.get('env') === 'development') {
     app.log.info('Auto-restarting on changes');
     printHeader();
     runSupervisor();
-    return;
+  } 
+
+  else {
+    printHeader();
+    app.load();
+    start();
   }
 
-  app.load();
-  if (flags !== 'Q') printHeader();
-  app.log.info('Ready (' + timestamp() + ')');
-  start();
+  // Helpers
+  // -------
 
   function printHeader() {
     app.log.debug("env: " + app.get('env'));
@@ -30,6 +42,8 @@ var Runner = module.exports = function(app, port, flags) {
   }
 
   function start() {
+    var elapsed = +new Date() - time.start;
+    app.log.info('Ready [' + elapsed + 'ms]');
     app.listen(port);
   }
 

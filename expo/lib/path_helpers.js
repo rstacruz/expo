@@ -28,9 +28,7 @@ function loadModules(filepath, callback) {
 
     // Ignore directories.
     if (isDirSync(fn)) return;
-    console.time(fn);
     callback(require(fn));
-    console.timeEnd(fn);
   });
 }
 

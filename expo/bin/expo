@@ -8,8 +8,10 @@ cli
   .option('--no-sequelize', 'Disable models')
   .option('--no-assets', 'Disable asset pipeline')
   .option('--no-sessions', 'Disable sessions')
+  .option('--no-test', 'Disable tests')
+  .option('--edge', 'Use edge version of Expo')
 
 cli.parse(process.argv);
 
-console.log(cli.sequelize);
-console.log(cli.connectassets);
+cli
+  .help();
