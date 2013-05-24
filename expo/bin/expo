@@ -1,7 +1,0 @@
-#!/usr/bin/env node
-
-var cli = require('commander');
-cli
-  .version(require('../package.json').version);
-
-cli.parse(process.argv);
