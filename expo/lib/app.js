@@ -120,13 +120,15 @@ var AppExt = module.exports = function(app) {
 
   // Loads configuration from a file.
   app.conf = function(file) {
-    if (!app._configData[file])  {
-      var fname =
-        getFile(app.path('config', file+'.js')) ||
-        getFile(app.path('config', file+'.coffee'));
-
-      var data = require(fname);
-      app._configData[file] = data[app.get('env')];
+    if (!(file in app._configData)) {
+      var data;
+      try {
+        data = require(app.path('config', file));
+        data = data[app.get('env')];
+      } catch (e) {
+        data = undefined;
+      }
+      app._configData[file] = data;
     }
 
     return app._configData[file];

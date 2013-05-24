@@ -6,8 +6,7 @@ var express = require('express');
 // * http://www.senchalabs.org/connect/session.html
 //
 module.exports = function(app) {
-  var secret = app.conf('secret');
-  var token  = secret ? secret.token : '...';
+  var token = app.conf('secret_token');
 
   app.use(express.cookieParser(token));
   app.use(express.session({
