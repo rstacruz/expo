@@ -2,7 +2,8 @@ require('./test_helper');
 
 describe('Expo', function() {
   beforeEach(function() {
-    this.app = expo(fixturePath('simple')).load();
+    var app = require('express')();
+    this.app = expo(app, fixturePath('simple')).load();
   });
 
   describe('routes', function() {
