@@ -35,6 +35,8 @@ apps together with multiple packages.
    * Logging
    * Config file loading
 
+[![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
+
 Getting started
 ---------------
 
