@@ -1,9 +1,9 @@
 {
   "name": "myapp",
-  "version": "0.1.0",
+  "version": "0.1.0pre",
   "dependencies": {
     "expo": {
-      "version": "0.1.0",
+      "version": "0.1.0pre",
       "dependencies": {
         "commander": {
           "version": "1.1.1",
@@ -174,7 +174,7 @@
       }
     },
     "expo-connect_assets": {
-      "version": "0.1.0",
+      "version": "0.1.0pre",
       "dependencies": {
         "connect-assets": {
           "version": "2.4.3",
@@ -220,7 +220,7 @@
       }
     },
     "expo-sequelize": {
-      "version": "0.1.0",
+      "version": "0.1.0pre",
       "dependencies": {
         "sequelize": {
           "version": "1.7.0-alpha2",
@@ -514,36 +514,26 @@
       }
     },
     "pg": {
-      "version": "1.1.2",
+      "version": "0.10.2",
       "dependencies": {
         "generic-pool": {
-          "version": "2.0.3"
-        },
-        "buffer-writer": {
-          "version": "1.0.0",
-          "dependencies": {
-            "cloned": {
-              "version": "0.0.1",
-              "dependencies": {
-                "rmdir": {
-                  "version": "1.0.0"
-                }
-              }
-            },
-            "async": {
-              "version": "0.2.8"
-            }
-          }
+          "version": "2.0.2"
         }
       }
     },
-    "mysql2": {
-      "version": "0.8.7",
+    "mysql": {
+      "version": "2.0.0-alpha8",
       "dependencies": {
-        "fastqueue": {
-          "version": "0.1.0"
+        "require-all": {
+          "version": "0.0.3"
+        },
+        "bignumber.js": {
+          "version": "1.0.1"
         }
       }
+    },
+    "sqlite3": {
+      "version": "2.1.7"
     },
     "coffee-script": {
       "version": "1.6.2"
