@@ -1,3 +1,18 @@
+Development notes
+=================
+
+### Publishing
+To publish all packages together:
+
+    $ make publish
+
+### Updating versions
+Bumping build, minor, major versions respectively:
+
+    $ make bump
+    $ make bumpm
+    $ make bumpM
+
 Features
 --------
 
