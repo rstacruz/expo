@@ -9,6 +9,7 @@ module.exports = function(app, cli) {
     // Shortcuts
     if (argv[2] === 'c') argv[2] = 'console';
     if (argv[2] === 's') argv[2] = 'server';
+    if (argv[2] === 'r') argv[2] = 'runner';
 
     if (argv.length === 2) {
       this.parse([argv[0], argv[1], '--help']);
@@ -35,8 +36,15 @@ module.exports = function(app, cli) {
     .command('console')
     .description('Opens a console')
     .action(function() {
-      global.app = app;
-      app.load();
+      global.app = app.load();
       require('repl').start({});
+    });
+
+  cli
+    .command('runner [cmd]')
+    .description('Runs a command')
+    .action(function(command) {
+      global.app = app.load();
+      eval(command);
     });
 };
