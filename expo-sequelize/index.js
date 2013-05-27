@@ -3,6 +3,28 @@ var path = require('path');
 var ExpoSequelize = module.exports = function(app) {
   app.on('cli', function(app, cli) {
     cli
+      .command('db:create')
+      .description("Creates databases")
+      .action(function() {
+        app.load();
+        var db = app.conf('database');
+        if (db.database) {
+          app.sequelize()
+            .query('CREATE DATABASE '+(db.database)+';')
+            .success(function() {
+              app.log.info("[db] Database %s created", db.database);
+            })
+            .error(function(err) {
+              app.log.error("[db] Database %s failed to be created", db.database);
+              app.log.error("[db] ", err);
+              process.exit(1);
+            });
+        } else {
+          app.log.info("[db] No database to create");
+        }
+      });
+
+    cli
       .command('db:migrate')
       .description("Run database migrations")
       .action(function() {
