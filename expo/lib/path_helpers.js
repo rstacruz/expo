@@ -7,7 +7,7 @@ var PathHelpers = module.exports = {
 // Finds all module files in `filepath` and gives them to `callback`.
 // to each of those functions.
 //
-//     loadModules('./models/', function(m) { ... });
+//     loadModules('app/migrations/', function(m) { ... });
 //
 function loadModules(filepath, callback) {
   var fs   = require('fs');

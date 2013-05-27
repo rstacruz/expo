@@ -4,7 +4,7 @@ module.exports = function(app) {
   });
 
   app.get('/n', function(req, res) {
-    var Note = require('../models/note');
+    var Note = require('../../lib/note');
     res.send('hi');
   });
 };
