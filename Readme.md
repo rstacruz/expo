@@ -54,13 +54,15 @@ directory here is optional: you may delete any that you don't need!)
 ``` files
 yourapp/
   app/
-    assets/
     views/
     helpers/
     initializers/
     migrations/
     routes/
     tasks/
+  assets/
+    css/
+    js/
   config/
   lib/
   public/
