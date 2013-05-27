@@ -15,6 +15,7 @@
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
 
+    "express": "3.2.x",
     "jade": "*",
     "stylus": "*",
     "nib": "*",
