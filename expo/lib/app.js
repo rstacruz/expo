@@ -57,6 +57,10 @@ var app = module.exports = function(app) {
 
       // Set environment if asked (usually test).
       if (env) app.set('env', env);
+      env = app.get('env');
+
+      // Set the appropriate logger
+      if (env !== 'development') app.log = require('./logger')(env);
 
       // Hooks: do pre-load hooks that extensions may listen for.
       events.emit('load:before', app);
@@ -118,7 +122,7 @@ var app = module.exports = function(app) {
    *     app.log.info('Loading models');
    */
 
-  app.log = require('clog');
+  app.log = require('./logger')('development');
 
   // Events
   // ------
