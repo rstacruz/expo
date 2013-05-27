@@ -8,7 +8,7 @@
   "main": "./app",
   "bin": { "run": "./run" },
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec"
+    "test": "./node_modules/.bin/mocha -R spec --compilers coffee:coffee-script"
   },
   "dependencies": {
     "expo": "*",

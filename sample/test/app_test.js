@@ -1,6 +1,6 @@
-require('./test_helper');
-
 describe('App', function() {
+  beforeEach(require('./setup'));
+
   it('Homepage should work', function(done) {
     request(app)
       .get('/')
