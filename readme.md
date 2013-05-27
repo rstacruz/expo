@@ -11,16 +11,21 @@ $ npm install -g expo
 $ expo --help
 ```
 
+Expo is called a *meta-framework* as it's a glue that lets you build [Express] 
+apps together with multiple packages.
+
  * __Routing__
-   * Routing API *-- via [express.js]*
+   * Routing API *-- via [Express]*
    * Middleware support *-- via [connect]*
+   * Sessions, helpers, cookies
  * __Assets__
    * Asset pipeline *-- via [connect-assets]*
+   * Concatenation, compression, cache-busting
    * Support for CoffeeScript, Less, Stylus
  * __Database__
    * Database ORM *-- via [Sequelize]*
    * Database migrations
- * __Tests__
+ * __Testing__
    * Tests *-- via [Mocha]*
    * Assertions *-- via [Chai]*
    * Integration tests *-- via [superagent]*
@@ -29,8 +34,6 @@ $ expo --help
    * Auto-restarting on changes *-- via [supervisor]*
    * Logging
    * Config file loading
-
-[Try it >](#download)
 
 Getting started
 ---------------
@@ -88,29 +91,24 @@ $ ./run server
 Summary
 -------
 
-### NPM package
-You can use your project as any other Node package. Your app will have one main 
-entry point (like most Node packages) that you can programatically use anywhere.
+#### Routes
+
+Routes are supported via [express.js]. Just add your route files to 
+`app/routes/` and everything else will be taken care of for you.
 
 ``` js
-var app = require('yourapp').load();
-
-// Use models:
-var Article = require('yourapp/lib/article');
-Article.find({ id: 20 });
-
-// Fetch config:
-app.conf('database').hostname;
-
-// Make it work:
-app.listen(3000);
+// app/routes/home.js
+module.exports = function(app) {
+  app.get('/', function(req, res) {
+    res.send("Hola, mundo!");
+  });
+};
 ```
 
-[Read more >](#package)
+#### Command-line runner
 
-### Command-line runner
-
-Just do `./run server` or `./run console` or define more custom tasks.
+Just do `./run server` or `./run console`. You may also define custom tasks you 
+may need in your app.
 
 ``` cmd
 $ ./run --help
@@ -120,14 +118,14 @@ $ ./run --help
     console             Opens the console
     db:migrate          Performs database migrations
     assets:precompile   Compiles asset files
+    ...
 ```
 
-[Read more >](#command-line-tasks)
-
-### Assets
+#### Assets
 
 Just add your asset files in `app/assets/`. JavaScript, CoffeeScript, Less, 
-     Stylus are supported.
+     Stylus are supported. They will be compiled, concatenated, and compressed 
+     as needed.
 
 ``` files
 app/
@@ -141,14 +139,36 @@ app/
       background.jpg
 ```
 
+#### NPM package
+You can use your project as any other Node package. Your app will have one main 
+entry point (like most Node packages) that you can programatically use anywhere.
+
+``` js
+var app = require('yourapp').load();
+
+// Use models:
+var Article = require('yourapp/lib/article');
+Article.find({ id: 20 });
+
+// Fetch config:
+app.conf('database').hostname;
+```
+
+[Read more >](#routes)
 
 # Features
 
+## Routes
+
+## Database
+
+## Migrations
+
+## Helpers
+
 ## Tasks
 
-### Defining your own tasks
-
-Do things well.
+## Assets
 
 Misc
 ====
@@ -172,7 +192,7 @@ License](http://www.opensource.org/licenses/mit-license.php).
 [nd]:  http://nadarei.co
 
 [connect-assets]: https://github.com/adunkman/connect-assets
-[express.js]: http://expressjs.com/
+[Express]: http://expressjs.com/
 [connect]: https://github.com/senchalabs/connect
 [Node.js]: http://nodejs.org/
 [commander.js]: https://github.com/visionmedia/commander.js

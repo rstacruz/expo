@@ -17,6 +17,7 @@ Core:
 - Secret tokens (done)
 - Tests (done)
 - Helpers (done)
+
 - Generator bin
 - Error
 
