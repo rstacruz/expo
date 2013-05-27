@@ -102,7 +102,7 @@ var app = module.exports = function(app) {
       // Import [1] default tasks, [2] extensions tasks, [3] app tasks.
       require('./cli')(app, command);
       events.emit('cli', app, command);
-      loadModules(app.path('tasks'), function(mixin) { mixin(app, command); });
+      loadModules(app.path('app/tasks'), function(mixin) { mixin(app, command); });
     }
 
     return command;
