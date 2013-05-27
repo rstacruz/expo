@@ -31,8 +31,7 @@ var Runner = module.exports = function(app, port, flags) {
   // -------
 
   function printHeader() {
-    app.log.debug("env: " + app.get('env'));
-    app.log.debug("url: http://0.0.0.0:"+port);
+    app.log.info("Running %s mode at http://0.0.0.0:"+port, app.get('env'));
   }
 
   // Invokes supervisor to load the runner bin of the application.
