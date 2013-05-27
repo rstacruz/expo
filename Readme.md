@@ -63,6 +63,7 @@ yourapp/
   assets/
     css/
     js/
+    img/
   config/
   lib/
   public/
