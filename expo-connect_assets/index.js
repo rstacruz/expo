@@ -26,7 +26,7 @@ module.exports = function(app) {
 
   app.on('cli', function(app, cli) {
     cli
-      .command('assets:precompile')
+      .command('assets-precompile')
       .description('Precompiles asset files')
       .action(function() {
         

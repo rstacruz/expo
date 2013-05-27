@@ -4,7 +4,7 @@ var extend = require('util')._extend;
 var ExpoSequelize = module.exports = function(app) {
   app.on('cli', function(app, cli) {
     cli
-      .command('db:create')
+      .command('db-create')
       .description("Creates the environment's database")
       .action(function() {
         app.load();
@@ -23,7 +23,7 @@ var ExpoSequelize = module.exports = function(app) {
       });
 
     cli
-      .command('db:drop')
+      .command('db-drop')
       .description("Drops the environment's database")
       .action(function() {
         app.load();
@@ -42,7 +42,7 @@ var ExpoSequelize = module.exports = function(app) {
       });
 
     cli
-      .command('db:migrate')
+      .command('db-migrate')
       .description("Run database migrations")
       .action(function() {
         app.load();
@@ -52,7 +52,7 @@ var ExpoSequelize = module.exports = function(app) {
       });
 
     cli
-      .command('gen:migration [name]')
+      .command('gen-migration [name]')
       .description('Creates a migration file in migrations/')
       .action(function(name) {
         name = name || '';

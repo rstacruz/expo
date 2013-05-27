@@ -1,6 +1,6 @@
 module.exports = function(app, cli) {
   cli
-  .command('db:seed')
+  .command('db-seed')
   .description('seeds')
   .action(function() {
     console.log(":)");
