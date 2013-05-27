@@ -63,16 +63,16 @@ var app = module.exports = function(app) {
       if (env === 'test') events.emit('load:test:before', app);
 
       // Load initializers of the application.
-      loadPath('initializers', function(mixin) { mixin(app); });
+      loadPath('app/initializers', function(mixin) { mixin(app); });
 
       // Ensure this is the last middleware in the stack.
       app.use(app.router);
 
       // Apply the helpers using `.local()` to make them available to all views.
-      loadPath('helpers', function(helpers) { app.locals(helpers); });
+      loadPath('app/helpers', function(helpers) { app.locals(helpers); });
 
       // Load routes of the application.
-      loadPath('routes', function(mixin) { mixin(app); });
+      loadPath('app/routes', function(mixin) { mixin(app); });
 
       // After hooks
       if (env === 'test') events.emit('load:test:after', app);
