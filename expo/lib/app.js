@@ -156,10 +156,10 @@ var app = module.exports = function(app) {
       var data;
       try {
         data = require(app.path('config', file));
-        data = data[app.get('env')];
       } catch (e) {
-        data = undefined;
+        throw ("Config file '"+file+"' not found.");
       }
+      data = data[app.get('env')];
       configData[file] = data;
     }
 

@@ -1,0 +1,33 @@
+{
+  "name": "myapp",
+  "description": "Your Expo application",
+  "author": "You <me@here.com>",
+  "version": "0.1.0pre",
+  "private": true,
+  "engines": {"node": ">=0.8.0"},
+  "main": "./app",
+  "bin": { "run": "./run" },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -R spec --compilers coffee:coffee-script"
+  },
+  "dependencies": {
+    "expo": "*",
+    "expo-connect_assets": "*",
+    "expo-sequelize": "*",
+
+    "express": "3.2.x",
+    "jade": "*",
+    "stylus": "*",
+    "nib": "*",
+
+    "mocha": "*",
+    "chai": "*",
+    "supertest": "*"
+  },
+  "optionalDependencies": {
+    "pg": "0.10.x",
+    "mysql": "2.0.x",
+    "sqlite3": "2.1.x",
+    "coffee-script": "*"
+  }
+}
