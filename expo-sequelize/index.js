@@ -47,7 +47,7 @@ var ExpoSequelize = module.exports = function(app) {
         var exec = require('child_process').exec;
         var cmd = bin + " --create-migration " + name;
 
-        process.chdir(app.root);
+        process.chdir(app.path('app'));
         exec(cmd, function(cin, cout, cerr) {
           console.log(cout); console.warn(cerr);
         });
