@@ -4,6 +4,9 @@
   "keywords": [""],
   "author": "Rico Sta. Cruz",
   "version": "0.1.0pre",
+  "scripts": {
+    "test": "cd expo && npm test"
+  },
   "devDependencies": {
     "expo": "*",
     "expo-connect_assets": "*",
