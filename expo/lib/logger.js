@@ -1,7 +1,7 @@
 var nil = (function(){});
 
 module.exports = function(env) {
-  if (env === 'development') {
+  if (env !== 'production') {
     return {
       'log':   logger('   '),
       'error': logger(c(31, '!! ')),
