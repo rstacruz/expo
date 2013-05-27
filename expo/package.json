@@ -5,6 +5,7 @@
   "author": "Rico Sta. Cruz",
   "version": "0.1.0",
   "engines": { "node": ">=0.8.0" },
+  "preferGlobal" true,
   "main": "index",
   "bin": { "expo": "./bin/expo" },
   "scripts": { "test": "./node_modules/.bin/mocha -R spec" },
