@@ -35,6 +35,9 @@ Features
 
 Core:
 
+- Generator bin
+- Error
+- Multiple config paths
 - Initializers (done)
 - Tasks (done)
 - Supervisor (done)
@@ -49,10 +52,7 @@ Core:
 - Secret tokens (done)
 - Tests (done)
 - Helpers (done)
-
-- Move to /app (!)
-- Generator bin
-- Error
+- Move to /app (done)
 
 Sequelize:
 
