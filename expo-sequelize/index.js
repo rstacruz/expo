@@ -9,14 +9,17 @@ var ExpoSequelize = module.exports = function(app) {
         app.load();
         var db = app.conf('database');
         if (db.database) {
+          var dbname = db.database;
+          db.database = undefined;
+
           app.sequelize()
-            .query('CREATE DATABASE '+(db.database)+';')
+            .query('CREATE DATABASE ' + dbname + ';')
             .success(function() {
-              app.log.info("[db] Database %s created", db.database);
+              app.log.info("[db] Database %s created", dbname);
             })
             .error(function(err) {
-              app.log.error("[db] Database %s failed to be created", db.database);
-              app.log.error("[db] ", err);
+              app.log.error("[db] Database %s failed to be created", dbname);
+              app.log.error("[db] => %s", err.message);
               process.exit(1);
             });
         } else {
