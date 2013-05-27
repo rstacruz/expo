@@ -179,6 +179,60 @@ app.conf('database').hostname;
 
 ## Assets
 
+## Tests
+
+### Running tests
+
+To run tests, use `npm test`, just as you would for any Node package. A 
+freshly-minted app will have some placeholder tests in `test/` -- try it out.
+
+``` cmd
+$ npm test
+
+  > ./node_modules/.bin/mocha -R spec
+  debug: App loaded for test environment
+  ..
+
+  2 tests complete (400ms)
+```
+
+### Creating tests
+
+Create a test as a JS file in the `test/` folder with the filename the ends in 
+`_test.js`.
+
+``` js
+/* test/article_test.js */
+var Article = require('../app/lib/article');
+
+describe('Article', function() {
+  it('should work', function() {
+    var a = Article.build({ title: "Doing things" });
+    a.title.should.equal("Doing things");
+  });
+});
+```
+
+### Using other packages
+
+You may want to use other packages, like say, [Sinon.js] for mocks and stubs.
+Just load them in the `test_helper.js` file as needed.
+
+``` js
+/* test/test_helper.js */
+global.sinon = require('sinon');
+```
+
+### Read more
+
+See these third-party guides for more info.
+
+[Mocha >][Mocha] *A guide to things*
+
+[Chai (should) >][Chai should] *Guide to the `.should` syntax*
+
+[Chai (assert) >][Chai assert] *Guide to `assert()` API*
+
 Misc
 ====
 
@@ -209,7 +263,10 @@ License](http://www.opensource.org/licenses/mit-license.php).
 [Mocha]: http://visionmedia.github.io/mocha
 [supervisor]: https://github.com/isaacs/node-supervisor
 [Chai]: http://chaijs.com/
+[Chai should]: http://chaijs.com/guide/styles/#should
+[Chai assert]: http://chaijs.com/api/assert/
 [Superagent]: https://npmjs.org/package/superagent
+[Sinon.js]: http://sinonjs.org/
 
 [shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
 [install]: https://npmjs.org/doc/install.html
