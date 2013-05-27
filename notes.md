@@ -1,6 +1,12 @@
 Development notes
 =================
 
+### Link
+To develop locally, you probably want to make the expo packages available 
+globally, so:
+
+    $ make link
+
 ### Publishing
 To publish all packages together:
 

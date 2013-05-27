@@ -73,12 +73,12 @@ yourapp/
 #### Boot up your stack
 
 Now initialize your environment by installing all `npm` dependencies.
-And run your app with the included `run` script.
+*(See: [install], [shrinkwrap])*
+You can run your app with the included `run` script afterwards.
 
 ``` cmd
 $ cd yourapp
-$ npm install
-$ npm shrinkwrap
+$ npm install && npm shrinkwrap
 ```
 
 ``` cmd
@@ -88,13 +88,20 @@ $ ./run server
 => Ready [480ms]
 ```
 
-Summary
--------
+#### Let's begin
+
+It's time to begin! Let's learn about making your first routes and views for 
+your new app.
+
+[Routes Guide >](#routes)
+
+Summary of features
+-------------------
 
 #### Routes
 
-Routes are supported via [express.js]. Just add your route files to 
-`app/routes/` and everything else will be taken care of for you.
+Routes are supported via [Express]. Just add your route files to `app/routes/` 
+and everything else will be taken care of for you.
 
 ``` js
 // app/routes/home.js
@@ -158,6 +165,8 @@ app.conf('database').hostname;
 
 # Features
 
+## Expo executable
+
 ## Routes
 
 ## Database
@@ -202,3 +211,5 @@ License](http://www.opensource.org/licenses/mit-license.php).
 [Chai]: http://chaijs.com/
 [Superagent]: https://npmjs.org/package/superagent
 
+[shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
+[install]: https://npmjs.org/doc/install.html

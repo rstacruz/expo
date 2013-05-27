@@ -1,5 +1,9 @@
 all:
 
+link:
+	cd expo && npm link
+	cd expo-connect_assets && npm link
+	cd expo-sequelize && npm link
 publish:
 	cd expo && npm publish
 	cd expo-connect_assets && npm publish
@@ -16,4 +20,4 @@ bumpm: $(PACKAGES)
 	bump -m $^
 	
 
-.PHONY: publish bump
+.PHONY: link publish bump bumpm bumpM
