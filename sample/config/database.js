@@ -1,20 +1,18 @@
 module.exports = {
   development: {
-    database: 'db',
-    username: 'rsc',
-    password: '',
-    dialect: 'postgres'
+    dialect: 'sqlite',
+    storage: 'db/development.sqlite'
   },
   test: {
-    database: 'db',
-    username: 'rsc',
-    password: '',
-    dialect: 'postgres'
+    dialect: 'sqlite',
+    database: 'dbname',
+    username: 'username',
+    password: ''
   },
   production: {
-    database: 'db',
-    username: 'rsc',
-    password: '',
-    dialect: 'postgres'
+    dialect: 'sqlite',
+    database: 'dbname',
+    username: 'username',
+    password: ''
   }
 };
