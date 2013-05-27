@@ -5,10 +5,10 @@ cli
   .version(require('../package.json').version);
 
 cli
-  .option('--no-sequelize', 'Disable models')
-  .option('--no-assets', 'Disable asset pipeline')
-  .option('--no-sessions', 'Disable sessions')
-  .option('--no-test', 'Disable tests')
+  .option('--skip-sequelize', 'Disable models')
+  .option('--skip-assets', 'Disable asset pipeline')
+  .option('--skip-sessions', 'Disable sessions')
+  .option('--skip-test', 'Disable tests')
   .option('--edge', 'Use edge version of Expo')
 
 cli.parse(process.argv);
