@@ -2,7 +2,7 @@
   "name": "myapp",
   "description": "Your Expo application",
   "author": "You <me@here.com>",
-  "version": "0.1.0",
+  "version": "0.1.0pre",
   "private": true,
   "engines": {"node": ">=0.8.0"},
   "main": "./app",
