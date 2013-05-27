@@ -11,7 +11,7 @@ global.request = require('supertest');
 global.app = require('../app');
 app.load('test');
 
-module.exports = function(done) {
+exports.before = function(done) {
   // Insert any async-style code here to be done on each test.
   done();
 };

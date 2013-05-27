@@ -1,5 +1,5 @@
 describe('App', function() {
-  beforeEach(require('./setup'));
+  beforeEach(require('./setup').before);
 
   it('Homepage should work', function(done) {
     request(app)
