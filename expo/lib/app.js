@@ -166,6 +166,16 @@ var app = module.exports = function(app) {
     return configData[file];
   };
 
+  // Defaults
+  // --------
+
+  /**
+   * Set some defaults
+   */
+
+  app.set('views', app.path('app/views'));
+
+
   // Private helpers
   // ---------------
 
