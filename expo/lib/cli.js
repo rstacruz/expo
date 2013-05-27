@@ -27,14 +27,14 @@ module.exports = function(app, cli) {
 
   cli
     .command('server [port] [..]')
-    .description('Starts the server')
+    .description('Starts the server (alias: "s")')
     .action(function(port, flags) {
       require('../lib/runner')(app, port, flags);
     });
 
   cli
     .command('console')
-    .description('Opens a console')
+    .description('Opens a console (alias: "c")')
     .action(function() {
       global.app = app.load();
       require('repl').start({});
@@ -42,7 +42,7 @@ module.exports = function(app, cli) {
 
   cli
     .command('runner [cmd]')
-    .description('Runs a command')
+    .description('Runs a command (alias: "r")')
     .action(function(command) {
       global.app = app.load();
       eval(command);
