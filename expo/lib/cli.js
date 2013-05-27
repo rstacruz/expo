@@ -1,4 +1,9 @@
-var TasksDefault = module.exports = function(app, cli) {
+/**
+ * @group Command line
+ * The command line interface
+ */
+
+module.exports = function(app, cli) {
 
   cli.go = function(argv) {
     // Shortcuts
@@ -13,7 +18,11 @@ var TasksDefault = module.exports = function(app, cli) {
   };
 
   cli
-    .version(app.getPackageInfo().version);
+    .version(require(app.path('package.json')).version);
+
+  /**
+   * Starts a server.
+   */
 
   cli
     .command('server [port] [..]')

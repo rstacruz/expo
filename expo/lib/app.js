@@ -2,42 +2,55 @@ var path = require('path');
 var loadModules = require('./path_helpers').loadModules;
 var EventEmitter = require('events').EventEmitter;
 
-// Application extensions mixin.
-// Extends an Express app with more functions.
-//
-var AppExt = module.exports = function(app) {
-  // The root path. To be overriden later.
+
+/**
+ * Application extensions mixin.
+ * Extends an Express app with more functions.
+ */
+
+var app = module.exports = function(app) {
+
+  /**
+   * Event emitter. Used by `emit()` and such.
+   * @api private
+   */
+
+  var events = new EventEmitter();
+
+  /**
+   * The root path. To be overriden later.
+   */
+
   app.root = '';
 
-  // Gets a path relative to the root.
-  //
-  //     app.path('.')
-  //     app.path('public')
-  //
+  /**
+   * Gets a path relative to the root.
+   *
+   *     app.path('public')
+   *     app.path('app/migrations')
+   */
+
   app.path = function() {
     return path.resolve.apply(this, [this.root].concat([].slice.call(arguments)));
   };
 
-  // Returns package.json information of the app.
-  app.getPackageInfo = function() {
-    return require(path.resolve(this.root, 'package.json'));
-  };
-
   var loaded = false;
 
-  // Loads all files needed to run an Express server.
-  //
-  //     app.load();
-  //     app.listen(3000);
-  //
-  // Also emits the following events in this sequence:
-  //
-  //  * load:before
-  //  * initializers:before, initializers:after
-  //  * helpers:before, helpers:after
-  //  * routes:before, routes:after
-  //  * load:after
-  //
+  /**
+   * Loads all files needed to run an Express server.
+   *
+   *     app.load();
+   *     app.listen(3000);
+   *
+   * Also emits the following events in this sequence:
+   *
+   *  - load:before
+   *  - initializers:before, initializers:after
+   *  - helpers:before, helpers:after
+   *  - routes:before, routes:after
+   *  - load:after
+   */
+
   app.load = function(env) {
     if (!loaded) {
       process.chdir(app.root);
@@ -46,8 +59,8 @@ var AppExt = module.exports = function(app) {
       if (env) app.set('env', env);
 
       // Hooks: do pre-load hooks that extensions may listen for.
-      this.events.emit('load:before', app);
-      if (env === 'test') this.events.emit('load:test:before', app);
+      events.emit('load:before', app);
+      if (env === 'test') events.emit('load:test:before', app);
 
       // Load initializers of the application.
       loadPath('initializers', function(mixin) { mixin(app); });
@@ -62,8 +75,8 @@ var AppExt = module.exports = function(app) {
       loadPath('routes', function(mixin) { mixin(app); });
 
       // After hooks
-      if (env === 'test') this.events.emit('load:test:after', app);
-      this.events.emit('load:after', app);
+      if (env === 'test') events.emit('load:test:after', app);
+      events.emit('load:after', app);
 
       if (env === 'test') app.log.debug('App loaded for test environment');
 
@@ -73,54 +86,73 @@ var AppExt = module.exports = function(app) {
     return this;
   };
 
-  // Returns the commander command line parser.
-  //
-  //     app.cli()
-  //     app.cli().parse(...)
-  //
+  var command;
+
+  /**
+   * Returns the commander command line parser.
+   *
+   *      app.cli()
+   *      app.cli().parse(...)
+   */
+
   app.cli = function() {
-    if (!this._cli) {
-      var cli = this._cli = require('commander');
+    if (!command) {
+      command = require('commander');
 
-      // Import default tasks;
-      require('./cli')(app, cli);
-
-      // Extension tasks;
-      app.events.emit('cli', app, cli);
-
-      // Application tasks.
-      loadModules(app.path('tasks'), function(mixin) { mixin(app, cli); });
+      // Import [1] default tasks, [2] extensions tasks, [3] app tasks.
+      require('./cli')(app, command);
+      events.emit('cli', app, command);
+      loadModules(app.path('tasks'), function(mixin) { mixin(app, command); });
     }
 
-    return this._cli;
+    return command;
   };
 
   // Logger
   // ------
 
-  // Simple logging facility.
+  /**
+   * Simple logging facility.
+   *
+   *     app.log.debug('Loading models');
+   *     app.log.info('Loading models');
+   */
+
   app.log = require('clog');
 
   // Events
   // ------
 
-  // Event emitter.
-  app.events = new EventEmitter();
+  /**
+   * Listens to a given event.
+   *
+   *     app.on('load:before', function() { ... })
+   *
+   * This emits events during the load process, allowing extensions to hook
+   * onto certain parts of the load process.
+   *
+   * See `app.load()` for a catalog of events that it emits.
+   */
 
-  // Listens to a given event.
   app.on = function(eventName, listener) {
-    this.events.on(eventName, listener);
+    events.on(eventName, listener);
     return this;
   };
 
   // Config
   // ------
   
-  app._configData = {};
+  var configData = {};
 
-  // Loads configuration from a file.
+  /**
+   * Loads configuration from a file.
+   *
+   *     // Reads `config/secret_token.js`
+   *     app.conf('secret_token');
+   */
+
   app.conf = function(file) {
-    if (!(file in app._configData)) {
+    if (!(file in configData)) {
       var data;
       try {
         data = require(app.path('config', file));
@@ -128,25 +160,23 @@ var AppExt = module.exports = function(app) {
       } catch (e) {
         data = undefined;
       }
-      app._configData[file] = data;
+      configData[file] = data;
     }
 
-    return app._configData[file];
+    return configData[file];
   };
 
   // Private helpers
   // ---------------
 
-  function getFile(fname) {
-    var fs = require('fs');
-    if (fs.existsSync(fname)) return fname;
-  }
+  /**
+   * Loads mixins in a given path.
+   * @api private
+   */
 
-  // Loads mixins in a given path.
   function loadPath(path, callback) {
-    app.events.emit(path+':before', app);
+    events.emit(path+':before', app);
     loadModules(app.path(path), callback);
-    app.events.emit(path+':after', app);
+    events.emit(path+':after', app);
   }
 };
-
