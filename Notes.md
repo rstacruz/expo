@@ -19,6 +19,17 @@ Bumping build, minor, major versions respectively:
     $ make bumpm
     $ make bumpM
 
+### Working on gh-pages
+
+Create `site/` from gh-pages:
+
+    $ make site
+
+Open it:
+
+    $ python -m SimpleHTTPServer
+    $ open http://localhost:8000
+
 Features
 --------
 
