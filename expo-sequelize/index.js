@@ -1,4 +1,5 @@
 var path = require('path');
+var extend = require('util')._extend;
 
 var ExpoSequelize = module.exports = function(app) {
   app.on('cli', function(app, cli) {
@@ -84,7 +85,7 @@ var ExpoSequelize = module.exports = function(app) {
         conf = app.conf('database');
         app.log.debug('[db] Loading sequelize');
       }
-      app._sequelize = getSequelizeFromConfig(conf);
+      app._sequelize = getSequelizeFromConfig(app, conf);
     }
 
     return app._sequelize;
@@ -113,9 +114,16 @@ function parseURL(url) {
  * Returns a `Sequelize` instance from a given configuration hash.
  */
 
-function getSequelizeFromConfig(conf) {
+function getSequelizeFromConfig(app, conf) {
+  var options = extend({}, conf);
+
+  var isDev = (app.get('env') === 'development');
+  extend(options, {
+    logging: isDev ? (function(m) { app.log.debug("[sql] %s", m); }) : (function(){})
+  });
+
   var Sequelize = require('sequelize');
-  return new Sequelize(conf.database, conf.username, conf.password, conf);
+  return new Sequelize(conf.database, conf.username, conf.password, options);
 }
 
 /**
