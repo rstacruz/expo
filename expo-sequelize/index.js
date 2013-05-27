@@ -7,7 +7,7 @@ var ExpoSequelize = module.exports = function(app) {
       .description("Run database migrations")
       .action(function() {
         app.load();
-        var options = { path: app.path('migrations') };
+        var options = { path: app.path('app/migrations') };
         var migrator = app.sequelize().getMigrator(options, true);
         migrator.migrate({ method: 'up' });
       });
