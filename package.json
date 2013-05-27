@@ -3,7 +3,7 @@
   "description": "",
   "keywords": [""],
   "author": "Rico Sta. Cruz",
-  "version": "0.1.0",
+  "version": "0.1.0-pre1",
   "devDependencies": {
     "expo": "*",
     "expo-connect_assets": "*",
