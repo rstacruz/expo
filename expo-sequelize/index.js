@@ -4,27 +4,40 @@ var ExpoSequelize = module.exports = function(app) {
   app.on('cli', function(app, cli) {
     cli
       .command('db:create')
-      .description("Creates databases")
+      .description("Creates the environment's database")
       .action(function() {
         app.load();
-        var db = app.conf('database');
-        if (db.database) {
-          var dbname = db.database;
-          db.database = undefined;
-
+        databaseSetup(app, function(dbname) {
           app.sequelize()
             .query('CREATE DATABASE ' + dbname + ';')
             .success(function() {
-              app.log.info("[db] Database %s created", dbname);
+              app.log.info("[db] Database '%s' created", dbname);
             })
             .error(function(err) {
-              app.log.error("[db] Database %s failed to be created", dbname);
+              app.log.error("[db] Database '%s' failed to be created", dbname);
               app.log.error("[db] => %s", err.message);
               process.exit(1);
             });
-        } else {
-          app.log.info("[db] No database to create");
-        }
+        });
+      });
+
+    cli
+      .command('db:drop')
+      .description("Drops the environment's database")
+      .action(function() {
+        app.load();
+        databaseSetup(app, function(dbname) {
+          app.sequelize()
+            .query('DROP DATABASE ' + dbname + ';')
+            .success(function() {
+              app.log.info("[db] Database '%s' dropped", dbname);
+            })
+            .error(function(err) {
+              app.log.error("[db] Database '%s' failed to be dropped", dbname);
+              app.log.error("[db] => %s", err.message);
+              process.exit(1);
+            });
+        });
       });
 
     cli
@@ -55,42 +68,72 @@ var ExpoSequelize = module.exports = function(app) {
       });
   });
 
-  // Loads sequelize.
+  /**
+   * Loads sequelize.
+   */
+
   app.sequelize = function() {
     if (!app._sequelize) {
       var url = process.env.DATABASE_URL;
+      var conf;
 
       if (url) {
+        conf = parseURL(url);
         app.log.debug('[db] Loading sequelize via DATABASE_URL');
-        app._sequelize = getSequelizeFromURL(url);
       } else {
+        conf = app.conf('database');
         app.log.debug('[db] Loading sequelize');
-        app._sequelize = getSequelizeFromConfig(app.conf('database'));
       }
+      app._sequelize = getSequelizeFromConfig(conf);
     }
 
     return app._sequelize;
   };
 };
 
-function getSequelizeFromURL(url) {
-  match = url.match(/([^:]+):\/\/([^:]*):([^@]*)@([^:]+):(\d+)\/(.+)/);
+/**
+ * Returns a `Sequelize` instance from a given URL.
+ */
 
+function parseURL(url) {
+  var match = url.match(/([^:]+):\/\/([^:]*):([^@]*)@([^:]+):(\d+)\/(.+)/);
   if (!match) throw "Wrong DATABASE_URL format";
 
-  var Sequelize = require('sequelize');
-
-  return new Sequelize(match[6], match[2], match[3], {
+  return {
     dialect:  match[1],
-    protocol: match[1],
-    port:     match[5],
+    username: match[2],
+    password: match[3],
     host:     match[4],
-    logging:  function(m) { console.log("[SQL]", m); }
-  });
+    port:     match[5],
+    database: match[6]
+  };
 }
+
+/**
+ * Returns a `Sequelize` instance from a given configuration hash.
+ */
 
 function getSequelizeFromConfig(conf) {
   var Sequelize = require('sequelize');
-
   return new Sequelize(conf.database, conf.username, conf.password, conf);
 }
+
+/**
+ * Loads the app environment with no specific database.
+ * Used to create and drop databases.
+ */
+
+function databaseSetup(app, callback) {
+  var db = app.conf('database');
+
+  var dbname = db.database;
+  db.database = undefined;
+
+  if (!dbname) {
+    app.log.warn("[db] No database to work on");
+    process.exit(0);
+  }
+
+  callback(dbname);
+}
+
