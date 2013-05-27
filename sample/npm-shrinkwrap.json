@@ -9,19 +9,16 @@
           "version": "1.6.2"
         },
         "express": {
-          "version": "3.2.5",
+          "version": "3.2.4",
           "dependencies": {
             "connect": {
-              "version": "2.7.10",
+              "version": "2.7.9",
               "dependencies": {
                 "qs": {
-                  "version": "0.6.5"
+                  "version": "0.6.4"
                 },
                 "formidable": {
-                  "version": "1.0.14"
-                },
-                "cookie": {
-                  "version": "0.0.5"
+                  "version": "1.0.13"
                 },
                 "bytes": {
                   "version": "0.2.0"
@@ -41,7 +38,7 @@
               "version": "0.3.4"
             },
             "cookie": {
-              "version": "0.1.0"
+              "version": "0.0.5"
             },
             "buffer-crc32": {
               "version": "0.2.1"
@@ -81,6 +78,98 @@
         },
         "clog": {
           "version": "0.1.6"
+        },
+        "chai": {
+          "version": "1.6.0"
+        },
+        "mocha": {
+          "version": "1.10.0",
+          "dependencies": {
+            "commander": {
+              "version": "0.6.1"
+            },
+            "growl": {
+              "version": "1.7.0"
+            },
+            "jade": {
+              "version": "0.26.3",
+              "dependencies": {
+                "mkdirp": {
+                  "version": "0.3.0"
+                }
+              }
+            },
+            "diff": {
+              "version": "1.0.2"
+            },
+            "debug": {
+              "version": "0.7.2"
+            },
+            "mkdirp": {
+              "version": "0.3.3"
+            },
+            "ms": {
+              "version": "0.3.0"
+            },
+            "glob": {
+              "version": "3.2.1",
+              "dependencies": {
+                "minimatch": {
+                  "version": "0.2.12",
+                  "dependencies": {
+                    "lru-cache": {
+                      "version": "2.3.0"
+                    },
+                    "sigmund": {
+                      "version": "1.0.0"
+                    }
+                  }
+                },
+                "graceful-fs": {
+                  "version": "1.2.1"
+                },
+                "inherits": {
+                  "version": "1.0.0"
+                }
+              }
+            }
+          }
+        },
+        "supertest": {
+          "version": "0.6.0",
+          "dependencies": {
+            "superagent": {
+              "version": "0.10.0",
+              "dependencies": {
+                "qs": {
+                  "version": "0.5.2"
+                },
+                "formidable": {
+                  "version": "1.0.9"
+                },
+                "mime": {
+                  "version": "1.2.5"
+                },
+                "emitter-component": {
+                  "version": "0.0.6"
+                },
+                "cookiejar": {
+                  "version": "1.3.0"
+                },
+                "better-assert": {
+                  "version": "0.1.0",
+                  "dependencies": {
+                    "callsite": {
+                      "version": "1.0.0"
+                    }
+                  }
+                }
+              }
+            },
+            "methods": {
+              "version": "0.0.1"
+            }
+          }
         }
       }
     },
@@ -363,6 +452,41 @@
           "version": "0.0.1"
         }
       }
+    },
+    "pg": {
+      "version": "1.1.2",
+      "dependencies": {
+        "generic-pool": {
+          "version": "2.0.3"
+        },
+        "buffer-writer": {
+          "version": "1.0.0",
+          "dependencies": {
+            "cloned": {
+              "version": "0.0.1",
+              "dependencies": {
+                "rmdir": {
+                  "version": "1.0.0"
+                }
+              }
+            },
+            "async": {
+              "version": "0.2.8"
+            }
+          }
+        }
+      }
+    },
+    "mysql2": {
+      "version": "0.8.7",
+      "dependencies": {
+        "fastqueue": {
+          "version": "0.1.0"
+        }
+      }
+    },
+    "coffee-script": {
+      "version": "1.6.2"
     }
   }
 }

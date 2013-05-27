@@ -24,6 +24,8 @@
     "supertest": "*"
   },
   "optionalDependencies": {
-    "stylus-bootstrap": "*"
+    "pg": "*",
+    "mysql2": "*",
+    "coffee-script": "*"
   }
 }
