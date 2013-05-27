@@ -14,8 +14,8 @@ module.exports = function(env) {
     return {
       'log':   logger(''),
       'error': logger('ERR:  '),
-      'warn':  logger('warn: '),
-      'info':  logger('info: '),
+      'warn':  logger('WARN: '),
+      'info':  logger('INFO: '),
       'debug': logger('      ')
     };
   }
