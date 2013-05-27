@@ -39,6 +39,7 @@ Core:
 - Tests (done)
 - Helpers (done)
 
+- Move to /app (!)
 - Generator bin
 - Error
 
