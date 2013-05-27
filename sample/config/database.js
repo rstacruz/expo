@@ -4,15 +4,17 @@ module.exports = {
     storage: 'db/development.sqlite'
   },
   test: {
-    dialect: 'sqlite',
+    dialect: 'postgres',
     database: 'dbname',
-    username: 'username',
-    password: ''
+    username: 'rsc',
+    password: '',
+    port: 5432
   },
   production: {
-    dialect: 'sqlite',
+    dialect: 'postgres',
     database: 'dbname',
     username: 'username',
-    password: ''
+    password: '',
+    port: 5432
   }
 };
