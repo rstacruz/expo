@@ -19,6 +19,11 @@ module.exports = function(app, cli) {
     .version(require(app.path('package')).version)
     .option('-e, --env [env]', 'Environment to start in [develompent]');
 
+  cli
+    .on('env', function(env) {
+      app.set('env', env);
+    });
+
   /**
    * Starts a server.
    */
@@ -45,10 +50,5 @@ module.exports = function(app, cli) {
       console.log('run');
       global.app = app.load();
       eval(command);
-    });
-
-  cli
-    .on('env', function(env) {
-      app.set('env', env);
     });
 };

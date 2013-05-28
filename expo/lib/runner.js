@@ -22,7 +22,7 @@ var Runner = module.exports = function(app, port, flags) {
   } 
 
   else {
-    printHeader();
+    app.on('load:before', function() { printHeader(); });
     app.load();
     start();
   }
