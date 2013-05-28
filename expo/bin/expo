@@ -36,7 +36,8 @@ cli.command('*')
     mkdir(p);
     write(p+'/Readme.md', render.readme('Readme.md'));
     write(p+'/run', render.text('run'));
-    write(p+'/app.js', render.js('app.js'));
+    fs.chmodSync(p+'/run', 0755);
+    write(p+'/app.js', render.appjs('app.js'));
     write(p+'/.gitignore', render.text('gitignore'));
     write(p+'/package.json', render.package('package.json'));
 
@@ -98,6 +99,17 @@ cli.command('*')
       write(p+'/test/app_test.js', render.js('test.app_test.js'));
     }
 
+    console.log('');
+    console.log('  install dependencies:');
+    console.log('    $ cd '+p);
+    console.log('    $ npm install && npm shrinkwrap');
+    console.log('');
+    console.log('  run the app:');
+    console.log('    $ ./run server');
+    console.log('');
+    console.log('  more info:');
+    console.log('    $ ./run --help');
+
   });
 
 cli.parse(process.argv);
@@ -118,6 +130,14 @@ function getRender(options) {
       var str = this.text(fpath);
       if (!options.assets)
         str = str.replace(/\n.*( js| css).*\n/g, '\n');
+      return str;
+    },
+    appjs: function(fpath) {
+      var str = this.js(fpath);
+      if (!options.db)
+        str = str.replace(/\n.*'expo-sequelize'.*\n/g, '\n');
+      if (!options.assets)
+        str = str.replace(/\n.*'expo-connect_assets'.*\n/g, '\n');
       return str;
     },
     package: function(fpath) {
@@ -152,11 +172,11 @@ function gkeep(path) {
 
 function write(path, str) {
   if (exists(path)) {
-    console.log(' \033[30m skip: ' + path + '\033[0m');
+    console.log('  \033[30m skip: ' + path + '\033[0m');
     return;
   }
   fs.writeFileSync(path, str);
-  console.log(' \033[36m      \033[0m ' + path);
+  console.log('  \033[36m      \033[0m ' + path);
 }
 
 /**
@@ -168,11 +188,11 @@ function write(path, str) {
 
 function mkdir(path) {
   if (exists(path)) {
-    console.log(' \033[30m skip: ' + path + '/\033[0m');
+    console.log('  \033[30m skip: ' + path + '/\033[0m');
     return;
   }
   fs.mkdirSync(path, 0755);
-  console.log(' \033[36mmkdir: \033[36m' + path + '/\033[0m');
+  console.log('  \033[36mmkdir: \033[36m' + path + '/\033[0m');
 }
 
 function exists(path) {
