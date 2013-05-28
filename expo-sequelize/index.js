@@ -8,9 +8,9 @@ var ExpoSequelize = module.exports = function(app) {
       .description("Creates the environment's database")
       .action(function() {
         app.load();
-        databaseSetup(app, function(dbname) {
+        databaseSetup(app, function(dbname, dialect) {
           app.sequelize()
-            .query('CREATE DATABASE ' + dbname + ';')
+            .query('CREATE DATABASE ' + quotify(dbname, dialect) + ';')
             .success(function() {
               app.log.info("[db] Database '%s' created", dbname);
             })
@@ -27,9 +27,9 @@ var ExpoSequelize = module.exports = function(app) {
       .description("Drops the environment's database")
       .action(function() {
         app.load();
-        databaseSetup(app, function(dbname) {
+        databaseSetup(app, function(dbname, dialect) {
           app.sequelize()
-            .query('DROP DATABASE ' + dbname + ';')
+            .query('DROP DATABASE ' + quotify(dbname, dialect) + ';')
             .success(function() {
               app.log.info("[db] Database '%s' dropped", dbname);
             })
@@ -142,6 +142,13 @@ function databaseSetup(app, callback) {
     process.exit(0);
   }
 
-  callback(dbname);
+  var dialect = db.dialect;
+  callback(dbname, dialect);
 }
+
+function quotify(str, dialect) {
+  if (dialect === 'mysql') return "`"+str"`";
+  return str;
+}
+
 

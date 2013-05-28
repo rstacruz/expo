@@ -49,6 +49,6 @@ module.exports = function(app, cli) {
 
   cli
     .on('env', function(env) {
-      process.env.NODE_ENV = env;
+      app.set('env', env);
     });
 };

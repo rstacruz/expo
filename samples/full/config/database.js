@@ -5,16 +5,15 @@ module.exports = {
   },
   test: {
     dialect: 'postgres',
-    database: 'dbname',
+    database: 'expo-test',
     username: 'rsc',
     password: '',
     port: 5432
   },
   production: {
-    dialect: 'postgres',
-    database: 'dbname',
-    username: 'username',
-    password: '',
-    port: 5432
+    dialect: 'mysql',
+    database: 'expo-production',
+    username: 'root',
+    password: ''
   }
 };
