@@ -18,7 +18,7 @@ cli
   .option('--no-public', 'Disable public folder')
   .option('--bare', 'Disable everything')
 
-cli.command('*')
+  .command('*')
   .action(function(project) {
     var options = {
       project: project,
@@ -149,19 +149,19 @@ function getRender(options) {
     appjs: function(fpath) {
       var str = this.js(fpath);
       if (!options.db)
-        str = str.replace(/\n.*'expo-sequelize'.*\n/g, '\n');
+        str = str.replace(/^.*'expo-sequelize'.*\n/mg, '\n');
       if (!options.assets)
-        str = str.replace(/\n.*'expo-connect_assets'.*\n/g, '\n');
+        str = str.replace(/^.*'expo-connect_assets'.*\n/mg, '\n');
       return str;
     },
     package: function(fpath) {
       var str = this.readme(fpath);
       if (!options.db)
-        str = str.replace(/\n.*"(pg|mysql|sqlite3|expo-sequelize)".*\n/g, '\n');
+        str = str.replace(/^.*"(expo-sequelize|pg|mysql|sqlite3)".*\n/mg, '\n');
       if (!options.assets)
-        str = str.replace(/\n.*"(assets|stylus|nib)".*\n/g, '\n');
+        str = str.replace(/^.*"(expo-connect_assets|stylus|nib)".*\n/mg, '\n');
       if (!options.tests)
-        str = str.replace(/\n.*"(mocha|chai|supertest)".*\n/g, '\n');
+        str = str.replace(/^.*"(test|mocha|chai|supertest)".*\n/mg, '\n');
       return str;
     },
   };
