@@ -16,7 +16,7 @@ module.exports = function(env) {
       'error': logger('ERR:  '),
       'warn':  logger('WARN: '),
       'info':  logger('INFO: '),
-      'debug': logger('      ')
+      'debug': nil
     };
   }
 };
