@@ -103,13 +103,27 @@ cli.command('*')
     console.log('  install dependencies:');
     console.log('    $ cd '+p);
     console.log('    $ npm install && npm shrinkwrap');
-    console.log('');
-    console.log('  run the app:');
-    console.log('    $ ./run server');
-    console.log('');
-    console.log('  more info:');
-    console.log('    $ ./run --help');
+      console.log('');
 
+    cli.confirm('Do that now? [yn] ', function(go) {
+      if (go) {
+        var cmd = 'cd '+p+' && npm install && npm shrinkwrap';
+        exec(cmd, done);
+      } else {
+        done(0);
+      }
+
+      function done(err) {
+        console.log('');
+        console.log('  run the app:');
+        console.log('    $ ./run server');
+        console.log('');
+        console.log('  more info:');
+        console.log('    $ ./run --help');
+        console.log('');
+        process.exit(err);
+      };
+    });
   });
 
 cli.parse(process.argv);
@@ -197,4 +211,13 @@ function mkdir(path) {
 
 function exists(path) {
   return fs.existsSync(path);
+}
+
+function exec(args, callback) {
+  var spawn = require('child_process').spawn;
+  var proc = spawn('sh', ['-c', args].concat(args), { stdio: 'inherit', customFds: [0, 1, 2] });
+  proc.on('exit', function(code){
+    if (code > 0) return callback(code);
+    return callback();
+  });
 }
