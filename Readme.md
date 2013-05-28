@@ -296,6 +296,11 @@ See these third-party guides for more info.
 Misc
 ====
 
+Image
+-----
+
+[http://www.flickr.com/photos/feuilllu/7473428030/sizes/l/in/photostream/]
+
 Acknowledgements
 ----------------
 

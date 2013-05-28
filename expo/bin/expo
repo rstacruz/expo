@@ -162,6 +162,7 @@ function getRender(options) {
         str = str.replace(/^.*"(expo-connect_assets|stylus|nib)".*\n/mg, '\n');
       if (!options.tests)
         str = str.replace(/^.*"(test|mocha|chai|supertest)".*\n/mg, '\n');
+      str = JSON.stringify(JSON.parse(str), null, 2);
       return str;
     },
   };
