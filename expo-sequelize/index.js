@@ -147,8 +147,6 @@ function databaseSetup(app, callback) {
 }
 
 function quotify(str, dialect) {
-  if (dialect === 'mysql') return "`"+str"`";
+  if (dialect === 'mysql') return "`"+str+"`";
   return str;
 }
-
-
