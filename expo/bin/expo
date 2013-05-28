@@ -1,17 +1,180 @@
 #!/usr/bin/env node
 
+var path = require('path');
+var mkdirp = require('mkdirp');
 var cli = require('commander');
-cli
-  .version(require('../package.json').version);
+var fs = require('fs');
 
 cli
-  .option('--skip-sequelize', 'Disable models')
+  .version(require('../package').version);
+
+cli
+  .option('--skip-db', 'Disable models and database')
   .option('--skip-assets', 'Disable asset pipeline')
-  .option('--skip-sessions', 'Disable sessions')
-  .option('--skip-test', 'Disable tests')
-  .option('--edge', 'Use edge version of Expo')
+  .option('--skip-sessions', 'Disable sessions support')
+  .option('--skip-tests', 'Disable tests')
+  .option('--skip-tasks', 'Disable command-line tasks')
+  .option('--skip-helpers', 'Disable helpers')
+  .option('--skip-public', 'Disable public folder')
+  .option('--bare', 'Disable everything')
+
+cli.command('*')
+  .action(function(project) {
+    var options = {
+      project: project,
+      db: !cli.skipDb && !cli.bare,
+      assets: !cli.skipAssets && !cli.bare,
+      sessions: !cli.skipSessions && !cli.bare,
+      tests: !cli.skipTests && !cli.bare,
+      helpers: !cli.skipHelpers && !cli.bare,
+      public: !cli.skipPublic && !cli.bare
+    };
+
+    var render = getRender(options);
+    var p = project;
+
+    mkdir(p);
+    write(p+'/Readme.md', render.readme('Readme.md'));
+    write(p+'/run', render.text('run'));
+    write(p+'/app.js', render.js('app.js'));
+    write(p+'/.gitignore', render.text('gitignore'));
+    write(p+'/package.json', render.package('package.json'));
+
+    mkdir(p+'/app');
+
+    if (options.assets) {
+      mkdir(p+'/app/assets');
+      mkdir(p+'/app/assets/css');
+      write(p+'/app/assets/css/application.styl', render.text('assets.application.styl'));
+      mkdir(p+'/app/assets/js');
+      write(p+'/app/assets/js/application.js', render.js('assets.application.js'));
+      gkeep(p+'/app/assets/img');
+    }
+
+    mkdir(p+'/app/initializers');
+    write(p+'/app/initializers/app.js', render.js('init.app.js'));
+    options.assets &&
+    write(p+'/app/initializers/assets.js', render.js('init.assets.js'));
+    options.sessions &&
+    write(p+'/app/initializers/sessions.js', render.js('init.sessions.js'));
+
+    if (options.helpers) {
+      mkdir(p+'/app/helpers');
+      write(p+'/app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
+    }
+
+    mkdir(p+'/app/routes');
+    write(p+'/app/routes/home.js', render.js('routes.home.js'));
+
+    if (options.tasks) {
+      mkdir(p+'/app/tasks');
+      write(p+'/app/tasks/db.js', render.js('tasks.db.js'));
+    }
+
+    mkdir(p+'/app/views');
+    write(p+'/app/views/index.jade', render.jade('views.index.jade'));
+    write(p+'/app/views/layout.jade', render.jade('views.layout.jade'));
+
+    mkdir(p+'/config');
+    options.db &&
+    write(p+'/config/database.js.example', render.js('config.database.js'));
+    options.sessions &&
+    write(p+'/config/secret_token.js', render.js('config.secret_token.js'));
+
+    if (options.db) {
+      gkeep(p+'/db');
+    }
+
+    gkeep(p+'/lib');
+
+    if (options.public) {
+      mkdir(p+'/public');
+      write(p+'/public/robots.txt', render.text('robots.txt'));
+    }
+
+    if (options.tests) {
+      mkdir(p+'/test');
+      write(p+'/test/setup.js', render.js('test.setup.js'));
+      write(p+'/test/app_test.js', render.js('test.app_test.js'));
+    }
+
+  });
 
 cli.parse(process.argv);
 
-cli
-  .help();
+function getRender(options) {
+  return {
+    text: function(fpath) {
+      return readTemplate(fpath);
+    },
+    js: function(fpath) {
+      return readTemplate(fpath);
+    },
+    readme: function(fpath) {
+      return this.text(fpath)
+        .replace(/PROJECT/g, options.project);
+    },
+    jade: function(fpath) {
+      var str = this.text(fpath);
+      if (!options.assets)
+        str = str.replace(/\n.*( js| css).*\n/g, '\n');
+      return str;
+    },
+    package: function(fpath) {
+      var str = this.readme(fpath);
+      if (!options.db)
+        str = str.replace(/\n.*"(pg|mysql|sqlite3|expo-sequelize)".*\n/g, '\n');
+      if (!options.assets)
+        str = str.replace(/\n.*"(assets|stylus|nib)".*\n/g, '\n');
+      if (!options.tests)
+        str = str.replace(/\n.*"(mocha|chai|supertest)".*\n/g, '\n');
+      return str;
+    },
+  };
+}
+
+function readTemplate(fpath) {
+  var fullpath = path.resolve(__dirname, '../template', fpath);
+  return fs.readFileSync(fullpath).toString();
+}
+
+function gkeep(path) {
+  mkdir(path);
+  write(path+'/.gitkeep', '');
+}
+
+/**
+ * echo str > path.
+ *
+ * @param {String} path
+ * @param {String} str
+ */
+
+function write(path, str) {
+  if (exists(path)) {
+    console.log(' \033[30m skip: ' + path + '\033[0m');
+    return;
+  }
+  fs.writeFileSync(path, str);
+  console.log(' \033[36m      \033[0m ' + path);
+}
+
+/**
+ * Mkdir -p.
+ *
+ * @param {String} path
+ j
+ */
+
+function mkdir(path) {
+  if (exists(path)) {
+    console.log(' \033[30m skip: ' + path + '/\033[0m');
+    return;
+  }
+  fs.mkdirSync(path, 0755);
+  console.log(' \033[36mmkdir: \033[36m' + path + '/\033[0m');
+}
+
+function exists(path) {
+  return fs.existsSync(path);
+}

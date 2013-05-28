@@ -180,11 +180,65 @@ app.conf('database').hostname;
 
 ## Helpers
 
-## Tasks
-
 ## Assets
 
-## Tests
+Runner
+------
+
+All applications come with a `run` executable. Use `./run --help` to see a list 
+of options.
+
+``` cmd
+$ ./run --help
+
+  Usage: run [options] [command]
+
+  Commands:
+
+    server [port] [..]     Starts the server (alias: "s")
+    console                Opens a console (alias: "c")
+    runner [cmd]           Runs a command (alias: "r")
+    db-create              Creates the environment's database
+    db-drop                Drops the environment's database
+    db-migrate             Run database migrations
+    assets-precompile      Precompiles asset files
+
+  Options:
+
+    -h, --help       output usage information
+    -V, --version    output the version number
+    -e, --env [env]  Environment to start in [develompent]
+```
+
+### Running the application
+
+It's what's used to run the application:
+
+``` cmd
+$ ./run server
+
+  => Auto-restarting on changes
+  => Running development mode at http://0.0.0.0:4567
+  => Ready [451ms]
+  GET / 200 929ms - 307b
+```
+
+### Console
+
+Start a console by using `./run console`. This starts a REPL shell. You can use 
+the object `app` to refer to your application.
+
+``` cmd
+$ ./run console
+
+  > app.get('env')
+  'development'
+  > %
+```
+
+
+Tests
+-----
 
 ### Running tests
 
@@ -228,7 +282,7 @@ Just load them in the `test_helper.js` file as needed.
 global.sinon = require('sinon');
 ```
 
-### Read more
+#### Read more
 
 See these third-party guides for more info.
 
@@ -237,6 +291,7 @@ See these third-party guides for more info.
 [Chai (should) >][Chai should] *Guide to the `.should` syntax*
 
 [Chai (assert) >][Chai assert] *Guide to `assert()` API*
+
 
 Misc
 ====
