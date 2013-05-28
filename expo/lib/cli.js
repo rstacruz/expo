@@ -11,15 +11,13 @@ module.exports = function(app, cli) {
     if (argv[2] === 's') argv[2] = 'server';
     if (argv[2] === 'r') argv[2] = 'runner';
 
-    if (argv.length === 2) {
-      this.parse([argv[0], argv[1], '--help']);
-    } else {
-      this.parse(argv);
-    }
+    this.parse(argv);
+    if (argv.length === 2) this.help();
   };
 
   cli
-    .version(require(app.path('package.json')).version);
+    .version(require(app.path('package')).version)
+    .option('-e, --env [env]', 'Environment to start in [develompent]');
 
   /**
    * Starts a server.
@@ -44,7 +42,13 @@ module.exports = function(app, cli) {
     .command('runner [cmd]')
     .description('Runs a command (alias: "r")')
     .action(function(command) {
+      console.log('run');
       global.app = app.load();
       eval(command);
+    });
+
+  cli
+    .on('env', function(env) {
+      process.env.NODE_ENV = env;
     });
 };
