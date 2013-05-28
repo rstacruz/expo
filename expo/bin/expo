@@ -9,25 +9,25 @@ cli
   .version(require('../package').version);
 
 cli
-  .option('--skip-db', 'Disable models and database')
-  .option('--skip-assets', 'Disable asset pipeline')
-  .option('--skip-sessions', 'Disable sessions support')
-  .option('--skip-tests', 'Disable tests')
-  .option('--skip-tasks', 'Disable command-line tasks')
-  .option('--skip-helpers', 'Disable helpers')
-  .option('--skip-public', 'Disable public folder')
+  .option('--no-db', 'Disable models and database')
+  .option('--no-assets', 'Disable asset pipeline')
+  .option('--no-sessions', 'Disable sessions support')
+  .option('--no-tests', 'Disable tests')
+  .option('--no-tasks', 'Disable command-line tasks')
+  .option('--no-helpers', 'Disable helpers')
+  .option('--no-public', 'Disable public folder')
   .option('--bare', 'Disable everything')
 
 cli.command('*')
   .action(function(project) {
     var options = {
       project: project,
-      db: !cli.skipDb && !cli.bare,
-      assets: !cli.skipAssets && !cli.bare,
-      sessions: !cli.skipSessions && !cli.bare,
-      tests: !cli.skipTests && !cli.bare,
-      helpers: !cli.skipHelpers && !cli.bare,
-      public: !cli.skipPublic && !cli.bare
+      db: !cli.noDb && !cli.bare,
+      assets: !cli.noAssets && !cli.bare,
+      sessions: !cli.noSessions && !cli.bare,
+      tests: !cli.noTests && !cli.bare,
+      helpers: !cli.noHelpers && !cli.bare,
+      public: !cli.noPublic && !cli.bare
     };
 
     var render = getRender(options);
