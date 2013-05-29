@@ -127,12 +127,21 @@ var app = module.exports = function(app) {
   // ------
 
   /**
+   * The events.
+   * You may emit events here.
+   */
+
+  app.events = events;
+
+  /**
    * Listens to a given event.
    *
    *     app.on('load:before', function() { ... })
    *
    * This emits events during the load process, allowing extensions to hook
    * onto certain parts of the load process.
+   *
+   * This is just shorthand for `app.events.on(x, ...)`.
    *
    * See `app.load()` for a catalog of events that it emits.
    */

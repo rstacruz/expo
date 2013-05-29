@@ -85,7 +85,10 @@ var ExpoSequelize = module.exports = function(app) {
         conf = app.conf('database');
         app.log.debug('[db] Loading sequelize');
       }
+
+      app.events.emit('sequelize:before', app);
       app._sequelize = getSequelizeFromConfig(app, conf);
+      app.events.emit('sequelize:after', app, app._sequelize);
     }
 
     return app._sequelize;
