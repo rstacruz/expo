@@ -1,0 +1,278 @@
+Expo
+====
+
+
+[![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
+
+Getting started
+---------------
+
+Create your first Expo application by installing the `expo` command and 
+generating your application with it.
+
+``` cmd
+$ npm install -g expo
+$ expo yourapp
+```
+
+#### File structure
+
+This gets you a new Node.js project with the following files. (Every
+directory here is optional: you may delete any that you don't need!)
+
+``` files
+yourapp/
+  app/
+    views/
+    helpers/
+    initializers/
+    migrations/
+    routes/
+    tasks/
+  assets/
+    css/
+    js/
+    img/
+  config/
+  lib/
+  public/
+  test/
+  app.js
+  run*
+  package.json
+```
+
+#### Boot up your stack
+
+Now initialize your environment by installing all `npm` dependencies.
+*(See: [install], [shrinkwrap])*
+You can run your app with the included `run` script afterwards.
+
+``` cmd
+$ cd yourapp
+$ npm install && npm shrinkwrap
+```
+
+``` cmd
+$ ./run server
+=> env: development
+=> url: http://0.0.0.0:4567/
+=> Ready [480ms]
+```
+
+#### Let's begin
+
+It's time to begin! Let's learn about making your first routes and views for 
+your new app.
+
+[Routes Guide >](#routes)
+
+Summary of features
+-------------------
+
+#### Routes
+
+Routes are supported via [Express]. Just add your route files to `app/routes/` 
+and everything else will be taken care of for you.
+
+``` js
+// app/routes/home.js
+module.exports = function(app) {
+  app.get('/', function(req, res) {
+    res.send("Hola, mundo!");
+  });
+};
+```
+
+#### Command-line runner
+
+Just do `./run server` or `./run console`. You may also define custom tasks you 
+may need in your app.
+
+``` cmd
+$ ./run --help
+
+  Commands:
+    server              Starts the server
+    console             Opens the console
+    db:migrate          Performs database migrations
+    assets:precompile   Compiles asset files
+    ...
+```
+
+#### Assets
+
+Just add your asset files in `app/assets/`. JavaScript, CoffeeScript, Less, 
+     Stylus are supported. They will be compiled, concatenated, and compressed 
+     as needed.
+
+``` files
+app/
+  assets/
+    js/
+      application.coffee
+      jquery.js
+    css/
+      application.styl
+    img/
+      background.jpg
+```
+
+#### NPM package
+You can use your project as any other Node package. Your app will have one main 
+entry point (like most Node packages) that you can programatically use anywhere.
+
+``` js
+var app = require('yourapp').load();
+
+// Use models:
+var Article = require('yourapp/lib/article');
+Article.find({ id: 20 });
+
+// Fetch config:
+app.conf('database').hostname;
+```
+
+[Read more >](#routes)
+
+# Features
+
+## Expo executable
+
+## Routes
+
+## Database
+
+## Migrations
+
+## Helpers
+
+## Assets
+
+Runner
+------
+
+All applications come with a `run` executable. Use `./run --help` to see a list 
+of options.
+
+``` cmd
+$ ./run --help
+
+  Usage: run [options] [command]
+
+  Commands:
+
+    server [port] [..]     Starts the server (alias: "s")
+    console                Opens a console (alias: "c")
+    runner [cmd]           Runs a command (alias: "r")
+    db-create              Creates the environment's database
+    db-drop                Drops the environment's database
+    db-migrate             Run database migrations
+    assets-precompile      Precompiles asset files
+
+  Options:
+
+    -h, --help       output usage information
+    -V, --version    output the version number
+    -e, --env [env]  Environment to start in [develompent]
+```
+
+### Running the application
+
+It's what's used to run the application:
+
+``` cmd
+$ ./run server
+
+  => Auto-restarting on changes
+  => Running development mode at http://0.0.0.0:4567
+  => Ready [451ms]
+  GET / 200 929ms - 307b
+```
+
+### Console
+
+Start a console by using `./run console`. This starts a REPL shell. You can use 
+the object `app` to refer to your application.
+
+``` cmd
+$ ./run console
+
+  > app.get('env')
+  'development'
+  > %
+```
+
+
+Tests
+-----
+
+### Running tests
+
+To run tests, use `npm test`, just as you would for any Node package. A 
+freshly-minted app will have some placeholder tests in `test/` -- try it out.
+
+``` cmd
+$ npm test
+
+  > ./node_modules/.bin/mocha -R spec
+  debug: App loaded for test environment
+  ..
+
+  2 tests complete (400ms)
+```
+
+### Creating tests
+
+Create a test as a JS file in the `test/` folder with the filename the ends in 
+`_test.js`.
+
+``` js
+/* test/article_test.js */
+var Article = require('../app/lib/article');
+
+describe('Article', function() {
+  it('should work', function() {
+    var a = Article.build({ title: "Doing things" });
+    a.title.should.equal("Doing things");
+  });
+});
+```
+
+### Using other packages
+
+You may want to use other packages, like say, [Sinon.js] for mocks and stubs.
+Just load them in the `test_helper.js` file as needed.
+
+``` js
+/* test/test_helper.js */
+global.sinon = require('sinon');
+```
+
+#### Read more
+
+See these third-party guides for more info.
+
+[Mocha >][Mocha] *A guide to things*
+
+[Chai (should) >][Chai should] *Guide to the `.should` syntax*
+
+[Chai (assert) >][Chai assert] *Guide to `assert()` API*
+
+[connect-assets]: https://github.com/adunkman/connect-assets
+[Express]: http://expressjs.com/
+[connect]: https://github.com/senchalabs/connect
+[Node.js]: http://nodejs.org/
+[commander.js]: https://github.com/visionmedia/commander.js
+[Sequelize]: http://www.sequelizejs.com
+[Mocha]: http://visionmedia.github.io/mocha
+[supervisor]: https://github.com/isaacs/node-supervisor
+[Chai]: http://chaijs.com/
+[Chai should]: http://chaijs.com/guide/styles/#should
+[Chai assert]: http://chaijs.com/api/assert/
+[Superagent]: https://npmjs.org/package/superagent
+[Sinon.js]: http://sinonjs.org/
+
+[shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
+[install]: https://npmjs.org/doc/install.html
+[Demo]: https://raw.github.com/rstacruz/expo/master/support/demo.txt

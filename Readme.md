@@ -11,9 +11,6 @@ $ npm install -g expo
 $ expo --help
 ```
 
-Expo is called a *meta-framework* as it's a glue that lets you build [Express] 
-apps together with multiple packages.
-
  * __Routing__
    * Routing API *-- via [Express]*
    * Middleware support *-- via [connect]*
@@ -35,162 +32,102 @@ apps together with multiple packages.
    * Logging
    * Config file loading
 
-[View a demo >]( http://ricostacruz.com/expo/demo.html )
+[![Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
 
-[![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
+## Your first app
 
-Getting started
----------------
+Expo lets you start up sites very fast.
+Create a project using the `expo` command. Here we'll use `--bare`, which
+generates the bare minimum:
 
-Create your first Expo application by installing the `expo` command and 
-generating your application with it.
+```
+$ expo --bare hello
 
-``` cmd
-$ npm install -g expo
-$ expo yourapp
+  mkdir: hello/
+         hello/Readme.md
+         hello/run
+         hello/app.js
+         hello/.gitignore
+         hello/package.json
+  mkdir: hello/app/
+  mkdir: hello/app/initializers/
+         hello/app/initializers/app.js
+  mkdir: hello/app/routes/
+         hello/app/routes/home.js
+  mkdir: hello/app/views/
+         hello/app/views/index.jade
+         hello/app/views/layout.jade
+
+  install dependencies:
+    $ cd hello
+    $ npm install && npm shrinkwrap
+
+  run the app:
+    $ ./run server
+
+  more info:
+    $ ./run --help
 ```
 
-#### File structure
+[Read about creating projects >]( .#expo-executable )
 
-This gets you a new Node.js project with the following files. (Every
-directory here is optional: you may delete any that you don't need!)
+## Full setup
 
-``` files
-yourapp/
-  app/
-    views/
-    helpers/
-    initializers/
-    migrations/
-    routes/
-    tasks/
-  assets/
-    css/
-    js/
-    img/
-  config/
-  lib/
-  public/
-  test/
-  app.js
-  run*
-  package.json
+...But this isn't always that useful, since you probably will need assets,
+databases, sessions, tests, helpers and other doodads. Use `expo` without 
+switches to generate the default layout:
+
+```
+$ expo myproject
+
+  mkdir: myproject/
+         myproject/Readme.md
+         myproject/run
+         myproject/app.js
+         myproject/.gitignore
+         myproject/package.json
+  mkdir: myproject/app/
+  mkdir: myproject/app/assets/
+  mkdir: myproject/app/assets/css/
+         myproject/app/assets/css/application.styl
+  mkdir: myproject/app/assets/js/
+         myproject/app/assets/js/application.js
+  mkdir: myproject/app/assets/img/
+         myproject/app/assets/img/.gitkeep
+  mkdir: myproject/app/initializers/
+         myproject/app/initializers/app.js
+         myproject/app/initializers/assets.js
+         myproject/app/initializers/sessions.js
+  mkdir: myproject/app/helpers/
+         myproject/app/helpers/app_helper.js
+  mkdir: myproject/app/routes/
+         myproject/app/routes/home.js
+  mkdir: myproject/app/views/
+         myproject/app/views/index.jade
+         myproject/app/views/layout.jade
+  mkdir: myproject/config/
+         myproject/config/database.yml.example
+         myproject/config/secret_token.yml
+  mkdir: myproject/db/
+         myproject/db/.gitkeep
+  mkdir: myproject/lib/
+         myproject/lib/.gitkeep
+  mkdir: myproject/public/
+         myproject/public/robots.txt
+  mkdir: myproject/test/
+         myproject/test/setup.js
+         myproject/test/app_test.js
 ```
 
-#### Boot up your stack
+[Read about creating projects >]( .#expo-executable )
 
-Now initialize your environment by installing all `npm` dependencies.
-*(See: [install], [shrinkwrap])*
-You can run your app with the included `run` script afterwards.
+## Command line runner
 
-``` cmd
-$ cd yourapp
-$ npm install && npm shrinkwrap
+Expo projects come with a runner that gives you access to default tasks.
+Simply invoke ./run in a project.
+
 ```
-
-``` cmd
-$ ./run server
-=> env: development
-=> url: http://0.0.0.0:4567/
-=> Ready [480ms]
-```
-
-#### Let's begin
-
-It's time to begin! Let's learn about making your first routes and views for 
-your new app.
-
-[Routes Guide >](#routes)
-
-Summary of features
--------------------
-
-#### Routes
-
-Routes are supported via [Express]. Just add your route files to `app/routes/` 
-and everything else will be taken care of for you.
-
-``` js
-// app/routes/home.js
-module.exports = function(app) {
-  app.get('/', function(req, res) {
-    res.send("Hola, mundo!");
-  });
-};
-```
-
-#### Command-line runner
-
-Just do `./run server` or `./run console`. You may also define custom tasks you 
-may need in your app.
-
-``` cmd
-$ ./run --help
-
-  Commands:
-    server              Starts the server
-    console             Opens the console
-    db:migrate          Performs database migrations
-    assets:precompile   Compiles asset files
-    ...
-```
-
-#### Assets
-
-Just add your asset files in `app/assets/`. JavaScript, CoffeeScript, Less, 
-     Stylus are supported. They will be compiled, concatenated, and compressed 
-     as needed.
-
-``` files
-app/
-  assets/
-    js/
-      application.coffee
-      jquery.js
-    css/
-      application.styl
-    img/
-      background.jpg
-```
-
-#### NPM package
-You can use your project as any other Node package. Your app will have one main 
-entry point (like most Node packages) that you can programatically use anywhere.
-
-``` js
-var app = require('yourapp').load();
-
-// Use models:
-var Article = require('yourapp/lib/article');
-Article.find({ id: 20 });
-
-// Fetch config:
-app.conf('database').hostname;
-```
-
-[Read more >](#routes)
-
-# Features
-
-## Expo executable
-
-## Routes
-
-## Database
-
-## Migrations
-
-## Helpers
-
-## Assets
-
-Runner
-------
-
-All applications come with a `run` executable. Use `./run --help` to see a list 
-of options.
-
-``` cmd
+$ cd myproject
 $ ./run --help
 
   Usage: run [options] [command]
@@ -203,6 +140,7 @@ $ ./run --help
     db-create              Creates the environment's database
     db-drop                Drops the environment's database
     db-migrate             Run database migrations
+    gen-migration [name]   Creates a migration file in migrations/
     assets-precompile      Precompiles asset files
 
   Options:
@@ -212,102 +150,183 @@ $ ./run --help
     -e, --env [env]  Environment to start in [develompent]
 ```
 
-### Running the application
+[Read about the runner >]( .#runner )
 
-It's what's used to run the application:
+## Server
 
-``` cmd
-$ ./run server
+Run your a project using `./run server` (or its shortcut: `./run s`).
+In development mode, you server will automatically reload on code changes.
+
+```
+$ ./run s
 
   => Auto-restarting on changes
   => Running development mode at http://0.0.0.0:4567
-  => Ready [451ms]
-  GET / 200 929ms - 307b
+  => Ready [290ms]
+  GET / 200 486ms - 241b
+  GET / 200 116ms - 241b
+  GET /css/application.css 200 10ms - 36b
+  GET /js/application.js 200 2ms - 1b
 ```
 
-### Console
+## Console
 
-Start a console by using `./run console`. This starts a REPL shell. You can use 
-the object `app` to refer to your application.
+And you get a convenient REPL console.
 
-``` cmd
-$ ./run console
+```js
+$ ./run c
 
+  > 2 + 4
+  6
   > app.get('env')
   'development'
-  > %
 ```
 
 
-Tests
------
+## Entry point
 
-### Running tests
+Your Expo app behaves just like any Node package would. It has a main entry
+point, `app`, which is a Connect app.
 
-To run tests, use `npm test`, just as you would for any Node package. A 
-freshly-minted app will have some placeholder tests in `test/` -- try it out.
+```js
+$ node
 
-``` cmd
+  > app = require('.')
+  { ... }
+  > app.get('env')
+  'development'
+  > app.conf('database').username
+  'youruser'
+  > http.createServer(app).listen(5678);
+```
+
+
+## Tests (via mocha)
+
+Tests are available via Mocha and Chai. Just like all Node packages, the command 
+is the standard `npm test`.
+
+```
 $ npm test
 
+  > myapp@0.1.0 test
   > ./node_modules/.bin/mocha -R spec
-  debug: App loaded for test environment
-  ..
 
-  2 tests complete (400ms)
+  >  App loaded for test environment
+
+    App
+      Homepage should work (799ms)
+      should have the right env
+
+    2 tests complete (807 ms)
 ```
 
-### Creating tests
+[Read about tests >]( .#tests )
 
-Create a test as a JS file in the `test/` folder with the filename the ends in 
-`_test.js`.
 
-``` js
-/* test/article_test.js */
-var Article = require('../app/lib/article');
+## So how does the code look like?
 
-describe('Article', function() {
-  it('should work', function() {
-    var a = Article.build({ title: "Doing things" });
-    a.title.should.equal("Doing things");
-  });
-});
+Here's the main entry point, and the main initializer.
+You can dump JS files in `app/initializers/` and they will be automatically
+loaded when the app is loaded.
+
+```
+$ cat app.js
+
+  var app = module.exports = require('express')();
+  require('expo')(app, __dirname);
+
+
+$ cat app/initializers/app.js
+
+  var express = require('express');
+
+  module.exports = function(app) {
+    app.set('view engine', 'jade');
+    app.use(express['static'](app.path('public')));
+    app.use(express.methodOverride());
+    app.use(express.bodyParser());
+
+    app.configure('development', function() {
+      app.use(express.favicon());
+      app.use(express.logger('dev'));
+      app.use(express.errorHandler());
+    });
+  };
 ```
 
-### Using other packages
 
-You may want to use other packages, like say, [Sinon.js] for mocks and stubs.
-Just load them in the `test_helper.js` file as needed.
+## Routes
 
-``` js
-/* test/test_helper.js */
-global.sinon = require('sinon');
+Routes in app/routes are automatically loaded.
+
+```
+$ cat app/routes/home.js
+
+  module.exports = function(app) {
+    app.get('/', function(req, res) {
+      res.render('index', {});
+    });
+  };
 ```
 
-#### Read more
+[Read about routes >]( .#routes )
 
-See these third-party guides for more info.
 
-[Mocha >][Mocha] *A guide to things*
+## Helpers
 
-[Chai (should) >][Chai should] *Guide to the `.should` syntax*
+These will be available in your views automatically.
 
-[Chai (assert) >][Chai assert] *Guide to `assert()` API*
+```
+$ cat app/helpers/name_helper.js
+
+  module.exports = {
+    hello: function(name) {
+      return "Hello " + name;
+    }
+  };
+
+$ cat app/views/hello.jade
+
+  div= hello("Rico")
+```
+
+[Read about helpers >]( .#helpers )
+
+
+## Configuration
+
+Expo provides you helpers for Yaml and JSON configuration files via
+`app.conf()`.
+
+```
+$ cat config/database.yml
+
+  production:
+    username: 'rsc'
+    dbname: 'foobar_production'
+  development:
+    username: 'rsc'
+    dbname: 'foobar_development'
+
+$ ./run console
+
+  > app.conf('database').dbname
+  "foobar_development"
+```
 
 
 Misc
 ====
 
-Image
------
-
-[http://www.flickr.com/photos/feuilllu/7473428030/sizes/l/in/photostream/]
 
 Acknowledgements
 ----------------
 
 © 2013, Rico Sta. Cruz. Released under the [MIT 
 License](http://www.opensource.org/licenses/mit-license.php).
+
+[Image] was taken from Flickr, licensed under Creative Commons.
 
 **Expo** is authored and maintained by [Rico Sta. Cruz][rsc] with help from its 
 [contributors][c]. It is sponsored by my startup, [Nadarei, Inc][nd].
@@ -320,7 +339,6 @@ License](http://www.opensource.org/licenses/mit-license.php).
 [rsc]: http://ricostacruz.com
 [c]:   http://github.com/rstacruz/expo/contributors
 [nd]:  http://nadarei.co
-
 [connect-assets]: https://github.com/adunkman/connect-assets
 [Express]: http://expressjs.com/
 [connect]: https://github.com/senchalabs/connect
@@ -334,7 +352,4 @@ License](http://www.opensource.org/licenses/mit-license.php).
 [Chai assert]: http://chaijs.com/api/assert/
 [Superagent]: https://npmjs.org/package/superagent
 [Sinon.js]: http://sinonjs.org/
-
-[shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
-[install]: https://npmjs.org/doc/install.html
-[Demo]: https://raw.github.com/rstacruz/expo/master/support/demo.txt
+[Image]:http://www.flickr.com/photos/feuilllu/7473428030/sizes/l/in/photostream/
