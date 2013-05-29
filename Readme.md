@@ -80,55 +80,52 @@ switches to generate the default layout:
 ```
 $ expo hello
 
-       hello
-       hello/Readme.md
-       hello/run
-       hello/app.js
-       hello/.gitignore
-       hello/package.json
-       hello/app
-     Assets - these are where your images, CSS and JS files live
-       hello/app/assets
-       hello/app/assets/css
-       hello/app/assets/css/application.styl
-       hello/app/assets/js
-       hello/app/assets/js/application.js
-       hello/app/assets/img
-       hello/app/assets/img/.gitkeep
-     Initializers - code that initializes the app environment
-       hello/app/initializers
-       hello/app/initializers/app.js
-       hello/app/initializers/assets.js
-       hello/app/initializers/sessions.js
-     Helpers - functions available in your views
-       hello/app/helpers
-       hello/app/helpers/app_helper.js
-     Routes - auto-loaded files that create URL routes
-       hello/app/routes
-       hello/app/routes/home.js
-     Tasks - command line tasks
-       hello/app/tasks
-       hello/app/tasks/db.js
-     Views - template files
-       hello/app/views
-       hello/app/views/index.jade
-       hello/app/views/layout.jade
-     Config - yaml config files
-       hello/config
-       hello/config/database.yml.example
-       hello/config/secret_token.yml
-     Database - development sqlite database
-       hello/db
-       hello/db/.gitkeep
-       hello/lib
-       hello/lib/.gitkeep
-     Public - normal files go here
-       hello/public
-       hello/public/robots.txt
-     Test - tests, specs
-       hello/test
-       hello/test/setup.js
-       hello/test/app_test.js
+             hello/  your project
+                     Readme.md
+                     run
+                     app.js
+                     .gitignore
+                     package.json
+
+        app/assets/  where your images, CSS and JS files live
+                     app/assets/css/application.styl
+                     app/assets/js/application.js
+                     app/assets/img/.gitkeep
+
+  app/initializers/  code that initializes the app environment
+                     app/initializers/app.js
+                     app/initializers/assets.js
+                     app/initializers/sessions.js
+
+       app/helpers/  functions available in your views
+                     app/helpers/app_helper.js
+
+        app/routes/  auto-loaded files that create URL routes
+                     app/routes/home.js
+
+         app/tasks/  command line tasks
+                     app/tasks/db.js
+
+         app/views/  template files
+                     app/views/index.jade
+                     app/views/layout.jade
+
+            config/  yaml config files
+                     config/database.yml.example
+                     config/secret_token.yml
+
+                db/  development sqlite database
+                     db/.gitkeep
+
+              lib/   models and code
+                     lib/.gitkeep
+
+            public/  normal files go here
+                     public/robots.txt
+
+              test/  tests, specs
+                     test/setup.js
+                     test/app_test.js
 
   install dependencies:
     $ cd aoeu

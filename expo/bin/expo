@@ -40,9 +40,10 @@ cli
 
     var f = new Folder(p);
 
+    f.banner(p, 'your project');
     f.mkdir('');
     f.write('Readme.md', render.readme('Readme.md'));
-    f.write('/run', render.text('run'), 0755);
+    f.write('run', render.text('run'), 0755);
     f.write('app.js', render.appjs('app.js'));
     f.write('.gitignore', render.text('gitignore'));
     f.write('package.json', render.package('package.json'));
@@ -50,7 +51,7 @@ cli
     f.mkdir('app');
 
     if (options.assets) {
-      f.banner('Assets', 'these are where your images, CSS and JS files live', 32);
+      f.banner('app/assets', 'where your images, CSS and JS files live', 32);
       f.mkdir('app/assets');
       f.mkdir('app/assets/css');
       f.write('app/assets/css/application.styl', render.text('assets.application.styl'));
@@ -59,7 +60,7 @@ cli
       f.gkeep('app/assets/img');
     }
 
-    f.banner('Initializers', 'code that initializes the app environment', 33);
+    f.banner('app/initializers', 'code that initializes the app environment', 33);
     f.mkdir('app/initializers');
     f.write('app/initializers/app.js', render.js('init.app.js'));
     options.assets &&
@@ -68,27 +69,27 @@ cli
     f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
 
     if (options.helpers) {
-      f.banner('Helpers', 'functions available in your views', 34);
+      f.banner('app/helpers', 'functions available in your views', 34);
       f.mkdir('app/helpers');
       f.write('app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
     }
 
-    f.banner('Routes', 'auto-loaded files that create URL routes', 36);
+    f.banner('app/routes', 'auto-loaded files that create URL routes');
     f.mkdir('app/routes');
     f.write('app/routes/home.js', render.js('routes.home.js'));
 
     if (options.tasks) {
-      f.banner('Tasks', 'command line tasks', 32);
+      f.banner('app/tasks', 'command line tasks');
       f.mkdir('app/tasks');
       f.write('app/tasks/db.js', render.js('tasks.db.js'));
     }
 
-    f.banner('Views', 'template files', 33);
+    f.banner('app/views', 'template files');
     f.mkdir('app/views');
     f.write('app/views/index.jade', render.jade('views.index.jade'));
     f.write('app/views/layout.jade', render.jade('views.layout.jade'));
 
-    f.banner('Config', 'yaml config files', 34);
+    f.banner('config', 'yaml config files', 34);
     f.mkdir('config');
     options.db &&
     f.write('config/database.yml.example', render.js('config.database.yml'));
@@ -96,20 +97,21 @@ cli
     f.write('config/secret_token.yml', render.js('config.secret_token.yml'));
 
     if (options.db) {
-      f.banner('Database', 'development sqlite database', 35);
+      f.banner('db', 'development sqlite database');
       f.gkeep('db');
     }
 
+    f.banner('lib', 'models and code');
     f.gkeep('lib');
 
     if (options.public) {
-      f.banner('Public', 'normal files go here', 35);
+      f.banner('public', 'static files go here');
       f.mkdir('public');
       f.write('public/robots.txt', render.text('robots.txt'));
     }
 
     if (options.tests) {
-      f.banner('Test', 'tests, specs', 36);
+      f.banner('test', 'tests, specs');
       f.mkdir('test');
       f.write('test/setup.js', render.js('test.setup.js'));
       f.write('test/app_test.js', render.js('test.app_test.js'));
