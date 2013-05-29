@@ -7,10 +7,12 @@ describe('Events', function() {
 
   var events = [
     'load:before',
-    'routes:before',
-    'routes:after',
+    'initializers:before',
+    'initializers:after',
     'helpers:before',
     'helpers:after',
+    'routes:before',
+    'routes:after',
     'load:after'
   ];
 
@@ -19,5 +21,19 @@ describe('Events', function() {
       app.on(e, function() { done(); });
       app.load();
     });
+  });
+
+  it('should emit the right sequence', function(done) {
+    var emitted = [];
+    events.forEach(function(e) {
+      app.on(e, function() { emitted.push(e); });
+    });
+
+    app.on('load:after', function() {
+      emitted.join(",").should.equal(events.join(","));
+      done();
+    });
+
+    app.load();
   });
 });
