@@ -94,7 +94,7 @@ cli
     options.db &&
     f.write('config/database.yml.example', render.js('config.database.yml'));
     options.sessions &&
-    f.write('config/secret_token.yml', render.js('config.secret_token.yml'));
+    f.write('config/secret_token.yml', render.secret());
 
     if (options.db) {
       f.banner('db', 'development sqlite database');
