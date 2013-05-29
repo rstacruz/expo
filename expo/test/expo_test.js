@@ -1,4 +1,4 @@
-require('./test_helper');
+require('./setup');
 
 describe('Expo', function() {
   beforeEach(function() {
