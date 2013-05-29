@@ -80,52 +80,52 @@ switches to generate the default layout:
 ```
 $ expo hello
 
-             hello/  your project
-                     Readme.md
-                     run
-                     app.js
-                     .gitignore
-                     package.json
+        hello/  your project
+                Readme.md
+                run
+                app.js
+                .gitignore
+                package.json
 
-        app/assets/  where your images, CSS and JS files live
-                     app/assets/css/application.styl
-                     app/assets/js/application.js
-                     app/assets/img/.gitkeep
+       assets/  where your images, CSS and JS files live
+                app/assets/css/application.styl
+                app/assets/js/application.js
+                app/assets/img/.gitkeep
 
-  app/initializers/  code that initializes the app environment
-                     app/initializers/app.js
-                     app/initializers/assets.js
-                     app/initializers/sessions.js
+ initializers/  code that initializes the app environment
+                app/initializers/app.js
+                app/initializers/assets.js
+                app/initializers/sessions.js
 
-       app/helpers/  functions available in your views
-                     app/helpers/app_helper.js
+      helpers/  functions available in your views
+                app/helpers/app_helper.js
 
-        app/routes/  auto-loaded files that create URL routes
-                     app/routes/home.js
+       routes/  auto-loaded files that create URL routes
+                app/routes/home.js
 
-         app/tasks/  command line tasks
-                     app/tasks/db.js
+        tasks/  command line tasks
+                app/tasks/db.js
 
-         app/views/  template files
-                     app/views/index.jade
-                     app/views/layout.jade
+        views/  template files
+                app/views/index.jade
+                app/views/layout.jade
 
-            config/  yaml config files
-                     config/database.yml.example
-                     config/secret_token.yml
+       config/  yaml config files
+                config/database.yml.example
+                config/secret_token.yml
 
-                db/  development sqlite database
-                     db/.gitkeep
+           db/  development sqlite database
+                db/.gitkeep
 
-              lib/   models and code
-                     lib/.gitkeep
+         lib/   models and code
+                lib/.gitkeep
 
-            public/  normal files go here
-                     public/robots.txt
+       public/  normal files go here
+                public/robots.txt
 
-              test/  tests, specs
-                     test/setup.js
-                     test/app_test.js
+         test/  tests, specs
+                test/setup.js
+                test/app_test.js
 
   install dependencies:
     $ cd aoeu

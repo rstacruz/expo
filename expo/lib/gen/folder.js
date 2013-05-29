@@ -29,6 +29,9 @@ Folder.prototype.gkeep = function(fpath) {
   this.write(fpath+'/.gitkeep', '');
 };
 
+
+var width = 17;
+
 /**
  * Writes a file.
  *
@@ -39,19 +42,19 @@ Folder.prototype.write = function(_fpath, str, mode) {
   fpath = path.join(this.root, _fpath);
 
   if (exists(fpath)) {
-    console.log(c(30, rpad('skip: ', 21) + _fpath));
+    console.log(c(30, rpad('skip: ', width) + _fpath));
     return;
   }
 
   fs.writeFileSync(fpath, str);
-  console.log(c(36, rpad('', 21)) + _fpath);
+  console.log(c(36, rpad('', width)) + _fpath);
 
   if (mode) fs.chmodSync(fpath, mode);
 };
 
 Folder.prototype.banner = function(header, msg) {
   msg = '  ' + msg;
-  console.log(c(34, rpad(header+'/', 21-2)) + c(30, msg));
+  console.log(c(34, rpad(header+'/', width-2)) + c(30, msg));
 };
 
 function c(n, str) {

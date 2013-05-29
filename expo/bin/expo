@@ -51,7 +51,7 @@ cli
     f.mkdir('app');
 
     if (options.assets) {
-      f.banner('app/assets', 'where your images, CSS and JS files live', 32);
+      f.banner('assets', 'where your images, CSS and JS files live', 32);
       f.mkdir('app/assets');
       f.mkdir('app/assets/css');
       f.write('app/assets/css/application.styl', render.text('assets.application.styl'));
@@ -60,7 +60,7 @@ cli
       f.gkeep('app/assets/img');
     }
 
-    f.banner('app/initializers', 'code that initializes the app environment', 33);
+    f.banner('initializers', 'code that initializes the app environment', 33);
     f.mkdir('app/initializers');
     f.write('app/initializers/app.js', render.js('init.app.js'));
     options.assets &&
@@ -69,22 +69,22 @@ cli
     f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
 
     if (options.helpers) {
-      f.banner('app/helpers', 'functions available in your views', 34);
+      f.banner('helpers', 'functions available in your views', 34);
       f.mkdir('app/helpers');
       f.write('app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
     }
 
-    f.banner('app/routes', 'auto-loaded files that create URL routes');
+    f.banner('routes', 'auto-loaded files that create URL routes');
     f.mkdir('app/routes');
     f.write('app/routes/home.js', render.js('routes.home.js'));
 
     if (options.tasks) {
-      f.banner('app/tasks', 'command line tasks');
+      f.banner('tasks', 'command line tasks');
       f.mkdir('app/tasks');
       f.write('app/tasks/db.js', render.js('tasks.db.js'));
     }
 
-    f.banner('app/views', 'template files');
+    f.banner('views', 'template files');
     f.mkdir('app/views');
     f.write('app/views/index.jade', render.jade('views.index.jade'));
     f.write('app/views/layout.jade', render.jade('views.layout.jade'));
