@@ -67,9 +67,6 @@ var app = module.exports = function(app) {
       // Load initializers of the application.
       loadAppPath('initializers', function(mixin) { mixin(app); });
 
-      // Ensure this is the last middleware in the stack.
-      app.use(app.router);
-
       // Apply the helpers using `.local()` to make them available to all views.
       loadAppPath('helpers', function(helpers) { app.locals(helpers); });
 

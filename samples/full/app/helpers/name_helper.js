@@ -1,6 +1,3 @@
-module.exports = {
-    hello: function(name) {
-      return "Hello " + name;
-    }
+exports.hello = function(name) {
+  return "Hello " + name;
 };
-
