@@ -210,11 +210,9 @@ $ cat app/initializers/app.js
 $ cat app/routes/home.js
 
   module.exports = function(app) {
-
     app.get('/', function(req, res) {
       res.render('index', {});
     });
-
   };
 
 
@@ -227,3 +225,24 @@ $ cat app/helpers/name_helper.js
       return "Hello " + name;
     }
   };
+
+
+
+# ----------------------------------------------------------------------------
+# Configuration!
+# ----------------------------------------------------------------------------
+
+$ cat config/database.yml
+
+  production:
+    username: 'rsc'
+    dbname: 'foobar_production'
+  development:
+    username: 'rsc'
+    dbname: 'foobar_development'
+
+$ ./run console
+
+  > app.conf('database').dbname
+  "foobar_development"
+
