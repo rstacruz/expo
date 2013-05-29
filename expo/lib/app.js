@@ -2,7 +2,6 @@ var path = require('path');
 var loadModules = require('./path_helpers').loadModules;
 var EventEmitter = require('events').EventEmitter;
 
-
 /**
  * Application extensions mixin.
  * Extends an Express app with more functions.
@@ -66,16 +65,16 @@ var app = module.exports = function(app) {
       if (env === 'test') events.emit('load:test:before', app);
 
       // Load initializers of the application.
-      loadPath('app/initializers', function(mixin) { mixin(app); });
+      loadAppPath('initializers', function(mixin) { mixin(app); });
 
       // Ensure this is the last middleware in the stack.
       app.use(app.router);
 
       // Apply the helpers using `.local()` to make them available to all views.
-      loadPath('app/helpers', function(helpers) { app.locals(helpers); });
+      loadAppPath('helpers', function(helpers) { app.locals(helpers); });
 
       // Load routes of the application.
-      loadPath('app/routes', function(mixin) { mixin(app); });
+      loadAppPath('routes', function(mixin) { mixin(app); });
 
       // After hooks
       if (env === 'test') events.emit('load:test:after', app);
@@ -157,22 +156,23 @@ var app = module.exports = function(app) {
   var configData = {};
 
   /**
-   * Loads configuration from a file.
+   * Loads configuration from a file. Yaml, JSON and JS are supported.
    *
-   *     // Reads `config/secret_token.js`
+   *     // Reads `config/secret_token.yml`
+   *     // (or .json, or .js, or .coffee)
    *     app.conf('secret_token');
    */
 
   app.conf = function(file) {
     if (!(file in configData)) {
-      var data;
-      try {
-        data = require(app.path('config', file));
-      } catch (e) {
-        throw ("Config file '"+file+"' not found.");
-      }
-      data = data[app.get('env')];
-      configData[file] = data;
+      var load = require('./conf');
+
+      var data = load(file, [
+        app.path('config'),
+        path.join(process.cwd(), 'config')
+      ]);
+
+      configData[file] = data[app.get('env')];
     }
 
     return configData[file];
@@ -196,9 +196,9 @@ var app = module.exports = function(app) {
    * @api private
    */
 
-  function loadPath(path, callback) {
+  function loadAppPath(path, callback) {
     events.emit(path+':before', app);
-    loadModules(app.path(path), callback);
+    loadModules(app.path('app', path), callback);
     events.emit(path+':after', app);
   }
 };

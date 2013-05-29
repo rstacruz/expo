@@ -11,7 +11,8 @@
   "scripts": { "test": "./node_modules/.bin/mocha -R spec" },
   "dependencies": {
     "commander": "1.1.x",
-    "supervisor": "0.5.x"
+    "supervisor": "0.5.x",
+    "js-yaml": "2.x"
   },
   "devDependencies": {
     "express": "3.2.x",

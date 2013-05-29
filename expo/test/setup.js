@@ -15,4 +15,11 @@ global.fixturePath = function(name) {
   return path.resolve(__dirname, 'fixtures', name);
 };
 
+global.loadFixtureApp = function(fixture) {
+  delete process.env.NODE_ENV;
+  var app = require('express')();
+  app = expo(app, fixturePath(fixture));
+  return app;
+};
+
 global.path = require('path');

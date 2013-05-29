@@ -1,6 +1,6 @@
 require('./setup');
 
-describe('Expo integration', function() {
+describe('Integration', function() {
   var app;
   beforeEach(function() {
     app = require('express')();
@@ -14,7 +14,7 @@ describe('Expo integration', function() {
     done();
   });
 
-  describe("CLI", function() {
+  describe("Command line", function() {
     var out;
 
     beforeEach(function() {

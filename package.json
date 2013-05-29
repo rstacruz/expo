@@ -8,8 +8,6 @@
     "test": "cd expo && npm test"
   },
   "devDependencies": {
-    "expo": "*",
-    "expo-connect_assets": "*",
-    "expo-sequelize": "*"
+    "libyaml": "0.2.x"
   }
 }
