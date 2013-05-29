@@ -5,26 +5,9 @@ var cli = require('commander');
 var fs = require('fs');
 
 var Helpers = require('../lib/gen/helpers');
-var exec = Helpers.exec;
-
 var Folder = require('../lib/gen/folder');
-
-/**
- * echo str > path.
- *
- * @param {String} path
- * @param {String} str
- */
-
-function write(path, str) {
-  if (exists(path)) {
-    console.log('  \033[30m skip: ' + path + '\033[0m');
-    return;
-  }
-  fs.writeFileSync(path, str);
-  console.log('  \033[36m      \033[0m ' + path);
-}
-
+var Renderer = require('../lib/gen/renderer');
+var exec = Helpers.exec;
 
 cli
   .version(require('../package').version);
@@ -51,7 +34,7 @@ cli
       public: !cli.noPublic && !cli.bare
     };
 
-    var render = getRender(options);
+    var render = Renderer(options);
     var p = project;
 
     var f = new Folder(p);
@@ -149,89 +132,3 @@ cli
   });
 
 cli.parse(process.argv);
-
-function getRender(options) {
-  return {
-    text: function(fpath) {
-      return readTemplate(fpath);
-    },
-    js: function(fpath) {
-      return readTemplate(fpath);
-    },
-    readme: function(fpath) {
-      return this.text(fpath)
-        .replace(/PROJECT/g, options.project);
-    },
-    jade: function(fpath) {
-      var str = this.text(fpath);
-      if (!options.assets)
-        str = str.replace(/\n.*( js| css).*\n/g, '\n');
-      return str;
-    },
-    appjs: function(fpath) {
-      var str = this.js(fpath);
-      if (!options.db)
-        str = str.replace(/^.*'expo-sequelize'.*\n/mg, '\n');
-      if (!options.assets)
-        str = str.replace(/^.*'expo-connect_assets'.*\n/mg, '\n');
-      return str;
-    },
-    package: function(fpath) {
-      var str = this.readme(fpath);
-      if (!options.db)
-        str = str.replace(/^.*"(expo-sequelize|pg|mysql|sqlite3)".*\n/mg, '\n');
-      if (!options.assets)
-        str = str.replace(/^.*"(expo-connect_assets|stylus|nib)".*\n/mg, '\n');
-      if (!options.tests)
-        str = str.replace(/^.*"(test|mocha|chai|supertest)".*\n/mg, '\n');
-      str = JSON.stringify(JSON.parse(str), null, 2);
-      return str;
-    },
-  };
-}
-
-function readTemplate(fpath) {
-  var fullpath = path.resolve(__dirname, '../template', fpath);
-  return fs.readFileSync(fullpath).toString();
-}
-
-function gkeep(path) {
-  mkdir(path);
-  write(path+'/.gitkeep', '');
-}
-
-/**
- * echo str > path.
- *
- * @param {String} path
- * @param {String} str
- */
-
-function write(path, str) {
-  if (exists(path)) {
-    console.log('  \033[30m skip: ' + path + '\033[0m');
-    return;
-  }
-  fs.writeFileSync(path, str);
-  console.log('  \033[36m      \033[0m ' + path);
-}
-
-/**
- * Mkdir -p.
- *
- * @param {String} path
- j
- */
-
-function mkdir(path) {
-  if (exists(path)) {
-    console.log('  \033[30m skip: ' + path + '/\033[0m');
-    return;
-  }
-  fs.mkdirSync(path, 0755);
-  console.log('  \033[36mmkdir: \033[36m' + path + '/\033[0m');
-}
-
-function exists(path) {
-  return fs.existsSync(path);
-}
