@@ -1,8 +1,7 @@
 language: node_js
 node_js: ["0.10"]
 install:
-  - "cd expo && npm install"
-  - "cd expo-connect_assets && npm install"
-  - "cd expo-sequelize && npm install"
-  - "cd expo && npm link ../expo-connect_assets"
-  - "cd expo && npm link ../expo-sequelize"
+  - cd expo
+  - npm link ../expo-connect_assets
+  - npm link ../expo-sequelize
+  - npm install
