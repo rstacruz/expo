@@ -43,20 +43,24 @@ generates the bare minimum:
 ```
 $ expo --bare hello
 
-  mkdir: hello/
-         hello/Readme.md
-         hello/run
-         hello/app.js
-         hello/.gitignore
-         hello/package.json
-  mkdir: hello/app/
-  mkdir: hello/app/initializers/
-         hello/app/initializers/app.js
-  mkdir: hello/app/routes/
-         hello/app/routes/home.js
-  mkdir: hello/app/views/
-         hello/app/views/index.jade
-         hello/app/views/layout.jade
+        hello/  your project
+                Readme.md
+                run
+                app.js
+                .gitignore
+                package.json
+
+ initializers/  code that initializes the app environment
+                app/initializers/app.js
+                app/initializers/assets.js
+                app/initializers/sessions.js
+
+       routes/  auto-loaded files that create URL routes
+                app/routes/home.js
+
+        views/  template files
+                app/views/index.jade
+                app/views/layout.jade
 
   install dependencies:
     $ cd hello

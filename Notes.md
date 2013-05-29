@@ -35,9 +35,9 @@ Features
 
 Core:
 
-- Generator bin
+- Generator bin (done)
 - Error
-- Multiple config paths
+- Multiple config paths (done)
 - Initializers (done)
 - Tasks (done)
 - Supervisor (done)
