@@ -35,6 +35,8 @@ apps together with multiple packages.
    * Logging
    * Config file loading
 
+[View a demo >][Demo]
+
 [![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
 
 Getting started
@@ -335,3 +337,4 @@ License](http://www.opensource.org/licenses/mit-license.php).
 
 [shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
 [install]: https://npmjs.org/doc/install.html
+[Demo]: https://raw.github.com/rstacruz/expo/master/support/demo.txt
