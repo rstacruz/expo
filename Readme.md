@@ -78,45 +78,61 @@ databases, sessions, tests, helpers and other doodads. Use `expo` without
 switches to generate the default layout:
 
 ```
-$ expo myproject
+$ expo hello
 
-  mkdir: myproject/
-         myproject/Readme.md
-         myproject/run
-         myproject/app.js
-         myproject/.gitignore
-         myproject/package.json
-  mkdir: myproject/app/
-  mkdir: myproject/app/assets/
-  mkdir: myproject/app/assets/css/
-         myproject/app/assets/css/application.styl
-  mkdir: myproject/app/assets/js/
-         myproject/app/assets/js/application.js
-  mkdir: myproject/app/assets/img/
-         myproject/app/assets/img/.gitkeep
-  mkdir: myproject/app/initializers/
-         myproject/app/initializers/app.js
-         myproject/app/initializers/assets.js
-         myproject/app/initializers/sessions.js
-  mkdir: myproject/app/helpers/
-         myproject/app/helpers/app_helper.js
-  mkdir: myproject/app/routes/
-         myproject/app/routes/home.js
-  mkdir: myproject/app/views/
-         myproject/app/views/index.jade
-         myproject/app/views/layout.jade
-  mkdir: myproject/config/
-         myproject/config/database.yml.example
-         myproject/config/secret_token.yml
-  mkdir: myproject/db/
-         myproject/db/.gitkeep
-  mkdir: myproject/lib/
-         myproject/lib/.gitkeep
-  mkdir: myproject/public/
-         myproject/public/robots.txt
-  mkdir: myproject/test/
-         myproject/test/setup.js
-         myproject/test/app_test.js
+       hello
+       hello/Readme.md
+       hello/run
+       hello/app.js
+       hello/.gitignore
+       hello/package.json
+       hello/app
+     Assets - these are where your images, CSS and JS files live
+       hello/app/assets
+       hello/app/assets/css
+       hello/app/assets/css/application.styl
+       hello/app/assets/js
+       hello/app/assets/js/application.js
+       hello/app/assets/img
+       hello/app/assets/img/.gitkeep
+     Initializers - code that initializes the app environment
+       hello/app/initializers
+       hello/app/initializers/app.js
+       hello/app/initializers/assets.js
+       hello/app/initializers/sessions.js
+     Helpers - functions available in your views
+       hello/app/helpers
+       hello/app/helpers/app_helper.js
+     Routes - auto-loaded files that create URL routes
+       hello/app/routes
+       hello/app/routes/home.js
+     Tasks - command line tasks
+       hello/app/tasks
+       hello/app/tasks/db.js
+     Views - template files
+       hello/app/views
+       hello/app/views/index.jade
+       hello/app/views/layout.jade
+     Config - yaml config files
+       hello/config
+       hello/config/database.yml.example
+       hello/config/secret_token.yml
+     Database - development sqlite database
+       hello/db
+       hello/db/.gitkeep
+       hello/lib
+       hello/lib/.gitkeep
+     Public - normal files go here
+       hello/public
+       hello/public/robots.txt
+     Test - tests, specs
+       hello/test
+       hello/test/setup.js
+       hello/test/app_test.js
+
+  install dependencies:
+    $ cd aoeu
+    $ npm install && npm shrinkwrap
 ```
 
 [Read about creating projects >]( .#expo-executable )
@@ -230,7 +246,7 @@ Here's the main entry point, and the main initializer.
 You can dump JS files in `app/initializers/` and they will be automatically
 loaded when the app is loaded.
 
-```
+```js
 $ cat app.js
 
   var app = module.exports = require('express')();
@@ -260,7 +276,7 @@ $ cat app/initializers/app.js
 
 Routes in app/routes are automatically loaded.
 
-```
+```js
 $ cat app/routes/home.js
 
   module.exports = function(app) {
@@ -277,7 +293,7 @@ $ cat app/routes/home.js
 
 These will be available in your views automatically.
 
-```
+```js
 $ cat app/helpers/name_helper.js
 
   module.exports = {
@@ -299,7 +315,7 @@ $ cat app/views/hello.jade
 Expo provides you helpers for Yaml and JSON configuration files via
 `app.conf()`.
 
-```
+```js
 $ cat config/database.yml
 
   production:

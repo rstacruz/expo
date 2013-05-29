@@ -16,11 +16,11 @@ Folder.prototype.mkdir = function (fpath) {
   fpath = path.join(this.root, fpath);
 
   if (exists(fpath)) {
-    console.log('  \033[30m skip: ' + fpath + '/\033[0m');
+    console.log(c(30, ' skip:  ' + fpath));
     return;
   }
   fs.mkdirSync(fpath, 0755);
-  console.log('  \033[36mmkdir: \033[36m' + fpath + '/\033[0m');
+  console.log(c(36, '       ') + fpath);
 };
 
 /**
@@ -44,12 +44,27 @@ Folder.prototype.write = function(fpath, str, mode) {
   fpath = path.join(this.root, fpath);
 
   if (exists(fpath)) {
-    console.log('  \033[30m skip: ' + fpath + '\033[0m');
+    console.log(c(30, ' skip: ' + fpath));
     return;
   }
 
   fs.writeFileSync(fpath, str);
-  console.log('  \033[36m      \033[0m ' + fpath);
+  console.log('       ' + fpath);
 
   if (mode) fs.chmodSync(fpath, mode);
 };
+
+Folder.prototype.banner = function(header, msg) {
+  msg = ' - ' + msg;
+  console.log(c(30, '     ') + c(34, header) + c(30, msg));
+};
+
+function c(n, str) {
+  return '\033['+n+'m'+str+'\033[0m';
+}
+
+function pad(n, char) {
+  var str = '';
+  for (var i=0; i<n; ++i) { str += char; }
+  return str;
+}
