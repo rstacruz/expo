@@ -35,7 +35,7 @@ apps together with multiple packages.
    * Logging
    * Config file loading
 
-[View a demo >][Demo]
+[View a demo >]( http://ricostacruz.com/expo/demo.html )
 
 [![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
 

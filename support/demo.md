@@ -1,9 +1,10 @@
-# ----------------------------------------------------------------------------
-# Expo lets you start up sites very fast.
-# Create a project using the `expo` command. Here we'll use `--bare`, which
-# generates the bare minimum:
-# ----------------------------------------------------------------------------
+# Expo demo
 
+Expo lets you start up sites very fast.
+Create a project using the `expo` command. Here we'll use `--bare`, which
+generates the bare minimum:
+
+```
 $ expo --bare hello
 
   mkdir: hello/
@@ -30,16 +31,18 @@ $ expo --bare hello
 
   more info:
     $ ./run --help
+```
 
+[Read about creating projects >]( .#expo-executable )
 
+## Full setup
 
-# ----------------------------------------------------------------------------
-# ...But this isn't always that useful, since you probably will need assets,
-# databases, sessions, tests, helpers and other doodads.
-#
-# Use `expo` without switches to generate the default layout:
-# ----------------------------------------------------------------------------
+...But this isn't always that useful, since you probably will need assets,
+databases, sessions, tests, helpers and other doodads.
 
+Use `expo` without switches to generate the default layout:
+
+```
 $ expo myproject
 
   mkdir: myproject/
@@ -79,14 +82,16 @@ $ expo myproject
   mkdir: myproject/test/
          myproject/test/setup.js
          myproject/test/app_test.js
+```
 
+[Read about creating projects >]( .#expo-executable )
 
+## Command line runner
 
-# ----------------------------------------------------------------------------
-# Expo projects come with a runner that gives you access to default tasks.
-# Simply invoke ./run in a project.
-# ----------------------------------------------------------------------------
+Expo projects come with a runner that gives you access to default tasks.
+Simply invoke ./run in a project.
 
+```
 $ cd myproject
 $ ./run --help
 
@@ -108,14 +113,16 @@ $ ./run --help
     -h, --help       output usage information
     -V, --version    output the version number
     -e, --env [env]  Environment to start in [develompent]
+```
 
+[Read about the runner >]( .#runner )
 
+## Server
 
-# ----------------------------------------------------------------------------
-# Run your a project using `./run server` (or its shortcut: `./run s`).
-# In development mode, you server will automatically reload on code changes.
-# ----------------------------------------------------------------------------
+Run your a project using `./run server` (or its shortcut: `./run s`).
+In development mode, you server will automatically reload on code changes.
 
+```
 $ ./run s
 
   => Auto-restarting on changes
@@ -125,27 +132,28 @@ $ ./run s
   GET / 200 116ms - 241b
   GET /css/application.css 200 10ms - 36b
   GET /js/application.js 200 2ms - 1b
+```
 
+## Console
 
+And you get a convenient REPL console.
 
-# ----------------------------------------------------------------------------
-# And you get a convenient REPL console.
-# ----------------------------------------------------------------------------
-
+```
 $ ./run c
 
   > 2 + 4
   6
   > app.get('env')
   'development'
+```
 
 
+## Entry point
 
-# ----------------------------------------------------------------------------
-# Your Expo app behaves just like any Node package would. It has a main entry
-# point, `app`, which is a Connect app.
-# ----------------------------------------------------------------------------
+Your Expo app behaves just like any Node package would. It has a main entry
+point, `app`, which is a Connect app.
 
+```
 $ node
 
   > app = require('.')
@@ -155,13 +163,15 @@ $ node
   > app.conf('database').username
   'youruser'
   > http.createServer(app).listen(5678);
+```
 
 
+## Tests (via mocha)
 
-# ----------------------------------------------------------------------------
-# Tests are available, just like all Node packages.
-# ----------------------------------------------------------------------------
+Tests are available via Mocha and Chai. Just like all Node packages, the command 
+is the standard `npm test`.
 
+```
 $ npm test
 
   > myapp@0.1.0 test
@@ -174,20 +184,24 @@ $ npm test
       should have the right env
 
     2 tests complete (807 ms)
+```
+
+[Read about tests >]( .#tests )
 
 
-# ----------------------------------------------------------------------------
-# How does the code look like?
-# ----------------------------------------------------------------------------
+## So how does the code look like?
 
-### Main entry point
+Here's the main entry point, and the main initializer.
+You can dump JS files in `app/initializers/` and they will be automatically
+loaded when the app is loaded.
+
+```
 $ cat app.js
 
   var app = module.exports = require('express')();
   require('expo')(app, __dirname);
 
 
-### Main initializer
 $ cat app/initializers/app.js
 
   var express = require('express');
@@ -204,9 +218,14 @@ $ cat app/initializers/app.js
       app.use(express.errorHandler());
     });
   };
+```
 
 
-### A route
+## Routes
+
+Routes in app/routes are automatically loaded.
+
+```
 $ cat app/routes/home.js
 
   module.exports = function(app) {
@@ -214,10 +233,16 @@ $ cat app/routes/home.js
       res.render('index', {});
     });
   };
+```
+
+[Read about routes >]( .#routes )
 
 
-### Helper
-### These will be available in your views automatically.
+## Helpers
+
+These will be available in your views automatically.
+
+```
 $ cat app/helpers/name_helper.js
 
   module.exports = {
@@ -226,12 +251,20 @@ $ cat app/helpers/name_helper.js
     }
   };
 
+$ cat app/views/hello.jade
+
+  div= hello("Rico")
+```
+
+[Read about helpers >]( .#helpers )
 
 
-# ----------------------------------------------------------------------------
-# Configuration!
-# ----------------------------------------------------------------------------
+## Configuration
 
+Expo provides you helpers for Yaml and JSON configuration files via
+`app.conf()`.
+
+```
 $ cat config/database.yml
 
   production:
@@ -245,4 +278,4 @@ $ ./run console
 
   > app.conf('database').dbname
   "foobar_development"
-
+```
