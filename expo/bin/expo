@@ -1,9 +1,30 @@
 #!/usr/bin/env node
 
 var path = require('path');
-var mkdirp = require('mkdirp');
 var cli = require('commander');
 var fs = require('fs');
+
+var Helpers = require('../lib/gen/helpers');
+var exec = Helpers.exec;
+
+var Folder = require('../lib/gen/folder');
+
+/**
+ * echo str > path.
+ *
+ * @param {String} path
+ * @param {String} str
+ */
+
+function write(path, str) {
+  if (exists(path)) {
+    console.log('  \033[30m skip: ' + path + '\033[0m');
+    return;
+  }
+  fs.writeFileSync(path, str);
+  console.log('  \033[36m      \033[0m ' + path);
+}
+
 
 cli
   .version(require('../package').version);
@@ -33,70 +54,71 @@ cli
     var render = getRender(options);
     var p = project;
 
-    mkdir(p);
-    write(p+'/Readme.md', render.readme('Readme.md'));
-    write(p+'/run', render.text('run'));
-    fs.chmodSync(p+'/run', 0755);
-    write(p+'/app.js', render.appjs('app.js'));
-    write(p+'/.gitignore', render.text('gitignore'));
-    write(p+'/package.json', render.package('package.json'));
+    var f = new Folder(p);
 
-    mkdir(p+'/app');
+    f.mkdir('');
+    f.write('Readme.md', render.readme('Readme.md'));
+    f.write('/run', render.text('run'), 0755);
+    f.write('app.js', render.appjs('app.js'));
+    f.write('.gitignore', render.text('gitignore'));
+    f.write('package.json', render.package('package.json'));
+
+    f.mkdir('app');
 
     if (options.assets) {
-      mkdir(p+'/app/assets');
-      mkdir(p+'/app/assets/css');
-      write(p+'/app/assets/css/application.styl', render.text('assets.application.styl'));
-      mkdir(p+'/app/assets/js');
-      write(p+'/app/assets/js/application.js', render.js('assets.application.js'));
-      gkeep(p+'/app/assets/img');
+      f.mkdir('app/assets');
+      f.mkdir('app/assets/css');
+      f.write('app/assets/css/application.styl', render.text('assets.application.styl'));
+      f.mkdir('app/assets/js');
+      f.write('app/assets/js/application.js', render.js('assets.application.js'));
+      f.gkeep('app/assets/img');
     }
 
-    mkdir(p+'/app/initializers');
-    write(p+'/app/initializers/app.js', render.js('init.app.js'));
+    f.mkdir('app/initializers');
+    f.write('app/initializers/app.js', render.js('init.app.js'));
     options.assets &&
-    write(p+'/app/initializers/assets.js', render.js('init.assets.js'));
+    f.write('app/initializers/assets.js', render.js('init.assets.js'));
     options.sessions &&
-    write(p+'/app/initializers/sessions.js', render.js('init.sessions.js'));
+    f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
 
     if (options.helpers) {
-      mkdir(p+'/app/helpers');
-      write(p+'/app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
+      f.mkdir('app/helpers');
+      f.write('app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
     }
 
-    mkdir(p+'/app/routes');
-    write(p+'/app/routes/home.js', render.js('routes.home.js'));
+    f.mkdir('app/routes');
+    f.write('app/routes/home.js', render.js('routes.home.js'));
 
     if (options.tasks) {
-      mkdir(p+'/app/tasks');
-      write(p+'/app/tasks/db.js', render.js('tasks.db.js'));
+      f.mkdir('app/tasks');
+      f.write('app/tasks/db.js', render.js('tasks.db.js'));
     }
 
-    mkdir(p+'/app/views');
-    write(p+'/app/views/index.jade', render.jade('views.index.jade'));
-    write(p+'/app/views/layout.jade', render.jade('views.layout.jade'));
+    f.mkdir('app/views');
+    f.write('app/views/index.jade', render.jade('views.index.jade'));
+    f.write('app/views/layout.jade', render.jade('views.layout.jade'));
 
-    mkdir(p+'/config');
+    f.mkdir('config');
     options.db &&
-    write(p+'/config/database.js.example', render.js('config.database.js'));
+    f.write('config/database.js.example', render.js('config.database.js'));
     options.sessions &&
-    write(p+'/config/secret_token.js', render.js('config.secret_token.js'));
+    f.write('config/secret_token.js', render.js('config.secret_token.js'));
 
     if (options.db) {
-      gkeep(p+'/db');
+      f.gkeep('db');
     }
 
-    gkeep(p+'/lib');
+    f.gkeep('lib');
 
     if (options.public) {
-      mkdir(p+'/public');
-      write(p+'/public/robots.txt', render.text('robots.txt'));
+      f.mkdir('public');
+      f.write('public/robots.txt', render.text('robots.txt'));
     }
 
     if (options.tests) {
-      mkdir(p+'/test');
-      write(p+'/test/setup.js', render.js('test.setup.js'));
-      write(p+'/test/app_test.js', render.js('test.app_test.js'));
+      f.mkdir('test');
+      f.write('test/setup.js', render.js('test.setup.js'));
+      f.write('test/app_test.js', render.js('test.app_test.js'));
     }
 
     console.log('');
@@ -212,13 +234,4 @@ function mkdir(path) {
 
 function exists(path) {
   return fs.existsSync(path);
-}
-
-function exec(args, callback) {
-  var spawn = require('child_process').spawn;
-  var proc = spawn('sh', ['-c', args].concat(args), { stdio: 'inherit', customFds: [0, 1, 2] });
-  proc.on('exit', function(code){
-    if (code > 0) return callback(code);
-    return callback();
-  });
 }
