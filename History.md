@@ -1,5 +1,4 @@
-v0.1.2 - Unreleased
--------------------
+## v0.1.2 - May 30, 2013
 
 App generator:
 
@@ -19,7 +18,6 @@ Assets:
 
  * Fix asset precompilation.
 
-v0.1.1 - May 30, 2013
----------------------
+## v0.1.1 - May 30, 2013
 
 Initial feature-complete release.
