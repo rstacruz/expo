@@ -210,9 +210,9 @@ var app = module.exports = function(app) {
 
   function notFound(req, res, next) {
     res.render('errors/404', { status: 404, url: req.url });
-  };
+  }
 
   function serverError(err, req, res, next) {
     res.render('errors/500', { status: 500, error: err });
-  };
+  }
 };

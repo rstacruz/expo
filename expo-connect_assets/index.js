@@ -1,7 +1,7 @@
 var extend = require('util')._extend;
 
 module.exports = function(app) {
-  app.on('load:after', function(app) {
+  app.on('initializers:after', function(app) {
     var env = app.get('env');
 
     var options = {
