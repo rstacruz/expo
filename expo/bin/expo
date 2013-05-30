@@ -99,6 +99,9 @@ function spawn(project) {
   f.mkdir('app/views');
   f.write('app/views/index.jade', render.jade('views.index.jade'));
   f.write('app/views/layout.jade', render.jade('views.layout.jade'));
+  f.mkdir('app/views/errors');
+  f.write('app/views/errors/404.jade', render.jade('views.404.jade'));
+  f.write('app/views/errors/500.jade', render.jade('views.500.jade'));
 
   f.banner('config', 'yaml config files', 34);
   f.mkdir('config');

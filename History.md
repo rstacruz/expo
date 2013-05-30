@@ -4,6 +4,7 @@ Expo:
 
  * Config: allow 'default' configuration scope.
  * CLI: improve `expo --help` help text.
+ * Add support for 404 and 500 error handlers.
 
 Assets:
 

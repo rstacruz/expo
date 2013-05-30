@@ -70,6 +70,11 @@ var app = module.exports = function(app) {
       // Load initializers of the application.
       loadAppPath('initializers', 'function', function(mixin) { mixin(app); });
 
+      // Middleware for 'file not found' and 'server error' -- must always be
+      // the last
+      app.use(notFound);
+      app.use(serverError);
+
       // Apply the helpers using `.local()` to make them available to all views.
       loadAppPath('helpers', 'object', function(helpers) { app.locals(helpers); });
 
@@ -202,4 +207,12 @@ var app = module.exports = function(app) {
     loadModules(app.path('app', path), type, callback);
     events.emit(path+':after', app);
   }
+
+  function notFound(req, res, next) {
+    res.render('errors/404', { status: 404, url: req.url });
+  };
+
+  function serverError(err, req, res, next) {
+    res.render('errors/500', { status: 500, error: err });
+  };
 };
