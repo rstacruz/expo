@@ -1,3 +1,13 @@
+## v0.1.3
+
+Expo:
+
+ * Config: allow 'default' configuration scope.
+
+Assets:
+
+ * Read config out of `assets.yml` instead.
+
 ## v0.1.2 - May 30, 2013
 
 App generator:
@@ -13,7 +23,6 @@ App generator:
 Expo:
 
  * CLI tasks that aren't returning JS code are now ignored.
- * Config: allow 'default' configuration scope.
 
 Assets:
 

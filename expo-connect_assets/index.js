@@ -33,7 +33,7 @@ module.exports = function(app) {
         process.chdir(app.root);
         app.load('production');
 
-        var packages = app.get('assets precompiled');
+        var packages = app.conf('assets').precompile;
         if (typeof packages !== 'object') {
           console.info("Warning: 'assets precompiled' setting found, no assets to be compiled.");
           process.exit(0);

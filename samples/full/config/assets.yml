@@ -1,0 +1,9 @@
+# List down CSS and JS files here to be precompiled when doing
+# `./run assets-precompile`.
+
+default:
+  precompile:
+    css:
+      - application
+    js:
+      - application
