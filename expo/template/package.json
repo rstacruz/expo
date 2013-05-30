@@ -17,6 +17,7 @@
     "stylus": "*",
     "nib": "*",
     "supertest": "*",
+    "sequelize": "1.7.x",
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
     "expo": "*"
