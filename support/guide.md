@@ -25,7 +25,7 @@ module.exports = {
 }
 ```
 
-#### Writing your first migration
+### Writing your first migration
 
 Fill up the `up` and `down` by issuing Sequelize SQL commands on `migration`, 
 and calling `done` upon completion.  See Sequelize's
@@ -51,7 +51,7 @@ down: function(migration, DataTypes, done) {
 }
 ```
 
-#### Performing migrations
+### Performing migrations
 
 To execute your migrations, just do `./run db-migrate`. Make sure that you have 
 your database created first (`./run db-create`). Sequelize will automatically 
@@ -194,4 +194,4 @@ See these third-party guides for more info.
 [shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
 [install]: https://npmjs.org/doc/install.html
 [Demo]: https://raw.github.com/rstacruz/expo/master/support/demo.txt
-[Migrations]: http://sequelizejs.com/documentation#migrations-skeleton
+[Migration]: http://sequelizejs.com/documentation#migrations-skeleton
