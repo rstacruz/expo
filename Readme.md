@@ -241,7 +241,10 @@ $ npm test
 [Read about tests >]( .#tests )
 
 
-## So how does the code look like?
+How it looks
+============
+
+## Initializers
 
 Here's the main entry point, and the main initializer.
 You can dump JS files in `app/initializers/` and they will be automatically
