@@ -63,9 +63,17 @@ $ ./run db-migrate
   ...
 ```
 
+More info about migrations in Sequelize's documentation.
+
+[Sequelize Migrations guide >][Migration]
+
 ## Helpers
 
 ## Assets
+
+See the `connect-assets` documentation for more info.
+
+[Connect assets guide >][connect-assets]
 
 Runner
 ------

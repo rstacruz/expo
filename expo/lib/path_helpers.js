@@ -28,7 +28,9 @@ function loadModules(filepath, callback) {
 
     // Ignore directories.
     if (isDirSync(fn)) return;
-    callback(require(fn));
+
+    var mixin = require(fn);
+    if (typeof mixin === 'function') callback(mixin);
   });
 }
 

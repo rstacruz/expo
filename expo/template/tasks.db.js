@@ -1,7 +1,7 @@
 // Sample task
-/*
 
 module.exports = function(app) {
+  /*
   app.cli()
     .command('db-seed')
     .description('Pre-fills the database with data')
@@ -11,6 +11,5 @@ module.exports = function(app) {
       // Do things here
 
     });
+  */
 };
-
-*/
