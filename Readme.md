@@ -73,7 +73,7 @@ $ expo --bare hello
     $ ./run --help
 ```
 
-[Read about creating projects >]( .#expo-executable )
+[Read about creating projects >]( guide.html#expo-executable )
 
 ## Full setup
 
@@ -136,7 +136,7 @@ $ expo hello
     $ npm install && npm shrinkwrap
 ```
 
-[Read about creating projects >]( .#expo-executable )
+[Read about creating projects >]( guide.html#expo-executable )
 
 ## Command line runner
 
@@ -167,7 +167,7 @@ $ ./run --help
     -e, --env [env]  Environment to start in [develompent]
 ```
 
-[Read about the runner >]( .#runner )
+[Read about the runner >]( guide.html#runner )
 
 ## Server
 
@@ -238,7 +238,7 @@ $ npm test
     2 tests complete (807 ms)
 ```
 
-[Read about tests >]( .#tests )
+[Read about tests >]( guide.html#tests )
 
 
 How it looks
@@ -290,7 +290,7 @@ $ cat app/routes/home.js
   };
 ```
 
-[Read about routes >]( .#routes )
+[Read about routes >]( guide.html#routes )
 
 
 ## Helpers
@@ -311,7 +311,7 @@ $ cat app/views/hello.jade
   div= hello("Rico")
 ```
 
-[Read about helpers >]( .#helpers )
+[Read about helpers >]( guide.html#helpers )
 
 
 ## Configuration
