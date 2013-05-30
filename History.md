@@ -9,6 +9,7 @@ App generator:
  * Fix the 'npm install' error.
  * Automatically gitignore compiled assets.
  * Move test packages into devDependencies.
+ * Remove pg/mysql by default.
 
 Expo:
 

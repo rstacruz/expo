@@ -3,12 +3,16 @@ development:
   storage: 'db/development.sqlite'
 
 test:
-  dialect: 'postgres'
-  database: 'expo_test'
-  username: 'rsc'
-  password: ''
-  port: 5432
+  dialect: 'sqlite'
+  storage: 'db/test.sqlite'
 
+# Important:
+# to use 'mysql' or 'postgres', be sure to add one of the following to your
+# package.json dependencies:
+#
+#   "pg": "0.10.x",
+#   "mysql": "2.0.x",
+#
 production:
   dialect: 'mysql'
   database: 'expo_production'
