@@ -1,141 +1,5 @@
-Expo
-====
-
-
-[![Build Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
-
-Getting started
----------------
-
-Create your first Expo application by installing the `expo` command and 
-generating your application with it.
-
-``` cmd
-$ npm install -g expo
-$ expo yourapp
-```
-
-#### File structure
-
-This gets you a new Node.js project with the following files. (Every
-directory here is optional: you may delete any that you don't need!)
-
-``` files
-yourapp/
-  app/
-    views/
-    helpers/
-    initializers/
-    migrations/
-    routes/
-    tasks/
-  assets/
-    css/
-    js/
-    img/
-  config/
-  lib/
-  public/
-  test/
-  app.js
-  run*
-  package.json
-```
-
-#### Boot up your stack
-
-Now initialize your environment by installing all `npm` dependencies.
-*(See: [install], [shrinkwrap])*
-You can run your app with the included `run` script afterwards.
-
-``` cmd
-$ cd yourapp
-$ npm install && npm shrinkwrap
-```
-
-``` cmd
-$ ./run server
-=> env: development
-=> url: http://0.0.0.0:4567/
-=> Ready [480ms]
-```
-
-#### Let's begin
-
-It's time to begin! Let's learn about making your first routes and views for 
-your new app.
-
-[Routes Guide >](#routes)
-
-Summary of features
--------------------
-
-#### Routes
-
-Routes are supported via [Express]. Just add your route files to `app/routes/` 
-and everything else will be taken care of for you.
-
-``` js
-// app/routes/home.js
-module.exports = function(app) {
-  app.get('/', function(req, res) {
-    res.send("Hola, mundo!");
-  });
-};
-```
-
-#### Command-line runner
-
-Just do `./run server` or `./run console`. You may also define custom tasks you 
-may need in your app.
-
-``` cmd
-$ ./run --help
-
-  Commands:
-    server              Starts the server
-    console             Opens the console
-    db:migrate          Performs database migrations
-    assets:precompile   Compiles asset files
-    ...
-```
-
-#### Assets
-
-Just add your asset files in `app/assets/`. JavaScript, CoffeeScript, Less, 
-     Stylus are supported. They will be compiled, concatenated, and compressed 
-     as needed.
-
-``` files
-app/
-  assets/
-    js/
-      application.coffee
-      jquery.js
-    css/
-      application.styl
-    img/
-      background.jpg
-```
-
-#### NPM package
-You can use your project as any other Node package. Your app will have one main 
-entry point (like most Node packages) that you can programatically use anywhere.
-
-``` js
-var app = require('yourapp').load();
-
-// Use models:
-var Article = require('yourapp/lib/article');
-Article.find({ id: 20 });
-
-// Fetch config:
-app.conf('database').hostname;
-```
-
-[Read more >](#routes)
-
-# Features
+Features
+========
 
 ## Expo executable
 
@@ -144,6 +8,60 @@ app.conf('database').hostname;
 ## Database
 
 ## Migrations
+
+Type `./run gen-migration` to create your first migration file. This creates a 
+file in `app/migrations/`.
+
+``` js
+/* app/migrations/20130506-default.md */
+module.exports = {
+  up: function(migration, DataTypes, done) {
+    // logic for transforming into the new state
+  },
+
+  down: function(migration, DataTypes, done) {
+    // logic for reverting the changes
+  }
+}
+```
+
+#### Writing your first migration
+
+Fill up the `up` and `down` by issuing Sequelize SQL commands on `migration`, 
+and calling `done` upon completion.  See Sequelize's
+[migration documentation][Migration] for details.
+
+``` js
+up: function(migration, DataTypes, done) {
+  migration.createTable('nameOfTheNewTable',
+  {
+    attr1: DataTypes.STRING,
+    attr2: DataTypes.INTEGER,
+    attr3: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false
+    }
+  })
+  .complete(done);
+},
+
+down: function(migration, DataTypes, done) {
+  migration.dropAllTables().complete(done);
+}
+```
+
+#### Performing migrations
+
+To execute your migrations, just do `./run db-migrate`. Make sure that you have 
+your database created first (`./run db-create`). Sequelize will automatically 
+track which migrations have been ran.
+
+``` cmd
+$ ./run db-migrate
+
+  ...
+```
 
 ## Helpers
 
@@ -276,3 +194,4 @@ See these third-party guides for more info.
 [shrinkwrap]: https://npmjs.org/doc/shrinkwrap.html
 [install]: https://npmjs.org/doc/install.html
 [Demo]: https://raw.github.com/rstacruz/expo/master/support/demo.txt
+[Migrations]: http://sequelizejs.com/documentation#migrations-skeleton
