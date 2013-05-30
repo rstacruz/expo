@@ -13,6 +13,7 @@ cli
   .version(require('../package').version);
 
 cli
+  .usage('PATH [options]')
   .option('--no-db', 'Disable models and database')
   .option('--no-assets', 'Disable asset pipeline')
   .option('--no-sessions', 'Disable sessions support')
@@ -21,127 +22,137 @@ cli
   .option('--no-helpers', 'Disable helpers')
   .option('--no-public', 'Disable public folder')
   .option('--bare', 'Disable everything')
-
-  .command('*')
-  .action(function(project) {
-    var options = {
-      project: project,
-      db: !cli.noDb && !cli.bare,
-      assets: !cli.noAssets && !cli.bare,
-      sessions: !cli.noSessions && !cli.bare,
-      tests: !cli.noTests && !cli.bare,
-      tasks: !cli.noTasks && !cli.bare,
-      helpers: !cli.noHelpers && !cli.bare,
-      public: !cli.noPublic && !cli.bare
-    };
-
-    var render = Renderer(options);
-    var p = project;
-
-    var f = new Folder(p);
-
-    f.banner(p, 'your project');
-    f.mkdir('');
-    f.write('Readme.md', render.readme('Readme.md'));
-    f.write('run', render.text('run'), 0755);
-    f.write('app.js', render.appjs('app.js'));
-    f.write('.gitignore', render.text('gitignore'));
-    f.write('package.json', render.package('package.json'));
-
-    f.mkdir('app');
-
-    if (options.assets) {
-      f.banner('assets', 'where your images, CSS and JS files live', 32);
-      f.mkdir('assets');
-      f.mkdir('assets/css');
-      f.write('assets/css/application.styl', render.text('assets.application.styl'));
-      f.mkdir('assets/js');
-      f.write('assets/js/application.js', render.js('assets.application.js'));
-      f.gkeep('assets/img');
-    }
-
-    f.banner('initializers', 'code that initializes the app environment', 33);
-    f.mkdir('app/initializers');
-    f.write('app/initializers/app.js', render.js('init.app.js'));
-    options.sessions &&
-    f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
-
-    if (options.helpers) {
-      f.banner('helpers', 'functions available in your views', 34);
-      f.mkdir('app/helpers');
-      f.write('app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
-    }
-
-    f.banner('routes', 'auto-loaded files that create URL routes');
-    f.mkdir('app/routes');
-    f.write('app/routes/home.js', render.js('routes.home.js'));
-
-    if (options.tasks) {
-      f.banner('tasks', 'command line tasks');
-      f.mkdir('app/tasks');
-      f.write('app/tasks/db.js', render.js('tasks.db.js'));
-    }
-
-    f.banner('views', 'template files');
-    f.mkdir('app/views');
-    f.write('app/views/index.jade', render.jade('views.index.jade'));
-    f.write('app/views/layout.jade', render.jade('views.layout.jade'));
-
-    f.banner('config', 'yaml config files', 34);
-    f.mkdir('config');
-    options.db &&
-    f.write('config/database.yml.example', render.js('config.database.yml'));
-    options.sessions &&
-    f.write('config/secret_token.yml', render.secret());
-    options.assets &&
-    f.write('config/assets.yml', render.js('config.assets.yml'));
-
-    if (options.db) {
-      f.banner('db', 'development sqlite database');
-      f.gkeep('db');
-    }
-
-    f.banner('lib', 'models and code');
-    f.gkeep('lib');
-
-    if (options.public) {
-      f.banner('public', 'static files go here');
-      f.mkdir('public');
-      f.write('public/robots.txt', render.text('robots.txt'));
-    }
-
-    if (options.tests) {
-      f.banner('test', 'tests, specs');
-      f.mkdir('test');
-      f.write('test/setup.js', render.js('test.setup.js'));
-      f.write('test/app_test.js', render.js('test.app_test.js'));
-    }
-
+  .on('--help', function() {
+    console.log('  start a project:');
+    console.log('    $ expo myproject');
     console.log('');
-    console.log('  install dependencies:');
-    console.log('    $ cd '+p);
-    console.log('    $ npm install && npm shrinkwrap');
-      console.log('');
-
-    cli.confirm('Do that now? [yn] ', function(go) {
-      if (go) {
-        var cmd = 'cd '+p+' && npm install && npm shrinkwrap';
-        exec(cmd, done);
-      } else {
-        done(0);
-      }
-
-      function done(err) {
-        console.log('');
-        console.log('  run the app:');
-        console.log('    $ ./run server');
-        console.log('');
-        console.log('  more info:');
-        console.log('    $ ./run --help');
-        console.log('');
-        process.exit(err);
-      };
-    });
+    console.log("  see Expo's website for more info.");
+    console.log('  http://ricostacruz.com/expo/');
   });
+  cli.parse(process.argv);
 
-cli.parse(process.argv);
+var project = cli.args.shift();
+
+if (project) spawn(project);
+else cli.help();
+
+function spawn(project) {
+  var options = {
+    project: project,
+    db: !cli.noDb && !cli.bare,
+    assets: !cli.noAssets && !cli.bare,
+    sessions: !cli.noSessions && !cli.bare,
+    tests: !cli.noTests && !cli.bare,
+    tasks: !cli.noTasks && !cli.bare,
+    helpers: !cli.noHelpers && !cli.bare,
+    public: !cli.noPublic && !cli.bare
+  };
+
+  var render = Renderer(options);
+  var p = project;
+
+  var f = new Folder(p);
+
+  f.banner(p, 'your project');
+  f.mkdir('');
+  f.write('Readme.md', render.readme('Readme.md'));
+  f.write('run', render.text('run'), 0755);
+  f.write('app.js', render.appjs('app.js'));
+  f.write('.gitignore', render.text('gitignore'));
+  f.write('package.json', render.package('package.json'));
+
+  f.mkdir('app');
+
+  if (options.assets) {
+    f.banner('assets', 'where your images, CSS and JS files live', 32);
+    f.mkdir('assets');
+    f.mkdir('assets/css');
+    f.write('assets/css/application.styl', render.text('assets.application.styl'));
+    f.mkdir('assets/js');
+    f.write('assets/js/application.js', render.js('assets.application.js'));
+    f.gkeep('assets/img');
+  }
+
+  f.banner('initializers', 'code that initializes the app environment', 33);
+  f.mkdir('app/initializers');
+  f.write('app/initializers/app.js', render.js('init.app.js'));
+  options.sessions &&
+  f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
+
+  if (options.helpers) {
+    f.banner('helpers', 'functions available in your views', 34);
+    f.mkdir('app/helpers');
+    f.write('app/helpers/app_helper.js', render.js('helpers.app_helper.js'));
+  }
+
+  f.banner('routes', 'auto-loaded files that create URL routes');
+  f.mkdir('app/routes');
+  f.write('app/routes/home.js', render.js('routes.home.js'));
+
+  if (options.tasks) {
+    f.banner('tasks', 'command line tasks');
+    f.mkdir('app/tasks');
+    f.write('app/tasks/db.js', render.js('tasks.db.js'));
+  }
+
+  f.banner('views', 'template files');
+  f.mkdir('app/views');
+  f.write('app/views/index.jade', render.jade('views.index.jade'));
+  f.write('app/views/layout.jade', render.jade('views.layout.jade'));
+
+  f.banner('config', 'yaml config files', 34);
+  f.mkdir('config');
+  options.db &&
+  f.write('config/database.yml.example', render.js('config.database.yml'));
+  options.sessions &&
+  f.write('config/secret_token.yml', render.secret());
+  options.assets &&
+  f.write('config/assets.yml', render.js('config.assets.yml'));
+
+  if (options.db) {
+    f.banner('db', 'development sqlite database');
+    f.gkeep('db');
+  }
+
+  f.banner('lib', 'models and code');
+  f.gkeep('lib');
+
+  if (options.public) {
+    f.banner('public', 'static files go here');
+    f.mkdir('public');
+    f.write('public/robots.txt', render.text('robots.txt'));
+  }
+
+  if (options.tests) {
+    f.banner('test', 'tests, specs');
+    f.mkdir('test');
+    f.write('test/setup.js', render.js('test.setup.js'));
+    f.write('test/app_test.js', render.js('test.app_test.js'));
+  }
+
+  console.log('');
+  console.log('  install dependencies:');
+  console.log('    $ cd '+p);
+  console.log('    $ npm install && npm shrinkwrap');
+    console.log('');
+
+  cli.confirm('Do that now? [yn] ', function(go) {
+    if (go) {
+      var cmd = 'cd '+p+' && npm install && npm shrinkwrap';
+      exec(cmd, done);
+    } else {
+      done(0);
+    }
+
+    function done(err) {
+      console.log('');
+      console.log('  run the app:');
+      console.log('    $ ./run server');
+      console.log('');
+      console.log('  more info:');
+      console.log('    $ ./run --help');
+      console.log('');
+      process.exit(err);
+    };
+  });
+}
