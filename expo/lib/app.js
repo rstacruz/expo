@@ -65,13 +65,13 @@ var app = module.exports = function(app) {
       if (env === 'test') events.emit('load:test:before', app);
 
       // Load initializers of the application.
-      loadAppPath('initializers', function(mixin) { mixin(app); });
+      loadAppPath('initializers', 'function', function(mixin) { mixin(app); });
 
       // Apply the helpers using `.local()` to make them available to all views.
-      loadAppPath('helpers', function(helpers) { app.locals(helpers); });
+      loadAppPath('helpers', 'object', function(helpers) { app.locals(helpers); });
 
       // Load routes of the application.
-      loadAppPath('routes', function(mixin) { mixin(app); });
+      loadAppPath('routes', 'function', function(mixin) { mixin(app); });
 
       // After hooks
       if (env === 'test') events.emit('load:test:after', app);
@@ -101,7 +101,7 @@ var app = module.exports = function(app) {
       // Import [1] default tasks, [2] extensions tasks, [3] app tasks.
       require('./cli')(app, command);
       events.emit('cli', app, command);
-      loadModules(app.path('app/tasks'), function(mixin) { mixin(app, command); });
+      loadModules(app.path('app/tasks'), 'function', function(mixin) { mixin(app, command); });
     }
 
     return command;
@@ -193,9 +193,9 @@ var app = module.exports = function(app) {
    * @api private
    */
 
-  function loadAppPath(path, callback) {
+  function loadAppPath(path, type, callback) {
     events.emit(path+':before', app);
-    loadModules(app.path('app', path), callback);
+    loadModules(app.path('app', path), type, callback);
     events.emit(path+':after', app);
   }
 };

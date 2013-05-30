@@ -7,9 +7,9 @@ var PathHelpers = module.exports = {
 // Finds all module files in `filepath` and gives them to `callback`.
 // to each of those functions.
 //
-//     loadModules('app/migrations/', function(m) { ... });
+//     loadModules('app/migrations/', 'function', function(m) { ... });
 //
-function loadModules(filepath, callback) {
+function loadModules(filepath, type, callback) {
   var fs   = require('fs');
   var path = require('path');
 
@@ -29,8 +29,11 @@ function loadModules(filepath, callback) {
     // Ignore directories.
     if (isDirSync(fn)) return;
 
-    var mixin = require(fn);
-    if (typeof mixin === 'function') callback(mixin);
+    // Ensure it's the right type.
+    var module = require(fn);
+    if (typeof module !== type) return;
+
+    callback(module);
   });
 }
 
