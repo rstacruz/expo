@@ -120,7 +120,14 @@ function spawn(project) {
   }
 
   f.banner('lib', 'models and code');
-  f.gkeep('lib');
+
+  if (options.db) {
+    f.mkdir('lib');
+    f.mkdir('lib/models');
+    f.write('lib/models/sample.js', render.js('model.sample.js'));
+  } else {
+    f.gkeep('lib');
+  }
 
   if (options.public) {
     f.banner('public', 'static files go here');
@@ -155,6 +162,13 @@ function spawn(project) {
     }
 
     function done(err) {
+      if (options.db) {
+        console.log('');
+        console.log('  setup the datbaase:');
+        console.log('    $ $EDITOR config/database.yml');
+        console.log('    $ ./run db-create');
+        console.log('    $ ./run db-sync');
+      }
       console.log('');
       console.log('  run the app:');
       console.log('    $ ./run server');
