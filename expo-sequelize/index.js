@@ -1,3 +1,4 @@
+var fs = require('fs');
 var path = require('path');
 var extend = require('util')._extend;
 
@@ -49,6 +50,27 @@ var ExpoSequelize = module.exports = function(app) {
         var options = { path: app.path('app/migrations') };
         var migrator = app.sequelize().getMigrator(options, true);
         migrator.migrate({ method: 'up' });
+      });
+
+    cli
+      .command('db-sync [force]')
+      .description("Performs Sequelize syncing")
+      .action(function(force) {
+        var isForce = (force === 'force');
+
+        app.load();
+        loadModels(app);
+
+        app.log.log("");
+        app.log.info(isForce ? "Force-syncing..." : "Syncing...");
+        app.sequelize().sync({force: isForce})
+        .then(function() {
+          app.log.info("Success");
+        }, function(e) {
+          app.log.error("failed");
+          app.log.error(e);
+          process.exit(1);
+        });
       });
 
     cli
@@ -152,4 +174,15 @@ function databaseSetup(app, callback) {
 function quotify(str, dialect) {
   if (dialect === 'mysql') return "`"+str+"`";
   return str;
+}
+
+function loadModels(app) {
+  app.log.info('Loading models:');
+
+  var mpath = app.path('lib/models');
+  var files = fs.readdirSync(mpath);
+  files.forEach(function(file) {
+    app.log.log('    %s', file);
+    require(path.join(mpath, file));
+  });
 }
