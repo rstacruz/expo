@@ -102,10 +102,15 @@ function spawn(project) {
 
   f.banner('config', 'yaml config files', 34);
   f.mkdir('config');
-  options.db &&
-  f.write('config/database.yml.example', render.js('config.database.yml'));
+
+  if (options.db) {
+    f.write('config/database.yml', render.js('config.database.yml'));
+    f.write('config/database.yml.example', render.js('config.database.yml'));
+  }
+
   options.sessions &&
   f.write('config/secret_token.yml', render.secret());
+
   options.assets &&
   f.write('config/assets.yml', render.js('config.assets.yml'));
 
@@ -139,7 +144,12 @@ function spawn(project) {
   cli.confirm('Do that now? [yn] ', function(go) {
     if (go) {
       var cmd = 'cd '+p+' && npm install && npm shrinkwrap';
-      exec(cmd, done);
+      exec(cmd, function() {
+        console.log('');
+        console.log("  let's begin!");
+        console.log('    $ cd '+p);
+        done();
+      });
     } else {
       done(0);
     }
