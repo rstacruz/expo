@@ -3,6 +3,7 @@
 Expo:
 
  * Config: allow 'default' configuration scope.
+ * CLI: improve `expo --help` help text.
 
 Assets:
 

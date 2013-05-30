@@ -36,6 +36,5 @@ Features
 To do:
 
 - Error
-- More info in --help
 - --quick mode
 - Timestamps in production log
