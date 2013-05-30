@@ -5,6 +5,7 @@
   "version": "0.1.0pre",
   "private": true,
   "engines": {"node": ">=0.8.0"},
+  "repository": {},
   "main": "./app",
   "bin": { "run": "./run" },
   "scripts": {
