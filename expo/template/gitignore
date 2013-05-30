@@ -1,3 +1,4 @@
+node_modules
 db/*.sqlite
 config/database.js
 public/css
