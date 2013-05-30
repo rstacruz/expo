@@ -213,6 +213,9 @@ var app = module.exports = function(app) {
   }
 
   function serverError(err, req, res, next) {
+    if (err === 404)
+      return notFound(req, res, next);
+
     res.render('errors/500', { status: 500, error: err });
   }
 };
