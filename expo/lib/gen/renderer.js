@@ -41,9 +41,9 @@ var Renderer = module.exports = function(options) {
     'package': function(fpath) {
       var str = this.readme(fpath);
       if (!options.db)
-        str = str.replace(/^.*"(expo-sequelize|pg|mysql|sqlite3)".*\n/mg, '\n');
+        str = str.replace(/^.*"(expo-sequelize|pg|mysql|sqlite3|sequelize)".*\n/mg, '\n');
       if (!options.assets)
-        str = str.replace(/^.*"(expo-connect_assets|stylus|nib)".*\n/mg, '\n');
+        str = str.replace(/^.*"(expo-connect_assets|stylus|nib|connect-assets)".*\n/mg, '\n');
       if (!options.tests)
         str = str.replace(/^.*"(test|mocha|chai|supertest)".*\n/mg, '\n');
       str = JSON.stringify(JSON.parse(str), null, 2);

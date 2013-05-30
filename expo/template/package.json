@@ -17,9 +17,10 @@
     "stylus": "*",
     "nib": "*",
     "supertest": "*",
-    "sequelize": "1.7.x",
     "expo-connect_assets": "*",
+    "connect-assets": "*",
     "expo-sequelize": "*",
+    "sequelize": "1.7.x",
     "expo": "*"
   },
   "devDependencies": {

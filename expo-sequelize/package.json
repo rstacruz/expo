@@ -9,5 +9,8 @@
      "type": "git",
      "url": "https://github.com/rstacruz/expo.git"
    },
-  "main": "index"
+  "main": "index",
+   "devDependencies": {
+     "sequelize": "1.7.x"
+   }
 }
