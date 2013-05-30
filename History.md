@@ -3,7 +3,8 @@ v0.1.2 - Unreleased
 
 App generator:
 
- * Make the generated projects have a `repository` in package.json.
+ * New projects now have a `repository` in package.json.
+ * New projects now default to version "0.0.1".
 
 v0.1.1 - May 30, 2013
 ---------------------
