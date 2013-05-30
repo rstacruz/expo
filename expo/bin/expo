@@ -63,8 +63,6 @@ cli
     f.banner('initializers', 'code that initializes the app environment', 33);
     f.mkdir('app/initializers');
     f.write('app/initializers/app.js', render.js('init.app.js'));
-    options.assets &&
-    f.write('app/initializers/assets.js', render.js('init.assets.js'));
     options.sessions &&
     f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
 
@@ -95,6 +93,8 @@ cli
     f.write('config/database.yml.example', render.js('config.database.yml'));
     options.sessions &&
     f.write('config/secret_token.yml', render.secret());
+    options.assets &&
+    f.write('config/assets.yml', render.js('config.assets.yml'));
 
     if (options.db) {
       f.banner('db', 'development sqlite database');
