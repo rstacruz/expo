@@ -8,6 +8,7 @@ App generator:
  * Fix the default tasks.
  * Fix the 'npm install' error.
  * Automatically gitignore compiled assets.
+ * Move test packages into devDependencies.
 
 Expo:
 

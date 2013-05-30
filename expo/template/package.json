@@ -16,14 +16,14 @@
     "jade": "*",
     "stylus": "*",
     "nib": "*",
-    "mocha": "*",
-    "chai": "*",
     "supertest": "*",
     "expo-connect_assets": "*",
     "expo-sequelize": "*",
     "expo": "*"
   },
-  "optionalDependencies": {
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
     "pg": "0.10.x",
     "mysql": "2.0.x",
     "sqlite3": "2.1.x",
