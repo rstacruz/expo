@@ -52,8 +52,6 @@ $ expo --bare hello
 
  initializers/  code that initializes the app environment
                 app/initializers/app.js
-                app/initializers/assets.js
-                app/initializers/sessions.js
 
        routes/  auto-loaded files that create URL routes
                 app/routes/home.js
