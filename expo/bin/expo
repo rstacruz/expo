@@ -52,12 +52,12 @@ cli
 
     if (options.assets) {
       f.banner('assets', 'where your images, CSS and JS files live', 32);
-      f.mkdir('app/assets');
-      f.mkdir('app/assets/css');
-      f.write('app/assets/css/application.styl', render.text('assets.application.styl'));
-      f.mkdir('app/assets/js');
-      f.write('app/assets/js/application.js', render.js('assets.application.js'));
-      f.gkeep('app/assets/img');
+      f.mkdir('assets');
+      f.mkdir('assets/css');
+      f.write('assets/css/application.styl', render.text('assets.application.styl'));
+      f.mkdir('assets/js');
+      f.write('assets/js/application.js', render.js('assets.application.js'));
+      f.gkeep('assets/img');
     }
 
     f.banner('initializers', 'code that initializes the app environment', 33);

@@ -6,6 +6,7 @@ App generator:
  * New projects now have a `repository` in package.json.
  * New projects now default to version "0.0.1".
  * Fix the default tasks.
+ * Fix the 'npm install' error.
 
 Expo:
 
