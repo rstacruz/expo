@@ -13,6 +13,7 @@ App generator:
 Expo:
 
  * CLI tasks that aren't returning JS code are now ignored.
+ * Config: allow 'default' configuration scope.
 
 Assets:
 

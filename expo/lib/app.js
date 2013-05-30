@@ -165,6 +165,7 @@ var app = module.exports = function(app) {
 
   app.conf = function(file) {
     if (!(file in configData)) {
+      var env = app.get('env');
       var load = require('./conf');
 
       var data = load(file, [
@@ -172,7 +173,7 @@ var app = module.exports = function(app) {
         path.join(process.cwd(), 'config')
       ]);
 
-      configData[file] = data[app.get('env')];
+      configData[file] = (env in data ? data[env] : data['default']);
     }
 
     return configData[file];
