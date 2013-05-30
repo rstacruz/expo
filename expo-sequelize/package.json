@@ -11,6 +11,6 @@
    },
   "main": "index",
   "dependencies": {
-    "sequelize": "latest"
+    "sequelize": "1.x"
   }
 }
