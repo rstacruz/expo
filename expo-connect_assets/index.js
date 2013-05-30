@@ -31,9 +31,7 @@ module.exports = function(app) {
       .action(function() {
         
         process.chdir(app.root);
-        app.set('env', 'production'); // Not working
-
-        app.load();
+        app.load('production');
 
         var packages = app.get('assets precompiled');
         if (typeof packages !== 'object') {

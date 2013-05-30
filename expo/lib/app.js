@@ -55,9 +55,12 @@ var app = module.exports = function(app) {
       process.chdir(app.root);
 
       // Set environment if asked (usually test).
-      if (env) app.set('env', env);
-      env = app.get('env');
+      if (env) {
+        process.env.NODE_ENV = env;
+        app.set('env', env);
+      }
 
+      env = app.get('env');
       if (env !== 'development') app.log = require('./logger')(env);
 
       // Hooks: do pre-load hooks that extensions may listen for.
