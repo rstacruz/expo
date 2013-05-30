@@ -17,7 +17,7 @@ module.exports = function(file, paths) {
 
   if (!data) throw [
     "Config file '"+file+"' not found.\n",
-    "Searched in: " + paths.join(", ")
+    "Searched in:\n  - " + paths.join("\n  - ")
   ].join("");
 
   return data;
