@@ -191,7 +191,7 @@ Filtering multiple routes
 
 #### Rails
 
-You can define filters that apply to an entire controller using `before_filter`.  
+You can define filters that apply to an entire controller using `before_filter`.
 This is useful for securing a certain controller to only a few selected users.
 
 ``` ruby
