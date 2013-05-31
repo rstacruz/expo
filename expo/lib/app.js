@@ -209,12 +209,14 @@ var app = module.exports = function(app) {
   }
 
   function notFound(req, res, next) {
-    res.render('errors/404', { status: 404, url: req.url });
+    next(404);
   }
 
   function serverError(err, req, res, next) {
-    if (err === 404)
-      return notFound(req, res, next);
+    if (err === 404) {
+      res.render('errors/404', { status: 404, url: req.url });
+      return;
+    }
 
     res.render('errors/500', { status: 500, error: err });
   }
