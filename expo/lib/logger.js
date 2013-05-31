@@ -12,10 +12,10 @@ module.exports = function(env) {
   }
   else {
     return {
-      'log':   logger(''),
-      'error': logger('ERR:  '),
-      'warn':  logger('WARN: '),
-      'info':  logger('INFO: '),
+      'log':   prodlogger(''),
+      'error': prodlogger('ERR:  '),
+      'warn':  prodlogger('WARN: '),
+      'info':  prodlogger('INFO: '),
       'debug': nil
     };
   }
@@ -32,6 +32,12 @@ function logger(prefix) {
   };
 }
 
+function prodlogger(prefix) {
+  return function() {
+    process.stdout.write('[' + (new Date()).toISOString() + '] ' + prefix);
+    console.log.apply(this, arguments);
+  };
+}
 
 function c(n, str) {
   return '\033['+n+'m'+str+'\033[0m';
