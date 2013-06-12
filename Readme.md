@@ -341,22 +341,23 @@ Misc
 Acknowledgements
 ----------------
 
-© 2013, Rico Sta. Cruz. Released under the [MIT 
-License](http://www.opensource.org/licenses/mit-license.php).
+© 2013, Rico Sta. Cruz. Released under the [MIT License].
 
 [Image] was taken from Flickr, licensed under Creative Commons.
 
-**Expo** is authored and maintained by [Rico Sta. Cruz][rsc] with help from its 
-[contributors][c]. It is sponsored by my startup, [Nadarei, Inc][nd].
+**Expo** is authored and maintained by [Rico Sta. Cruz] with help
+from its [contributors]. It is sponsored by my startup, [Nadarei, Inc.]
 
  * [My website](http://ricostacruz.com) (ricostacruz.com)
- * [Nadarei, Inc.](http://nadarei.co) (nadarei.co)
+ * [Nadarei, Inc.] (nadarei.co)
  * [Github](http://github.com/rstacruz) (@rstacruz)
  * [Twitter](http://twitter.com/rstacruz) (@rstacruz)
 
-[rsc]: http://ricostacruz.com
-[c]:   http://github.com/rstacruz/expo/contributors
-[nd]:  http://nadarei.co
+[MIT License]: http://www.opensource.org/licenses/mit-license.php
+[Rico Sta. Cruz]: http://ricostacruz.com
+[contributors]: http://github.com/rstacruz/expo/contributors
+[Nadarei, Inc]: http://nadarei.co
+
 [connect-assets]: https://github.com/adunkman/connect-assets
 [Express]: http://expressjs.com/
 [connect]: https://github.com/senchalabs/connect
