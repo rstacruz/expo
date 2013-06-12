@@ -75,9 +75,7 @@ function spawn(project) {
 
   f.banner('initializers', 'code that initializes the app environment', 33);
   f.mkdir('app/initializers');
-  f.write('app/initializers/app.js', render.js('init.app.js'));
-  options.sessions &&
-  f.write('app/initializers/sessions.js', render.js('init.sessions.js'));
+  f.write('app/initializers/app.js', render.appjs('init.app.js'));
 
   if (options.helpers) {
     f.banner('helpers', 'functions available in your views', 34);

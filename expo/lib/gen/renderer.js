@@ -23,6 +23,14 @@ var Renderer = module.exports = function(options) {
       return str;
     },
 
+    // Initializer
+    appjs: function(fpath) {
+      var str = this.text(fpath);
+      if (!option.session)
+        str = str.replace(/^.*token.*\n/mg, '\n');
+      return str;
+    },
+
     secret: function() {
       var crypto = require('crypto');
       var string = crypto.randomBytes(128).toString('base64');
