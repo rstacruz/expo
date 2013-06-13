@@ -193,7 +193,6 @@ var app = module.exports = function(app) {
 
   app.set('views', app.path('app/views'));
 
-
   // Private helpers
   // ---------------
 
