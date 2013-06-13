@@ -1,3 +1,4 @@
+var expo = require('expo');
 var express = require('express');
 
 module.exports = function(app) {
@@ -15,6 +16,6 @@ module.exports = function(app) {
   app.use(express.methodOverride());
   app.use(app.router);
   app.configure('development', function() {
-    app.use(express.errorHandler());
+    app.use(expo.errorHandler(express.errorHandler));
   });
 };
