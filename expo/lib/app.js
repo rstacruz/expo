@@ -64,8 +64,8 @@ var app = module.exports = function(app) {
       if (env !== 'development') app.log = require('./logger')(env);
 
       // Hooks: do pre-load hooks that extensions may listen for.
-      events.emit('load:before', app);
-      if (env === 'test') events.emit('load:test:before', app);
+      app.emit('load:before');
+      if (env === 'test') app.emit('load:test:before');
 
       // Load initializers of the application.
       loadAppPath('initializers', 'function', function(mixin) { mixin(app); });
@@ -82,8 +82,8 @@ var app = module.exports = function(app) {
       loadAppPath('routes', 'function', function(mixin) { mixin(app); });
 
       // After hooks
-      if (env === 'test') events.emit('load:test:after', app);
-      events.emit('load:after', app);
+      if (env === 'test') app.emit('load:test:after');
+      app.emit('load:after');
 
       if (env === 'test') app.log.debug('App loaded for test environment');
 
@@ -108,7 +108,7 @@ var app = module.exports = function(app) {
 
       // Import [1] default tasks, [2] extensions tasks, [3] app tasks.
       require('./cli')(app, command);
-      events.emit('cli', app, command);
+      app.emit('cli', command);
       loadModules(app.path('app/tasks'), 'function', function(mixin) { mixin(app, command); });
     }
 
@@ -152,6 +152,18 @@ var app = module.exports = function(app) {
 
   app.on = function(eventName, listener) {
     events.on(eventName, listener);
+    return this;
+  };
+
+  /**
+   * Emits an event.
+   *
+   *     app.emit('load:before');
+   *     app.emit('cli', app.cli);
+   */
+
+  app.emit = function(eventName, arg) {
+    events.emit(eventName, app, arg);
     return this;
   };
 
