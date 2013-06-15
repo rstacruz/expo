@@ -1,3 +1,6 @@
+## v0.1.4
+
+ * Console: it now triggers the 'console' event allowing you to hook things.
 ## v0.1.3
 
 Expo:
@@ -6,6 +9,8 @@ Expo:
  * CLI: improve `expo --help` help text.
  * Add support for 404 and 500 error handlers.
  * Log timestamps in production mode.
+ * Template: consolidate sessions into the main initializer.
+ * App: add `add.emit()` function.
 
 Assets:
 
