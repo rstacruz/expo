@@ -39,8 +39,7 @@ module.exports = function(app, cli) {
     .command('console')
     .description('Opens a console (alias: "c")')
     .action(function() {
-      global.app = app.load();
-      app.emit('console');
+      app.loadConsole();
       require('repl').start({});
     });
 

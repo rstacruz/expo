@@ -93,6 +93,16 @@ var app = module.exports = function(app) {
     return this;
   };
 
+  /**
+   * Loads the app in a console-friendly way. Environment optional.
+   */
+
+  app.loadConsole = function(env) {
+    app.load(env);
+    app.emit('console');
+    global.app = app;
+  };
+
   var command;
 
   /**
