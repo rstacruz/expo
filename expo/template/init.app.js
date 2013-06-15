@@ -16,6 +16,6 @@ module.exports = function(app) {
   app.use(express.methodOverride());
   app.use(app.router);
   app.configure('development', function() {
-    app.use(expo.errorHandler(express.errorHandler));
+    app.use(expo.errorHandler(express.errorHandler()));
   });
 };

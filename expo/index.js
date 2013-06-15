@@ -13,7 +13,7 @@ var expo = module.exports = function(app, dir) {
 expo.errorHandler = function(handler) {
   return function(err, req, res, next) {
     if (err === 404) return next(404);
-    handler.apply(this, arguments);
+    handler(err, req, res, next);
   };
 };
 
