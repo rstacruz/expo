@@ -1,3 +1,7 @@
+## v0.1.5
+
+ * New `throw errors` setting -- when set to true, 500 error pages will not show
+
 ## v0.1.4 - June 17, 2013
 
  * Expo:

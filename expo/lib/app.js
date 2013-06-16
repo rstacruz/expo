@@ -237,6 +237,8 @@ var app = module.exports = function(app) {
       return;
     }
 
-    res.render('errors/500', { status: 500, error: err });
+    if (!app.get('throw errors')) {
+      res.render('errors/500', { status: 500, error: err });
+    }
   }
 };
