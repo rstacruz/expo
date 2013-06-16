@@ -85,8 +85,6 @@ var app = module.exports = function(app) {
       if (env === 'test') app.emit('load:test:after');
       app.emit('load:after');
 
-      if (env === 'test') app.log.debug('App loaded for test environment');
-
       loaded = true;
     }
 
