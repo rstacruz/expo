@@ -16,7 +16,7 @@
    * The `package.json` now gives you the command `npm run autotest` to 
    continuously run tests.
 
-## v0.1.3
+## v0.1.3 - June 13, 2013
 
 Expo:
 
