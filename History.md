@@ -1,4 +1,4 @@
-## v0.1.4 - unreleased
+## v0.1.4 - June 17, 2013
 
  * Expo:
 
