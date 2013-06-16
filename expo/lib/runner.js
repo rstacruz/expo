@@ -37,13 +37,37 @@ var Runner = module.exports = function(app, port, flags) {
   // Invokes supervisor to load the runner bin of the application.
   function runSupervisor() {
     var supervisor = require('supervisor');
-    supervisor.run(['-n', 'exit', '-q', '-e', 'node|js|coffee', '--', process.argv[1], 'server', port, 'Q']);
+    supervisor.run(['-n', 'error', '-q', '-e', 'node|js|coffee', '--', process.argv[1], 'server', port, 'Q']);
   }
 
   function start() {
     var elapsed = +new Date() - time.start;
     app.log.info('Ready [' + elapsed + 'ms]');
+    catchExceptions();
     app.listen(port);
+  }
+
+  /**
+   * Print unhandled exceptions and terminate
+   */
+
+  function catchExceptions() {
+    if (app.get('env') === 'development') {
+      process.on('exit', function() {
+        app.log.debug('Restarting...');
+      });
+    }
+
+    process.on('uncaughtException', function(err) {
+      app.log.error(err.stack);
+
+      if (Object.keys(err).length > 0)
+        app.log.error("Error data:", JSON.stringify(err, null, 2));
+
+      // Let supervisor handle the restart
+      if (app.get('env') === 'development') process.exit(0);
+      process.exit(128);
+    });
   }
 
   function timestamp() {
