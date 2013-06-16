@@ -9,7 +9,8 @@
   "main": "./app",
   "bin": { "run": "./run" },
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec --compilers coffee:coffee-script"
+    "test": "./node_modules/.bin/mocha -R spec --compilers coffee:coffee-script",
+    "autotest": "./node_modules/.bin/mocha -R min --compilers coffee:coffee-script --watch -b"
   },
   "dependencies": {
     "express": "3.2.x",
