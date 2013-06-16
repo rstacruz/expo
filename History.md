@@ -1,6 +1,21 @@
-## v0.1.4
+## v0.1.4 - unreleased
 
- * Console: it now triggers the 'console' event allowing you to hook things.
+ * Expo:
+
+   * Console: it now triggers the 'console' event allowing you to hook things, 
+   allowing you to hook
+
+   * App: implement `app.loadConsole()`. This allows you to run `app = 
+   require('app').loadConsole()` in any REPL shell (like `coffee`).
+
+   * There's now a default `uncaughtException` handler to terminate the 
+   application when one happens.
+
+ * Template:
+
+   * The `package.json` now gives you the command `npm run autotest` to 
+   continuously run tests.
+
 ## v0.1.3
 
 Expo:
