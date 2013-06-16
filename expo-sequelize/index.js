@@ -102,10 +102,8 @@ var ExpoSequelize = module.exports = function(app) {
 
       if (url) {
         conf = parseURL(url);
-        app.log.debug('[db] Loading sequelize via DATABASE_URL');
       } else {
         conf = app.conf('database');
-        app.log.debug('[db] Loading sequelize');
       }
 
       app.events.emit('sequelize:before', app);
