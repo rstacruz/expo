@@ -1,4 +1,7 @@
 var expo = module.exports = function(app, dir) {
+  // Use source maps
+  require('source-map-support').install();
+
   require('./lib/app')(app);
   app.root = dir;
   return app;
