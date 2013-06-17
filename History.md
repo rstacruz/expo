@@ -2,6 +2,8 @@
 
  * New `throw errors` setting -- when set to true, 500 error pages will not show
 
+ * Source map support via the `source-map-support` package, enabled by default.
+
 ## v0.1.4 - June 17, 2013
 
  * Expo:
