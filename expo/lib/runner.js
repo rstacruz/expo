@@ -39,7 +39,6 @@ var Runner = module.exports = function(app, port, flags) {
     var supervisor = require('supervisor');
     supervisor.run([
       '--quiet',
-      '--poll-interval', '1000',
       '--extensions', 'node|js|coffee',
       '--', process.argv[1], 'server', port, 'Q']);
   }
