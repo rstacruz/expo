@@ -32,7 +32,7 @@ $ expo --help
    * Logging
    * Config file loading
 
-[![Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)
+[![Status](https://travis-ci.org/rstacruz/expo.png?branch=master)](https://travis-ci.org/rstacruz/expo)  [![NPM version](https://badge.fury.io/js/expo.png)](http://badge.fury.io/js/expo)
 
 ## Your first app
 
