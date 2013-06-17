@@ -37,7 +37,11 @@ var Runner = module.exports = function(app, port, flags) {
   // Invokes supervisor to load the runner bin of the application.
   function runSupervisor() {
     var supervisor = require('supervisor');
-    supervisor.run(['-q', '-e', 'node|js|coffee', '--', process.argv[1], 'server', port, 'Q']);
+    supervisor.run([
+      '--quiet',
+      '--poll-interval', '1000',
+      '--extensions', 'node|js|coffee',
+      '--', process.argv[1], 'server', port, 'Q']);
   }
 
   function start() {
