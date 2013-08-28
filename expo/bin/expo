@@ -59,6 +59,7 @@ function spawn(project) {
   f.write('run', render.text('run'), 0755);
   f.write('app.js', render.appjs('app.js'));
   f.write('.gitignore', render.text('gitignore'));
+  f.write('Procfile', render.text('Procfile'));
   f.write('package.json', render.package('package.json'));
 
   f.mkdir('app');
