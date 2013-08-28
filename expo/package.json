@@ -27,6 +27,9 @@
     "js-yaml": "2.x",
     "source-map-support": "~0.1.6"
   },
+  "peerDependencies": {
+    "express": ">= 3.2.0 < 4"
+  },
   "devDependencies": {
     "express": "3.2.x",
     "mocha": "1.10.x",
