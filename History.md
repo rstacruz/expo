@@ -1,12 +1,19 @@
-## v0.1.5
+## v0.1.6 - August 28, 2013
 
- * New `throw errors` setting -- when set to true, 500 error pages will not show
+ * Add `peerDependencies` to the NPM packages.
+
+ * Template: create a `Procfile` for Heroku.
+
+## v0.1.5 - June 6. 2013
+
+ * New `throw errors` setting -- when set to true, 500 error pages will not 
+ show.
 
  * Source map support via the `source-map-support` package, enabled by default.
 
 ## v0.1.4 - June 17, 2013
 
- * Expo:
+Expo:
 
    * Console: it now triggers the 'console' event allowing you to hook things, 
    allowing you to hook
@@ -17,7 +24,7 @@
    * There's now a default `uncaughtException` handler to terminate the 
    application when one happens.
 
- * Template:
+Template:
 
    * The `package.json` now gives you the command `npm run autotest` to 
    continuously run tests.
