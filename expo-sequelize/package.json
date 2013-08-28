@@ -10,6 +10,9 @@
      "url": "https://github.com/rstacruz/expo.git"
    },
   "main": "index",
+   "peerDependencies": {
+     "sequelize": "1.7.x"
+   },
    "devDependencies": {
      "sequelize": "1.7.x"
    }

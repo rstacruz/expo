@@ -10,6 +10,9 @@
      "url": "https://github.com/rstacruz/expo.git"
    },
   "main": "index",
+  "peerDependencies": {
+    "connect-assets": "2.x"
+  },
   "devDependencies": {
     "connect-assets": "2.x"
   }
